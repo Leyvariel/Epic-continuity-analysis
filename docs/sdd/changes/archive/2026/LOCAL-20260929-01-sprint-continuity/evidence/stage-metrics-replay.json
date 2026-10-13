@@ -1,0 +1,23 @@
+{
+  "cacheSha256": "1738ac9071086496fd170411185839ef672fe0ccd2bb5b98c1756964d0734fb1",
+  "asOf": "2026-10-07T12:46:36.813Z",
+  "epics": [
+    {
+      "key": "HOTELS-11631",
+      "before": null,
+      "afterDays": {
+        "preparation": 0,
+        "validation": 16.95546296296296,
+        "scoring": 0,
+        "solution": 39.95740740740741,
+        "ready": 96.88010416666667,
+        "implementation": 80.08483796296296,
+        "experiment": 21.11425925925926,
+        "evaluation": 0
+      },
+      "ttmMs": null
+    }
+  ],
+  "otherEpicFieldsUnchanged": true,
+  "hierarchyAndSprintsUnchanged": true
+}

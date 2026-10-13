@@ -1,0 +1,72 @@
+{
+  "checkedAt": "2026-09-29T16:08:00.255094+00:00",
+  "scope": "Проверка фактически прочитанных образцов Jira, не тест новой реализации",
+  "D1": "Подтверждены контракт Sprint версии 2, цепочки ID, календарные даты, originBoardId, пагинация isLast и стабильность на выбранном образце",
+  "D2": "Не закрыт: среди 164 доступных обычных задач нет текущих Jira Sub-task; историческая полнота не доказана; ожидается уточнение вида связи",
+  "issues": [
+    {
+      "key": "HOTELS-14091",
+      "completeHistory": true,
+      "sprintTransitions": 3,
+      "terminalIds": [
+        "12462"
+      ],
+      "chainMatchesCurrent": true,
+      "stable": true
+    },
+    {
+      "key": "HOTELS-14245",
+      "completeHistory": true,
+      "sprintTransitions": 0,
+      "terminalIds": [],
+      "chainMatchesCurrent": true,
+      "stable": true
+    },
+    {
+      "key": "ANL-20734",
+      "completeHistory": true,
+      "sprintTransitions": 1,
+      "terminalIds": [
+        "12587"
+      ],
+      "chainMatchesCurrent": true,
+      "stable": true
+    }
+  ],
+  "calendars": [
+    {
+      "boardId": "1465",
+      "count": 50,
+      "pagesPerPass": 1,
+      "stable": true,
+      "complete": true
+    },
+    {
+      "boardId": "971",
+      "count": 244,
+      "pagesPerPass": 5,
+      "stable": true,
+      "complete": true
+    }
+  ],
+  "inaccessibleSprints": [
+    "10076"
+  ],
+  "fixtureHashes": {
+    "jira-discovery.json": "054d62cc36a538d05bf50f9a5c95b7ab7cb2f5b75dcaa47de5ce4428d6662560",
+    "jira-d1-d2.json": "158c824a236e06e3a3f7ae9bd13c2a0e1b6c9aab372e0295c91aa529daa67d21",
+    "jira-versioned-sprint.json": "c888fe0d23022d60ab405414bcfed8850c4baade712315cd111aa2fab76a78f8"
+  },
+  "baseline": {
+    "checked": 102,
+    "changed": []
+  },
+  "applicationTestsRun": false,
+  "reproducibleDiagnostic": {
+    "path": "scripts/verify-sprint-continuity.ts",
+    "logicalGetCalls": 32,
+    "networkMutation": false,
+    "workingCacheWrite": false,
+    "versionedSprintIncluded": true
+  }
+}

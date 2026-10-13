@@ -1,0 +1,145 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-work.test.ts (15 tests | 15 failed) 7ms
+     × AC-055/081: whole sprint and all three levels, not other Delivery 3ms
+     × AC-051/053: a subtask wins over parent status; parent cannot substitute 0ms
+     × AC-070: detected reparenting gives unknown, another child still proves work 0ms
+     × AC-071: no parent fallback before creation of current subtask 0ms
+     × AC-054: work ending before parent sprint membership is insufficient 0ms
+     × AC-074/075: retain later transitions for reconstruction and validation 1ms
+     × unknown category never falls back to names 0ms
+     × membership unknown affects entire possible sprint, proven nonmembership excludes unknown status 0ms
+     × AC-085: a different sprint covers overlap without painting the empty sprint 0ms
+     × AC-082: future without dates is excluded; active without close is included 0ms
+     × AC-078/083: incomplete Delivery does not depend on HF phase mask; independent branch remains valid 0ms
+     × AC-084: known work survives unavailable parent status histories 0ms
+     × AC-057/059: mask mixed phases, repeats and nonworking stage 0ms
+     × shared and cyclic branches terminate and do not duplicate a segment 0ms
+     × calendar unavailable gives unbounded unknown while known positive remains 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-work.test.ts > work, current Sub-task roster and whole sprints > AC-055/081: whole sprint and all three levels, not other Delivery
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:6:151
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > work, current Sub-task roster and whole sprints > AC-051/053: a subtask wins over parent status; parent cannot substitute
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:7:237
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > work, current Sub-task roster and whole sprints > AC-070: detected reparenting gives unknown, another child still proves work
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:8:247
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > work, current Sub-task roster and whole sprints > AC-071: no parent fallback before creation of current subtask
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:9:254
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > work, current Sub-task roster and whole sprints > AC-054: work ending before parent sprint membership is insufficient
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:10:198
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > work, current Sub-task roster and whole sprints > AC-074/075: retain later transitions for reconstruction and validation
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:11:202
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > work, current Sub-task roster and whole sprints > unknown category never falls back to names
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:12:138
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > work, current Sub-task roster and whole sprints > membership unknown affects entire possible sprint, proven nonmembership excludes unknown status
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:13:191
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > rollup, phases, uncertainty and separate identities > AC-085: a different sprint covers overlap without painting the empty sprint
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:16:406
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > rollup, phases, uncertainty and separate identities > AC-082: future without dates is excluded; active without close is included
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ tests/sprint-work.test.ts:17:350
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > rollup, phases, uncertainty and separate identities > AC-078/083: incomplete Delivery does not depend on HF phase mask; independent branch remains valid
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:18:357
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > rollup, phases, uncertainty and separate identities > AC-084: known work survives unavailable parent status histories
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:19:225
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > rollup, phases, uncertainty and separate identities > AC-057/059: mask mixed phases, repeats and nonworking stage
+TypeError: Cannot read properties of undefined (reading 'gaps')
+ ❯ tests/sprint-work.test.ts:20:470
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > rollup, phases, uncertainty and separate identities > shared and cyclic branches terminate and do not duplicate a segment
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ tests/sprint-work.test.ts:21:229
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/15]⎯
+
+ FAIL  tests/sprint-work.test.ts > rollup, phases, uncertainty and separate identities > calendar unavailable gives unbounded unknown while known positive remains
+TypeError: Cannot read properties of undefined (reading 'segments')
+ ❯ states tests/sprint-work.test.ts:4:71
+
+ ❯ tests/sprint-work.test.ts:22:203
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/15]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  15 failed (15)
+   Start at  20:59:44
+   Duration  112ms (transform 25ms, setup 0ms, import 32ms, tests 7ms, environment 0ms)
+

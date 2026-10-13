@@ -1,0 +1,36 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-work.test.ts (16 tests | 1 failed) 17ms
+   × root mixed history keeps intermediate closed interval before reopening in the independent phase layer 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-work.test.ts > root mixed history keeps intermediate closed interval before reopening in the independent phase layer
+AssertionError: expected [ '[HF] Проверка идей', …(1) ] to deeply equal [ '[HF] Проверка идей', …(2) ]
+
+- Expected
++ Received
+
+  [
+    "[HF] Проверка идей",
+-   "[HF] Закрыт",
+    "[HF] Реализация",
+  ]
+
+ ❯ tests/sprint-work.test.ts:27:72
+     25|  const {graph,input}=fixture(),h=graph.nodes['1'].history!;
+     26|  h.statusChanges=[{id:'a',at:at(8),from:'[HF] Проверка идей',fromId:'2…
+     27|  expect(analyzeSprints(graph,input).rows['1'].phases.map(s=>s.status))…
+       |                                                                        ^
+     28| });
+     29|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 15 passed (16)
+   Start at  21:29:35
+   Duration  144ms (transform 43ms, setup 0ms, import 51ms, tests 17ms, environment 0ms)
+

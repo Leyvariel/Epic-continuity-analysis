@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-10-02T18:48:44.127425+00:00",
+  "changedSources": [
+    "shared/contracts.ts",
+    "server/jira/pipeline.ts",
+    "server/jira/dataset.ts",
+    "server/jira/ports.ts",
+    "server/jira/cache-schema.ts",
+    "server/jira/adapter.ts",
+    "src/App.tsx",
+    "src/styles.css",
+    "src/HierarchyRows.tsx"
+  ],
+  "addedSources": [
+    "shared/sprints.ts",
+    "server/sprint-analysis.ts",
+    "server/jira/sprint-schema.ts",
+    "server/jira/sprints.ts",
+    "src/SprintRows.tsx",
+    "tests/sprint-adapter.test.ts",
+    "tests/sprint-contracts.test.ts",
+    "tests/sprint-subtasks.test.ts",
+    "tests/sprint-dataset-fixture.ts",
+    "tests/sprint-collector-fixture.ts",
+    "tests/sprint-fixtures.ts",
+    "tests/sprint-cache.test.ts",
+    "tests/sprint-rail-replay.test.ts",
+    "tests/sprint-flow.test.tsx",
+    "tests/sprint-pipeline.test.ts",
+    "tests/sprint-work.test.ts",
+    "tests/sprint-ui.test.tsx",
+    "tests/sprint-control-fixture.ts",
+    "tests/data/sprint-rail-evidence.json",
+    "scripts/verify-sprint-demo.ts"
+  ],
+  "tests": 373,
+  "testFiles": 51,
+  "buildPassed": true,
+  "sddValidationPassed": true,
+  "readyValidationPassed": true,
+  "workingCacheUnchanged": true,
+  "remaining": [
+    "T011 live and rendered visual acceptance",
+    "T012 final reconciliation after acceptance",
+    "T013 archive"
+  ],
+  "archivePerformed": false,
+  "commitPerformed": false,
+  "pushPerformed": false
+}

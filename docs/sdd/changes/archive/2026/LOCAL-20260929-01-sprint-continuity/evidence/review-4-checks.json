@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-02T09:33:19.640647+00:00",
+  "reviewAgent": "/root/package_independent_review",
+  "forkTurns": "none",
+  "structural": {
+    "exitCode": 0,
+    "output": "OK: SDD validation passed with 0 warning(s)\n"
+  },
+  "ready": {
+    "exitCode": 1,
+    "output": "ERROR: proposal.md: status must be approved for --ready\nERROR: design.md: status must be approved for --ready\nERROR: tasks.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/jira-ingestion.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/sprint-continuity.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/visualization.md: status must be approved for --ready\nERROR: unresolved blocking question remains\nERROR: requirements checklist is not complete\nFAILED: 8 error(s), 0 warning(s)\n"
+  },
+  "unchangedNormativeAndPlanningFiles": [
+    "proposal.md",
+    "design.md",
+    "tasks.md",
+    "tdd-plan.md",
+    "bdd-scenarios.md",
+    "specs/sprint-continuity.md",
+    "specs/jira-ingestion.md",
+    "specs/visualization.md"
+  ],
+  "unchangedBaselineFiles": 102,
+  "unchangedCurrentSpecs": 6,
+  "links": {
+    "checked": 207,
+    "broken": []
+  },
+  "significantFindings": [
+    "R7: future sprint without dates has ambiguous influence on historical uncertainty"
+  ],
+  "futureWithoutDatesIds": [
+    13089,
+    13193,
+    12496,
+    9272
+  ],
+  "implementationAuthorized": false,
+  "applicationTestsRun": false,
+  "jiraRequestsMade": false,
+  "documentHashes": {
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-4.md": "0cf0469e5d99e0b5f8f20825b058e146424e14a75c055cbafaca416cb84dcefd",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/approval.md": "f2d45a1e985f85c4c4ac5490be20b430385ea8583a9cccc24ecb16c50f3c1020",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-resolution.md": "a35bcd08dbbd11a6af07c981e166255f59d40b7a1a345c8039301b4956a53693",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/verification.md": "d8dba8232ccf10a796f89c1dcb104bb0a14c26dbddc6482df278c032fb32d822"
+  }
+}

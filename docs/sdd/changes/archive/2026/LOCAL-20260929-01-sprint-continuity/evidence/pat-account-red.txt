@@ -1,0 +1,65 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/keychain-account.test.ts (2 tests | 2 failed) 5ms
+   × AC-093: selects the exact account and rereads the rotated value 4ms
+   × AC-093: fallback keeps the account; rejection does not expose native output 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/keychain-account.test.ts > AC-093: selects the exact account and rereads the rotated value
+AssertionError: expected [ 'find-generic-password', '-s', …(2) ] to deeply equal [ 'find-generic-password', '-s', …(4) ]
+
+- Expected
++ Received
+
+  [
+    "find-generic-password",
+    "-s",
+    "Code Jira Relations PAT",
+-   "-a",
+-   "leyva@tutu.tech",
+    "-w",
+  ]
+
+ ❯ tests/keychain-account.test.ts:14:52
+     12|  expect(await readPat(signal)).toBe('synthetic-before');value='synthet…
+     13|  expect(mock).toHaveBeenCalledTimes(2);
+     14|  for(const call of mock.mock.calls)expect(call[1]).toEqual(['find-gene…
+       |                                                    ^
+     15| });
+     16| it('AC-093: fallback keeps the account; rejection does not expose nati…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/keychain-account.test.ts > AC-093: fallback keeps the account; rejection does not expose native output
+AssertionError: expected [ 'find-generic-password', '-s', …(2) ] to deeply equal [ 'find-generic-password', '-s', …(4) ]
+
+- Expected
++ Received
+
+  [
+    "find-generic-password",
+    "-s",
+    "tutu-jira",
+-   "-a",
+-   "leyva@tutu.tech",
+    "-w",
+  ]
+
+ ❯ tests/keychain-account.test.ts:20:32
+     18|  mock.mockImplementation(((...args:any[])=>{calls++;args.at(-1)(calls=…
+     19|  expect(await readPat(new AbortController().signal)).toBe('synthetic-s…
+     20|  expect(mock.mock.calls[1][1]).toEqual(['find-generic-password','-s','…
+       |                                ^
+     21|  mock.mockClear();mock.mockImplementation(((...args:any[])=>{args.at(-…
+     22|  const error=await readPat(new AbortController().signal).catch(e=>e);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  20:00:09
+   Duration  125ms (transform 27ms, setup 0ms, import 35ms, tests 5ms, environment 0ms)
+

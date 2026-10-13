@@ -1,0 +1,48 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/hierarchy-jira.test.ts (2 tests | 2 failed) 9ms
+     × читает общую задачу одним процессом и сохраняет DF 6ms
+     × локальная ошибка истории сохраняет соседей, глобальная прерывает сбор 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hierarchy-jira.test.ts > T005: получение графа Jira > читает общую задачу одним процессом и сохраняет DF
+AssertionError: expected undefined to be 'epic' // Object.is equality
+
+- Expected:
+"epic"
+
++ Received:
+undefined
+
+ ❯ tests/hierarchy-jira.test.ts:12:32
+     10|     const getIssue=vi.fn(async(id:string)=>child(id)),getHistory=vi.fn…
+     11|     const g=await collectHierarchy({getIssue,getHistory,readBoard:vi.f…
+     12|     expect(g?.nodes['2'].type).toBe('epic');expect(g?.edges).toHaveLen…
+       |                                ^
+     13|     expect(getIssue.mock.calls.filter(([id])=>id==='3')).toHaveLength(…
+     14|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/hierarchy-jira.test.ts > T005: получение графа Jira > локальная ошибка истории сохраняет соседей, глобальная прерывает сбор
+AssertionError: expected undefined to be 'unavailable' // Object.is equality
+
+- Expected:
+"unavailable"
+
++ Received:
+undefined
+
+ ❯ tests/hierarchy-jira.test.ts:17:153
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  21:41:04
+   Duration  178ms (transform 47ms, setup 0ms, import 75ms, tests 9ms, environment 0ms)
+

@@ -1,0 +1,33 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/hierarchy-contracts.test.ts (2 tests | 1 failed) 3ms
+     × принимает явно пустой граф и сохраняет срез 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hierarchy-contracts.test.ts > T001: версионированный граф > принимает явно пустой граф и сохраняет срез
+ZodError: [
+  {
+    "expected": "never",
+    "code": "invalid_type",
+    "path": [],
+    "message": "Invalid input: expected never, received object"
+  }
+]
+ ❯ tests/hierarchy-contracts.test.ts:5:82
+      3| const empty = { version: 1, asOf: '2026-09-10T00:00:00+03:00', roots: …
+      4| describe('T001: версионированный граф', () => {
+      5|   it('принимает явно пустой граф и сохраняет срез', () => expect(hiera…
+       |                                                                                  ^
+      6|   it('отвергает неизвестную версию и повреждённую ссылку', () => {
+      7|     expect(hierarchySchema.safeParse({ ...empty, version: 2 }).success…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  21:23:13
+   Duration  135ms (transform 18ms, setup 0ms, import 56ms, tests 3ms, environment 0ms)
+

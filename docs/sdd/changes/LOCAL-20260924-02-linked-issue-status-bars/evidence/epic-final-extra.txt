@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  2 passed (2)
+      Tests  7 passed (7)
+   Start at  11:01:31
+   Duration  1.05s (transform 151ms, setup 0ms, import 273ms, tests 387ms, environment 438ms)
+

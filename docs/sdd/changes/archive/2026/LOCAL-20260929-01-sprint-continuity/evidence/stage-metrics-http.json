@@ -1,0 +1,17 @@
+{
+  "status": 200,
+  "cacheUnchanged": true,
+  "sprintsAndHierarchyUnchanged": true,
+  "key": "HOTELS-11631",
+  "durations": {
+    "preparation": 0,
+    "validation": 1464952000,
+    "scoring": 0,
+    "solution": 3452320000,
+    "ready": 8370441000,
+    "implementation": 6919330000,
+    "experiment": 1824272000,
+    "evaluation": 0
+  },
+  "ttmMs": null
+}

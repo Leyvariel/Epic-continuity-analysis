@@ -1,0 +1,134 @@
+{
+  "capturedAt": "2026-09-29T15:41:30.943946+00:00",
+  "scope": "Доработка документов по R6; без реализации и обращения к Jira",
+  "requirements": 10,
+  "scenarios": 43,
+  "previousScenariosPreserved": true,
+  "preservedScenarios": [
+    "AC-029",
+    "AC-030",
+    "AC-031",
+    "AC-032",
+    "AC-033",
+    "AC-034",
+    "AC-035",
+    "AC-036",
+    "AC-037",
+    "AC-038",
+    "AC-048",
+    "AC-049",
+    "AC-050",
+    "AC-051",
+    "AC-052",
+    "AC-053",
+    "AC-054",
+    "AC-055",
+    "AC-056",
+    "AC-057",
+    "AC-058",
+    "AC-059",
+    "AC-060",
+    "AC-061",
+    "AC-062",
+    "AC-063",
+    "AC-064",
+    "AC-065",
+    "AC-066",
+    "AC-067",
+    "AC-068",
+    "AC-069",
+    "AC-070",
+    "AC-071",
+    "AC-072",
+    "AC-073",
+    "AC-074",
+    "AC-075",
+    "AC-076",
+    "AC-077"
+  ],
+  "newScenarios": [
+    "AC-078",
+    "AC-079",
+    "AC-080"
+  ],
+  "taskCount": 13,
+  "bddCount": 29,
+  "allRequirementsAndScenariosTraced": true,
+  "confirmedUserResultPreserved": true,
+  "baseline": {
+    "checked": 102,
+    "changed": []
+  },
+  "currentSpecs": {
+    "checked": 6,
+    "changed": []
+  },
+  "links": {
+    "checked": 134,
+    "broken": []
+  },
+  "validators": {
+    "structural": {
+      "exitCode": 0,
+      "output": "OK: SDD validation passed with 0 warning(s)\n"
+    },
+    "ready": {
+      "exitCode": 1,
+      "output": "ERROR: proposal.md: status must be approved for --ready\nERROR: design.md: status must be approved for --ready\nERROR: tasks.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/jira-ingestion.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/sprint-continuity.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/visualization.md: status must be approved for --ready\nERROR: unresolved blocking question remains\nERROR: requirements checklist is not complete\nFAILED: 8 error(s), 0 warning(s)\n"
+    }
+  },
+  "expectedIntervalArithmetic": {
+    "scope": "Вымышленные B27–B29, полуоткрытые дни; не тест реализации",
+    "incompleteRoot": {
+      "covered": [
+        "04–12.09"
+      ],
+      "unknown": [
+        "01–04.09",
+        "12–15.09"
+      ],
+      "gaps": []
+    },
+    "independentCompleteRoot": {
+      "gaps": [
+        "01–15.09"
+      ]
+    },
+    "passed": true
+  },
+  "modifiedPackageFiles": [
+    "bdd-scenarios.md",
+    "checklists/requirements.md",
+    "design.md",
+    "evidence/README.md",
+    "implementation-review.md",
+    "proposal.md",
+    "review-resolution.md",
+    "specs/sprint-continuity.md",
+    "tasks.md",
+    "tdd-plan.md",
+    "verification.md"
+  ],
+  "documentHashes": {
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/bdd-scenarios.md": "e4bca7c4282da8b7776d9e05daaf02c870c2901b40d269004b9723073f9450b0",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/checklists/requirements.md": "9accb37c32285f367fff1fd26ecfac5d1f7827604f7d303456d31be83ede64ab",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/design.md": "2dc3a4b66c881742ea9e6709f72c343470d9240de965f736c819f82460289ead",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/evidence/README.md": "120edf209347ada290e9777cdf212e95f321d2e1c31778a5b941d834a3e46533",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/implementation-review.md": "1bdd65a997fda7e80f729cfa2a5445e4cad31648e7fbb651fb0934fd6e9c79c4",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/proposal.md": "c7e93c2a8757ef88e6ef60b2d83f87f31229297cbb937870bba471f951efd8c1",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/research.md": "d238a49153a0f03fce6ccaebc19eaa693f94772f86c289fb8bd497216ad050b6",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-2.md": "ad946ff96d1a5de2b04f573bd99e164b41a2d0a73f88c53b94481ecb8fa522b8",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-3.md": "d0d26371cc317f13f9677b7d9bd6717616e8436fb9929b1ade0be2976c36f3cb",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-resolution.md": "88e57671fd869c29229cb7dce701984afba7d9ac4432f0305f536b4a79d217b0",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review.md": "444da890cd9f5d902508656e1b2056ffb7d08d36e253baaad739eb968a3601e0",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/jira-ingestion.md": "fd1e2cfa0ae2cb38f53f7211b2e5b2a8de794ed63cc826c3e456e9f2cac3b2be",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/sprint-continuity.md": "0916c4007c4fc4784e02d8f02a2dcb651b5d4a1d3136571b7c7512e39c01d348",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/visualization.md": "49e93df1652f976ba4d505fcfa5dd33e7c494996f3e9351a4301bc59732c876a",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/tasks.md": "907ac098b54495fa8869e3c9eae415e838656b1e59c2ae7417c7a79e0d261ea3",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/tdd-plan.md": "8096425635925f63b15b7d27e38b21ba2e8ab7427555e98b62cd04a98c12b6a3",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/verification.md": "94f7be25f6dd6e0059857df6b95aea97ec696ea7382c853b63a4f636e3c292e4"
+  },
+  "applicationTestsRun": false,
+  "liveJiraRequests": 0,
+  "implementationAuthorized": false
+}

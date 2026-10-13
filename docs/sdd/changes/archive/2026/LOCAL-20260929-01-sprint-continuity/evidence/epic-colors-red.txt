@@ -1,0 +1,32 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-ui.test.tsx (8 tests | 1 failed | 7 skipped) 63ms
+   × AC-090: unknown TTM preserves epic stage colours, unknown hatching and membership gaps 63ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-ui.test.tsx > AC-090: unknown TTM preserves epic stage colours, unknown hatching and membership gaps
+AssertionError: Подготовка: expected '' to be 'rgb(8, 127, 69)' // Object.is equality
+
+- Expected
++ Received
+
+- rgb(8, 127, 69)
+
+ ❯ tests/sprint-ui.test.tsx:22:48
+     20|   const bar=phases.find(p=>p.getAttribute('aria-label')===`[HF]\u00a0$…
+     21|   const legend=[...div.querySelectorAll<HTMLElement>('.legends i')].fi…
+     22|   expect(bar.style.backgroundColor,stage.name).toBe(legend.style.backg…
+       |                                                ^
+     23|   expect(bar.classList.contains('hatch')).toBe(false);
+     24|  }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 skipped (8)
+   Start at  15:19:29
+   Duration  779ms (transform 126ms, setup 0ms, import 192ms, tests 63ms, environment 446ms)
+

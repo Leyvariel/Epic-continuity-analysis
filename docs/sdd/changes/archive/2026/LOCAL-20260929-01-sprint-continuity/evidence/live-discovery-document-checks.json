@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-09-29T16:08:00.255094+00:00",
+  "structural": {
+    "exitCode": 0,
+    "output": "OK: SDD validation passed with 0 warning(s)\n"
+  },
+  "links": {
+    "checked": 155,
+    "broken": []
+  },
+  "unchangedBaselineFiles": 102,
+  "unchangedCurrentSpecs": 6,
+  "newDiagnosticOnly": "scripts/verify-sprint-continuity.ts",
+  "scriptMirrorIdentical": true,
+  "ruleTemplateMatches": true,
+  "D1": "confirmed",
+  "D2": "open",
+  "implementationAuthorized": false,
+  "documentHashes": {
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-resolution.md": "ac109351bd8e3cea2c1f7d717ecdf68fda67d036723612eb78f995a59bcb02dd",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/live-discovery.md": "310ea5530de8e4f323f23ccdbe845b769fec9ba5833e3840441af5240169d955",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/tasks.md": "1f274684e345d6cda192a45bc648e028a9440603d9fd296771d25ea21e68747f",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/bdd-scenarios.md": "e4bca7c4282da8b7776d9e05daaf02c870c2901b40d269004b9723073f9450b0",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/tdd-plan.md": "8f82326f87e9011b1940311b609ebe7590a2c54f0579ab6ac1e761df647f87a2",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/verification.md": "44f74b405e824c08fc41f23f3e746ffdf56f4bd5dacb0d9e2711061b449ac741",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/research.md": "d238a49153a0f03fce6ccaebc19eaa693f94772f86c289fb8bd497216ad050b6",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-3.md": "d0d26371cc317f13f9677b7d9bd6717616e8436fb9929b1ade0be2976c36f3cb",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-2.md": "ad946ff96d1a5de2b04f573bd99e164b41a2d0a73f88c53b94481ecb8fa522b8",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/implementation-review.md": "af71cec8266a8aa8e881e908e9b1a342200413f7d2d48e337bfcbaab66c5f7bb",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/design.md": "36c0fe9f5f051b8978609017e676bdd7280930ef0961b099d2c5333fe7a8646d",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/proposal.md": "e0cdf05657f9ad4a4ea236682a04733329a405a11d6c07a2479142fa38a94453",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review.md": "444da890cd9f5d902508656e1b2056ffb7d08d36e253baaad739eb968a3601e0",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/evidence/README.md": "3d8f711387f5c2e445f0a225e0aacdceb2215c91e36410cbd3c67c5cf3ae287f",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/sprint-continuity.md": "0916c4007c4fc4784e02d8f02a2dcb651b5d4a1d3136571b7c7512e39c01d348",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/jira-ingestion.md": "fd1e2cfa0ae2cb38f53f7211b2e5b2a8de794ed63cc826c3e456e9f2cac3b2be",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/visualization.md": "49e93df1652f976ba4d505fcfa5dd33e7c494996f3e9351a4301bc59732c876a",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/checklists/requirements.md": "32a50295112e8349126df658b2002d07e6400f5de309eadaf3eba0998a3dfbbf"
+  }
+}

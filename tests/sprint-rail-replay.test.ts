@@ -1,0 +1,14 @@
+import {it,expect} from 'vitest';import data from './data/sprint-rail-evidence.json';
+import {parseSprint,sprintIdSet} from '../server/jira/sprints';import {analyzeSprints} from '../server/sprint-analysis';import {sprintInputsSchema} from '../server/jira/sprint-schema';
+import type {HierarchyInput} from '../shared/hierarchy';import type {HistorySnapshot} from '../shared/contracts';import type {SprintInputs} from '../shared/sprints';
+it('recorded RAIL evidence replay: localized names use ID categories; 13346 cannot cover 13433 via its own Sprint',()=>{
+ const asOf=data.recordedAt,parent=data.issues[0],graph:HierarchyInput={version:1,asOf,roots:{[parent.key]:parent.id},nodes:{},edges:[],coverage:'complete',warnings:[]};
+ for(const raw of data.issues){
+  const history:HistorySnapshot={source:'jira',key:raw.key,title:raw.key,historyStart:raw.created,updated:raw.updated,currentStatus:raw.status.name,currentStatusId:raw.status.id,resolution:'',assignee:'',issueType:'',importedAt:asOf,statusCoverage:'complete',flagCoverage:'unavailable',initialStateProven:true,proof:{expected:raw.history.total,received:raw.history.received,terminal:raw.stable,adapterVersion:'recorded-evidence-replay'},statusChanges:raw.history.changes.filter(c=>c.field==='status').map((c,i)=>({id:c.id,at:c.at,from:c.fromString!,to:c.toString!,fromId:c.from!,toId:c.to!,order:i})),flagChanges:[],currentFlag:false,flagAvailable:false,historyCount:raw.history.total,warnings:[]};
+  graph.nodes[raw.id]={id:raw.id,key:raw.key,title:raw.key,type:raw.type.subtask?'subtask':'task',resolution:'',created:raw.created,currentStatus:raw.status.name,currentStatusId:raw.status.id,statusCategories:Object.fromEntries(data.categories.map(c=>[c.id,c.category])),history,historyCoverage:'complete',branchCoverage:'complete',warnings:[]};
+ }
+ const input:SprintInputs={version:1,asOf,mode:'current-subtasks',tasks:{[parent.id]:{issueId:parent.id,observedAt:asOf,sprintIds:data.parentSprintIds,changes:data.parentSprintChanges.map(c=>({id:c.id,at:c.at,fromIds:sprintIdSet(c.from),toIds:sprintIdSet(c.to)})),membershipCoverage:'complete',rosterCoverage:'complete',subtaskIds:parent.subtasks.map(s=>s.id),uncertainSubtaskIds:[],calendarIds:['1416'],calendarCoverage:'partial',warnings:['Replay contains only two recorded sprints, not a complete calendar.']}},sprints:Object.fromEntries(data.sprints.map(s=>[String(s.id),parseSprint(s)])),calendars:{'1416':{boardId:'1416',sprintIds:data.parentSprintIds,coverage:'partial',warnings:[]}},warnings:[]};
+ const result=analyzeSprints(graph,sprintInputsSchema.parse(input)).rows[parent.id];expect(result.segments.map(s=>s.state)).toEqual(['work','work']);
+ expect(result.segments[0].subtaskKeys).toEqual(['RAIL-13346','RAIL-13347','RAIL-13349']);expect(result.segments[1].subtaskKeys).toEqual(['RAIL-13347']);
+ expect(result.segments[0].end).toBe('2026-08-31T08:01:44.068Z');expect(result.segments[1].end).toBe('2026-09-11T12:39:44.366Z');
+});

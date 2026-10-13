@@ -1,0 +1,53 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/independent-stage-metrics.test.ts (6 tests | 2 failed) 5ms
+   × AC-092: repeated stages retain proven totals independently of ambiguous TTM, including restored input 4ms
+   × AC-092: counts only observed time at the cutoff 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/independent-stage-metrics.test.ts > AC-092: repeated stages retain proven totals independently of ambiguous TTM, including restored input
+AssertionError: expected undefined to be 345600000 // Object.is equality
+
+- Expected:
+345600000
+
++ Received:
+undefined
+
+ ❯ tests/independent-stage-metrics.test.ts:17:34
+     15| it('AC-092: repeated stages retain proven totals independently of ambi…
+     16|  const h=fixture(),r=calculateJiraTimeline(summary,h,at(20));
+     17|  expect(r.durations?.validation).toBe(4*DAY_MS);expect(r.durations?.im…
+       |                                  ^
+     18|  expect(metricValue(r,'validation','history')).toBe(4*DAY_MS);
+     19|  expect(r.ttmMs).toBeNull();expect(r.returnToOpenMs).toBeNull();expect…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/independent-stage-metrics.test.ts > AC-092: counts only observed time at the cutoff
+AssertionError: expected undefined to be 172800000 // Object.is equality
+
+- Expected:
+172800000
+
++ Received:
+undefined
+
+ ❯ tests/independent-stage-metrics.test.ts:26:34
+     24| it('AC-092: counts only observed time at the cutoff',()=>{
+     25|  const r=calculateJiraTimeline(summary,fixture(),at(6));
+     26|  expect(r.durations?.validation).toBe(2*DAY_MS);expect(r.durations?.im…
+       |                                  ^
+     27| });
+     28| it.each(['partial','initial','later-break','mismatch'] as const)('AC-0…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 4 passed (6)
+   Start at  18:43:19
+   Duration  151ms (transform 41ms, setup 0ms, import 65ms, tests 5ms, environment 0ms)
+

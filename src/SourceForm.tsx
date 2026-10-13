@@ -1,0 +1,17 @@
+import { useState } from 'react';
+export type SourceInput = { kind: 'file'; file: File; historyMode?: 'jira' | 'file' } | { kind: 'keys'; text: string } | { kind: 'board' | 'epic'; url: string } | { kind: 'refresh'; datasetId: string };
+export function SourceForm({ busy, onSubmit }: { busy: boolean; onSubmit: (input: SourceInput) => Promise<void> }) {
+  const [kind, setKind] = useState<'file' | 'keys' | 'board' | 'epic'>('file');
+  const [historyMode, setHistoryMode] = useState<'jira' | 'file'>('jira');
+  const [fileError, setFileError] = useState('');
+  const [url, setUrl] = useState('');
+  const [text, setText] = useState('');
+  return <section className="source-form" aria-label="Источник эпиков">
+    <div className="source-tabs">{([['file', 'Файл'], ['keys', 'Список ключей'], ['board', 'Доска Jira'], ['epic', 'Эпик Jira']] as const).map(([value, label]) => <button key={value} type="button" disabled={busy} aria-pressed={kind === value} onClick={() => { setKind(value); setUrl(''); }}>{label}</button>)}</div>
+    <form onSubmit={event => { event.preventDefault(); if (busy) return; if (kind === 'keys') void onSubmit({ kind, text }); else if (kind !== 'file' && url.trim()) void onSubmit({ kind, url: url.trim() }); }}>
+      {kind === 'file' ? <><label>Источник истории <select aria-label="Источник истории файла" disabled={busy} value={historyMode} onChange={e => { setHistoryMode(e.target.value as 'jira' | 'file'); setFileError(''); }}><option value="jira">История из Jira</option><option value="file">История из XLSX, без Jira</option></select></label><label>{historyMode === 'file' ? 'XLSX — связи, метаданные и история внутри книги' : 'CSV или XLSX — достаточно колонки ключей'}<input type="file" accept={historyMode === 'file' ? '.xlsx' : '.csv,.xlsx'} disabled={busy} aria-label="Файл CSV или XLSX" onChange={event => { const file = event.currentTarget.files?.[0]; if(file && !busy){if(historyMode==='file' && !/\.xlsx$/i.test(file.name))setFileError('Автономный режим принимает только XLSX.');else{setFileError('');void onSubmit({ kind: 'file', file, historyMode });}} event.currentTarget.value = ''; }} /></label></>
+        : kind === 'keys' ? <><label htmlFor="source-keys">Вставьте ключи через запятую, по одному на строку или одноколоночную таблицу Markdown</label><textarea id="source-keys" aria-label="Ключи эпиков" rows={8} value={text} disabled={busy} onChange={event => setText(event.target.value)} placeholder={'CARSDIS-6\nBUSDIS-9\nRAILDIS-58'} /><button className="primary" disabled={busy}>Загрузить список</button></>
+          : <><label htmlFor="source-url">{kind === 'board' ? 'Ссылка на Jira-доску' : 'Ссылка на эпик Jira'}</label><div className="source-url"><input id="source-url" type="url" required value={url} disabled={busy} placeholder={kind === 'board' ? 'https://hq.tutu.ru/secure/RapidBoard.jspa?rapidView=…' : 'https://hq.tutu.ru/browse/KEY-123'} onChange={event => setUrl(event.target.value)} /><button className="primary" disabled={busy || !url.trim()}>Загрузить</button></div></>}
+    </form>{fileError && <p role="alert">{fileError}</p>}<p>{historyMode === 'file' && kind === 'file' ? 'Автономный XLSX не обращается к Jira. Для раскрытия нужны листы Элементы, Связи и История и общий срез в Параметрах.' : 'Для корректных ключей признаки HF и история этапов загружаются из Jira. Список только из ошибочных строк проверяется локально. Отклонённые эпики исключаются.'}</p>
+  </section>;
+}

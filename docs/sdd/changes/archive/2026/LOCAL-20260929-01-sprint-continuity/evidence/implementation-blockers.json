@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-02T18:42:32.767643+00:00",
+  "liveVerification": {
+    "status": "blocked",
+    "firstAttempt": "KEYCHAIN_NOT_FOUND in sandbox",
+    "authorizedUnsandboxedAttempt": "JIRA_REDIRECT",
+    "workingCacheChanged": false,
+    "tokenForwardedOnRedirect": false
+  },
+  "visualVerification": {
+    "status": "blocked",
+    "inventory": "Native apps: Sky Computer Use native pipe startup failed; browsers empty",
+    "attempts": [
+      "iab: Browser is not available",
+      "chrome: Browser is not available"
+    ],
+    "screenshotsTaken": false
+  },
+  "userClarificationPending": "Restore corporate network/VPN availability, then retry"
+}

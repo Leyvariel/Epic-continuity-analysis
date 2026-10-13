@@ -1,0 +1,53 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-ui.test.tsx (10 tests | 2 failed | 8 skipped) 284ms
+   × AC-091: gap touches the status from below with known TTM, at all scales 234ms
+   × AC-091: gap touches the status from below with unknown TTM, at all scales 50ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-ui.test.tsx > AC-091: gap touches the status from below with known TTM, at all scales
+AssertionError: expected 90 to be 111 // Object.is equality
+
+- Expected
++ Received
+
+- 111
++ 90
+
+ ❯ tests/sprint-ui.test.tsx:25:29
+     23|   await act(()=>[...div.querySelectorAll('button')].find(b=>b.textCont…
+     24|   const g=getComputedStyle(gap()),s=getComputedStyle(status),imp=getCo…
+     25|   expect(parseFloat(g.top)).toBe(parseFloat(s.top)+parseFloat(s.height…
+       |                             ^
+     26|   expect(parseFloat(g.top)+parseFloat(g.height)).toBeLessThan(parseFlo…
+     27|   expect(g.backgroundColor).not.toBe('rgb(255, 255, 255)');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-ui.test.tsx > AC-091: gap touches the status from below with unknown TTM, at all scales
+AssertionError: expected 94 to be 116 // Object.is equality
+
+- Expected
++ Received
+
+- 116
++ 94
+
+ ❯ tests/sprint-ui.test.tsx:25:29
+     23|   await act(()=>[...div.querySelectorAll('button')].find(b=>b.textCont…
+     24|   const g=getComputedStyle(gap()),s=getComputedStyle(status),imp=getCo…
+     25|   expect(parseFloat(g.top)).toBe(parseFloat(s.top)+parseFloat(s.height…
+       |                             ^
+     26|   expect(parseFloat(g.top)+parseFloat(g.height)).toBeLessThan(parseFlo…
+     27|   expect(g.backgroundColor).not.toBe('rgb(255, 255, 255)');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 8 skipped (10)
+   Start at  15:32:42
+   Duration  1.07s (transform 150ms, setup 0ms, import 223ms, tests 284ms, environment 486ms)
+

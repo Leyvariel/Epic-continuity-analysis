@@ -1,0 +1,56 @@
+{
+  "markdownLinksChecked": 869,
+  "brokenLinks": [],
+  "probeImports": [
+    {
+      "file": "review-3-probe.ts",
+      "path": "../../../../../../../shared/hierarchy-view",
+      "exists": true
+    },
+    {
+      "file": "review-3-probe.ts",
+      "path": "../../../../../../../server/hierarchy-schema",
+      "exists": true
+    },
+    {
+      "file": "review-3-probe.ts",
+      "path": "../../../../../../../shared/hierarchy",
+      "exists": true
+    },
+    {
+      "file": "review-2-probe.ts",
+      "path": "../../../../../../../server/jira/client.ts",
+      "exists": true
+    },
+    {
+      "file": "review-2-probe.ts",
+      "path": "../../../../../../../server/service.ts",
+      "exists": true
+    },
+    {
+      "file": "review-2-probe.ts",
+      "path": "../../../../../../../server/related-timeline.ts",
+      "exists": true
+    },
+    {
+      "file": "review-2-probe.ts",
+      "path": "../../../../../../../shared/contracts.ts",
+      "exists": true
+    },
+    {
+      "file": "review-2-probe.ts",
+      "path": "../../../../../../../shared/hierarchy.ts",
+      "exists": true
+    },
+    {
+      "file": "review-2-probe.ts",
+      "path": "../../../../../../../server/jira/ports.ts",
+      "exists": true
+    },
+    {
+      "file": "review-2-probe.ts",
+      "path": "../../../../../../../server/cache.ts",
+      "exists": true
+    }
+  ]
+}

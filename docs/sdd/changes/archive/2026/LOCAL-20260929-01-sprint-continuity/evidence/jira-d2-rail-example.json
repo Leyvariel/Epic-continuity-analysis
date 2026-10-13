@@ -1,0 +1,424 @@
+{
+  "checkedAt": "2026-10-01T14:44:14.823Z",
+  "scope": "Два указанных пользователем элемента; только GET; без записи рабочего кэша",
+  "requests": [
+    {
+      "path": "/rest/api/2/serverInfo"
+    },
+    {
+      "path": "/rest/api/2/field"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13308"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13308"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13346"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13346"
+    },
+    {
+      "path": "/rest/api/2/issueLinkType"
+    }
+  ],
+  "issues": [
+    {
+      "id": "2708639",
+      "key": "RAIL-13308",
+      "created": "2026-08-16T22:00:05.000+0300",
+      "updated": "2026-09-11T15:35:14.000+0300",
+      "type": {
+        "id": "7",
+        "name": "История",
+        "subtask": false
+      },
+      "status": {
+        "id": "6",
+        "name": "Закрыта",
+        "category": "done"
+      },
+      "resolution": "Сделано",
+      "parent": null,
+      "subtasksPresent": true,
+      "subtasks": [
+        {
+          "id": "2713959",
+          "key": "RAIL-13346",
+          "type": {
+            "id": "5",
+            "name": "Подзадача",
+            "subtask": true
+          }
+        },
+        {
+          "id": "2713968",
+          "key": "RAIL-13347",
+          "type": {
+            "id": "5",
+            "name": "Подзадача",
+            "subtask": true
+          }
+        },
+        {
+          "id": "2714088",
+          "key": "RAIL-13349",
+          "type": {
+            "id": "5",
+            "name": "Подзадача",
+            "subtask": true
+          }
+        }
+      ],
+      "links": [],
+      "sprintV2": [
+        {
+          "id": 13311,
+          "name": "16 ЖД СВ 17.08 - 28.10",
+          "state": "closed",
+          "boardId": 1416
+        },
+        {
+          "id": 13433,
+          "name": "17 ЖД СВ 31.08 - 11.09",
+          "state": "closed",
+          "boardId": 1416
+        }
+      ],
+      "history": {
+        "startAt": 0,
+        "total": 17,
+        "received": 17,
+        "unique": 17,
+        "fieldNames": [
+          "Rank",
+          "labels",
+          "Sprint",
+          "Оценка",
+          "description",
+          "assignee",
+          "status",
+          "Дата фактического начала задачи",
+          "Epic Link",
+          "Дата фактического завершения задачи",
+          "resolution"
+        ],
+        "changes": [
+          {
+            "id": "22429160",
+            "index": 0,
+            "at": "2026-08-17T11:22:21.000+0300",
+            "field": "Sprint",
+            "from": null,
+            "to": "13311",
+            "fromString": null,
+            "toString": "16 ЖД СВ 17.08 - 28.10"
+          },
+          {
+            "id": "22470919",
+            "index": 0,
+            "at": "2026-08-20T10:39:55.000+0300",
+            "field": "status",
+            "from": "1",
+            "to": "3",
+            "fromString": "Open",
+            "toString": "In Progress"
+          },
+          {
+            "id": "22568117",
+            "index": 0,
+            "at": "2026-08-31T11:01:46.000+0300",
+            "field": "Sprint",
+            "from": "13311",
+            "to": "13311, 13433",
+            "fromString": "16 ЖД СВ 17.08 - 28.10",
+            "toString": "16 ЖД СВ 17.08 - 28.10, 17 ЖД СВ 31.08 - 11.09"
+          },
+          {
+            "id": "22696024",
+            "index": 0,
+            "at": "2026-09-11T15:35:14.000+0300",
+            "field": "status",
+            "from": "3",
+            "to": "6",
+            "fromString": "In Progress",
+            "toString": "Closed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2713959",
+      "key": "RAIL-13346",
+      "created": "2026-08-20T16:36:17.000+0300",
+      "updated": "2026-08-31T10:47:36.000+0300",
+      "type": {
+        "id": "5",
+        "name": "Подзадача",
+        "subtask": true
+      },
+      "status": {
+        "id": "6",
+        "name": "Закрыта",
+        "category": "done"
+      },
+      "resolution": "Сделано",
+      "parent": {
+        "id": "2708639",
+        "key": "RAIL-13308",
+        "type": {
+          "id": "7",
+          "name": "История",
+          "subtask": false
+        }
+      },
+      "subtasksPresent": true,
+      "subtasks": [],
+      "links": [],
+      "sprintV2": [
+        {
+          "id": 13311,
+          "name": "16 ЖД СВ 17.08 - 28.10",
+          "state": "closed",
+          "boardId": 1416
+        },
+        {
+          "id": 13433,
+          "name": "17 ЖД СВ 31.08 - 11.09",
+          "state": "closed",
+          "boardId": 1416
+        }
+      ],
+      "history": {
+        "startAt": 0,
+        "total": 4,
+        "received": 4,
+        "unique": 4,
+        "fieldNames": [
+          "assignee",
+          "status",
+          "resolution"
+        ],
+        "changes": [
+          {
+            "id": "22477308",
+            "index": 0,
+            "at": "2026-08-20T17:05:30.000+0300",
+            "field": "status",
+            "from": "10028",
+            "to": "3",
+            "fromString": "To Do",
+            "toString": "In Progress"
+          },
+          {
+            "id": "22483069",
+            "index": 0,
+            "at": "2026-08-21T10:20:08.000+0300",
+            "field": "status",
+            "from": "3",
+            "to": "10000",
+            "fromString": "In Progress",
+            "toString": "In code review"
+          },
+          {
+            "id": "22483361",
+            "index": 0,
+            "at": "2026-08-21T10:40:21.000+0300",
+            "field": "status",
+            "from": "10000",
+            "to": "18829",
+            "fromString": "In code review",
+            "toString": "In testing"
+          },
+          {
+            "id": "22567701",
+            "index": 0,
+            "at": "2026-08-31T10:47:36.000+0300",
+            "field": "status",
+            "from": "18829",
+            "to": "6",
+            "fromString": "In testing",
+            "toString": "Closed"
+          }
+        ]
+      }
+    }
+  ],
+  "version": "9.12.10",
+  "sprintFields": [
+    {
+      "id": "customfield_10005",
+      "schema": {
+        "type": "array",
+        "items": "string",
+        "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+        "customId": 10005
+      }
+    }
+  ],
+  "issueLinkTypes": [
+    {
+      "id": "10000",
+      "name": "Block",
+      "inward": "заблокирован",
+      "outward": "блокирует",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/10000"
+    },
+    {
+      "id": "11206",
+      "name": "Blocks",
+      "inward": "is blocked by",
+      "outward": "blocks",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11206"
+    },
+    {
+      "id": "10001",
+      "name": "Clone",
+      "inward": "клонирован от",
+      "outward": "клон",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/10001"
+    },
+    {
+      "id": "11200",
+      "name": "Cloners",
+      "inward": "is cloned by",
+      "outward": "clones",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11200"
+    },
+    {
+      "id": "11400",
+      "name": "Contains",
+      "inward": "is contained in",
+      "outward": "contains",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11400"
+    },
+    {
+      "id": "10002",
+      "name": "Duplicate",
+      "inward": "дублирует",
+      "outward": "дубль",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/10002"
+    },
+    {
+      "id": "11204",
+      "name": "Gantt End to End",
+      "inward": "has to be finished together with",
+      "outward": "has to be finished together with",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11204"
+    },
+    {
+      "id": "11202",
+      "name": "Gantt End to Start",
+      "inward": "has to be done after",
+      "outward": "has to be done before",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11202"
+    },
+    {
+      "id": "11203",
+      "name": "Gantt Start to End",
+      "inward": "earliest end is start of",
+      "outward": "start is earliest end of",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11203"
+    },
+    {
+      "id": "11205",
+      "name": "Gantt Start to Start",
+      "inward": "has to be started together with",
+      "outward": "has to be started together with",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11205"
+    },
+    {
+      "id": "10003",
+      "name": "Link",
+      "inward": "связано с",
+      "outward": "связать с",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/10003"
+    },
+    {
+      "id": "10300",
+      "name": "Mention",
+      "inward": "упоминается в",
+      "outward": "упоминает",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/10300"
+    },
+    {
+      "id": "11500",
+      "name": "Parent to Child relations",
+      "inward": "is child of",
+      "outward": "is parent of",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11500"
+    },
+    {
+      "id": "11201",
+      "name": "Parent-Child",
+      "inward": "is child of",
+      "outward": "is parent of",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11201"
+    },
+    {
+      "id": "10400",
+      "name": "Part",
+      "inward": "является частью",
+      "outward": "имеет части",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/10400"
+    },
+    {
+      "id": "11001",
+      "name": "Risk Mitigation",
+      "inward": "is mitigated by",
+      "outward": "mitigates",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11001"
+    },
+    {
+      "id": "11000",
+      "name": "Risk Verification",
+      "inward": "verified by",
+      "outward": "verifies",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11000"
+    },
+    {
+      "id": "11300",
+      "name": "Risk mitigation",
+      "inward": "is mitigated by",
+      "outward": "mitigates risk",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11300"
+    },
+    {
+      "id": "11102",
+      "name": "Structure FF",
+      "inward": "Finish – Finish <",
+      "outward": "Finish – Finish >",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11102"
+    },
+    {
+      "id": "11100",
+      "name": "Structure FS",
+      "inward": "Finish – Start <",
+      "outward": "Finish – Start >",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11100"
+    },
+    {
+      "id": "11101",
+      "name": "Structure SF",
+      "inward": "Start – Finish <",
+      "outward": "Start – Finish >",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11101"
+    },
+    {
+      "id": "11103",
+      "name": "Structure SS",
+      "inward": "Start – Start <",
+      "outward": "Start – Start >",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/11103"
+    },
+    {
+      "id": "10900",
+      "name": "Проблема, разделенная",
+      "inward": "разделить от",
+      "outward": "разделить на",
+      "self": "https://hq.tutu.ru/rest/api/2/issueLinkType/10900"
+    }
+  ]
+}

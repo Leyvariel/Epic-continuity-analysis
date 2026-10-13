@@ -1,0 +1,457 @@
+{
+  "checkedAt": "2026-09-29T15:56:58.979Z",
+  "scope": "GET metadata and three known child tasks; no Jira or application-cache writes",
+  "requests": [
+    {
+      "path": "/rest/api/2/serverInfo",
+      "result": "ok"
+    },
+    {
+      "path": "/rest/api/2/status",
+      "result": "ok"
+    },
+    {
+      "path": "/rest/api/2/field",
+      "result": "ok"
+    },
+    {
+      "path": "/rest/api/2/issue/HOTELS-14091",
+      "result": "ok"
+    },
+    {
+      "path": "/rest/agile/1.0/issue/HOTELS-14091",
+      "result": "ok"
+    },
+    {
+      "path": "/rest/api/2/issue/HOTELS-14245",
+      "result": "ok"
+    },
+    {
+      "path": "/rest/agile/1.0/issue/HOTELS-14245",
+      "result": "ok"
+    },
+    {
+      "path": "/rest/api/2/issue/ANL-20734",
+      "result": "ok"
+    },
+    {
+      "path": "/rest/agile/1.0/issue/ANL-20734",
+      "result": "ok"
+    }
+  ],
+  "issues": [
+    {
+      "id": "2542134",
+      "key": "HOTELS-14091",
+      "parent": null,
+      "subtasksFieldPresent": true,
+      "created": "2026-04-08T13:51:57.000+0300",
+      "updated": "2026-04-28T10:35:44.000+0300",
+      "status": "Выполнено",
+      "category": "done",
+      "subtasks": [],
+      "history": {
+        "startAt": 0,
+        "total": 18,
+        "received": 18,
+        "fieldNames": [
+          "description",
+          "Epic Link",
+          "Attachment",
+          "assignee",
+          "Sprint",
+          "Link",
+          "Rank",
+          "status",
+          "Участники",
+          "resolution"
+        ],
+        "relevantChanges": [
+          {
+            "id": "20835148",
+            "at": "2026-04-13T12:41:14.000+0300",
+            "field": "Sprint",
+            "from": "10076",
+            "to": "12462",
+            "fromString": "Отобрано",
+            "toString": "Shock-Conent S2 Q2 2026"
+          },
+          {
+            "id": "20839258",
+            "at": "2026-04-13T15:18:53.000+0300",
+            "field": "status",
+            "from": "1",
+            "to": "3",
+            "fromString": "Open",
+            "toString": "In Progress"
+          },
+          {
+            "id": "20895453",
+            "at": "2026-04-16T10:26:54.000+0300",
+            "field": "status",
+            "from": "3",
+            "to": "20871",
+            "fromString": "In Progress",
+            "toString": "Релиз"
+          },
+          {
+            "id": "21023916",
+            "at": "2026-04-27T12:32:26.000+0300",
+            "field": "Sprint",
+            "from": "12462",
+            "to": "12462, 12544",
+            "fromString": "Shock-Conent S2 Q2 2026",
+            "toString": "Shock-Conent S2 Q2 2026, Shock-Content S3 Q2 2026"
+          },
+          {
+            "id": "21024056",
+            "at": "2026-04-27T12:38:57.000+0300",
+            "field": "Sprint",
+            "from": "12462, 12544",
+            "to": "12462",
+            "fromString": "Shock-Conent S2 Q2 2026, Shock-Content S3 Q2 2026",
+            "toString": "Shock-Conent S2 Q2 2026"
+          },
+          {
+            "id": "21035504",
+            "at": "2026-04-28T10:35:44.000+0300",
+            "field": "status",
+            "from": "20871",
+            "to": "10729",
+            "fromString": "Релиз",
+            "toString": "Done"
+          }
+        ],
+        "sprintChanges": [
+          {
+            "id": "20835148",
+            "at": "2026-04-13T12:41:14.000+0300",
+            "field": "Sprint",
+            "from": "10076",
+            "to": "12462",
+            "fromString": "Отобрано",
+            "toString": "Shock-Conent S2 Q2 2026"
+          },
+          {
+            "id": "21023916",
+            "at": "2026-04-27T12:32:26.000+0300",
+            "field": "Sprint",
+            "from": "12462",
+            "to": "12462, 12544",
+            "fromString": "Shock-Conent S2 Q2 2026",
+            "toString": "Shock-Conent S2 Q2 2026, Shock-Content S3 Q2 2026"
+          },
+          {
+            "id": "21024056",
+            "at": "2026-04-27T12:38:57.000+0300",
+            "field": "Sprint",
+            "from": "12462, 12544",
+            "to": "12462",
+            "fromString": "Shock-Conent S2 Q2 2026, Shock-Content S3 Q2 2026",
+            "toString": "Shock-Conent S2 Q2 2026"
+          }
+        ]
+      },
+      "sprintRaw": [
+        "com.atlassian.greenhopper.service.sprint.Sprint@4f74a133[id=12462,rapidViewId=1465,state=CLOSED,name=Shock-Conent S2 Q2 2026,startDate=2026-04-13T10:00:00.000+03:00,endDate=2026-04-24T19:00:00.000+03:00,completeDate=2026-04-27T12:32:21.093+03:00,activatedDate=2026-04-13T12:55:55.924+03:00,sequence=12462,goal=<omitted>]"
+      ],
+      "agileClosedSprints": [
+        {
+          "id": 12462,
+          "state": "closed",
+          "name": "Shock-Conent S2 Q2 2026",
+          "startDate": "2026-04-13T10:00:00.000+03:00",
+          "endDate": "2026-04-24T19:00:00.000+03:00",
+          "completeDate": "2026-04-27T12:32:21.093+03:00",
+          "activatedDate": "2026-04-13T12:55:55.924+03:00",
+          "originBoardId": 1465
+        }
+      ]
+    },
+    {
+      "id": "2552051",
+      "key": "HOTELS-14245",
+      "parent": null,
+      "subtasksFieldPresent": true,
+      "created": "2026-04-15T11:56:41.000+0300",
+      "updated": "2026-05-27T13:01:58.000+0300",
+      "status": "Закрыта",
+      "category": "done",
+      "subtasks": [],
+      "history": {
+        "startAt": 0,
+        "total": 4,
+        "received": 4,
+        "fieldNames": [
+          "status",
+          "labels",
+          "resolution",
+          "description"
+        ],
+        "relevantChanges": [
+          {
+            "id": "20879834",
+            "at": "2026-04-15T11:56:56.000+0300",
+            "field": "status",
+            "from": "19345",
+            "to": "14535",
+            "fromString": "Backlog",
+            "toString": "Системный анализ"
+          },
+          {
+            "id": "21391367",
+            "at": "2026-05-27T13:01:32.000+0300",
+            "field": "status",
+            "from": "14535",
+            "to": "6",
+            "fromString": "Системный анализ",
+            "toString": "Closed"
+          }
+        ],
+        "sprintChanges": []
+      },
+      "sprintRaw": null
+    },
+    {
+      "id": "2563314",
+      "key": "ANL-20734",
+      "parent": null,
+      "subtasksFieldPresent": true,
+      "created": "2026-04-23T10:52:22.000+0300",
+      "updated": "2026-08-18T14:50:06.000+0300",
+      "status": "Выполнена",
+      "category": "done",
+      "subtasks": [],
+      "history": {
+        "startAt": 0,
+        "total": 11,
+        "received": 11,
+        "fieldNames": [
+          "RemoteIssueLink",
+          "issuetype",
+          "assignee",
+          "Оценка",
+          "Sprint",
+          "status",
+          "Были проблемы в качестве данных в ходе решения задачи?",
+          "resolution",
+          "Решено с использованием AI-инструмента"
+        ],
+        "relevantChanges": [
+          {
+            "id": "21103392",
+            "at": "2026-05-04T12:10:48.000+0300",
+            "field": "Sprint",
+            "from": null,
+            "to": "12587",
+            "fromString": null,
+            "toString": "2026-05-04"
+          },
+          {
+            "id": "21112181",
+            "at": "2026-05-04T17:37:56.000+0300",
+            "field": "status",
+            "from": "1",
+            "to": "3",
+            "fromString": "Open",
+            "toString": "In Progress"
+          },
+          {
+            "id": "21112182",
+            "at": "2026-05-04T17:38:06.000+0300",
+            "field": "status",
+            "from": "3",
+            "to": "11529",
+            "fromString": "In Progress",
+            "toString": "Ожидает согласования"
+          },
+          {
+            "id": "21213783",
+            "at": "2026-05-13T11:24:01.000+0300",
+            "field": "status",
+            "from": "11529",
+            "to": "5",
+            "fromString": "Ожидает согласования",
+            "toString": "Resolved"
+          },
+          {
+            "id": "21289629",
+            "at": "2026-05-19T11:46:41.000+0300",
+            "field": "status",
+            "from": "5",
+            "to": "5",
+            "fromString": "Resolved",
+            "toString": "Resolved"
+          }
+        ],
+        "sprintChanges": [
+          {
+            "id": "21103392",
+            "at": "2026-05-04T12:10:48.000+0300",
+            "field": "Sprint",
+            "from": null,
+            "to": "12587",
+            "fromString": null,
+            "toString": "2026-05-04"
+          }
+        ]
+      },
+      "sprintRaw": [
+        "com.atlassian.greenhopper.service.sprint.Sprint@68fab31[id=12587,rapidViewId=971,state=CLOSED,name=2026-05-04,startDate=2026-05-04T13:42:00.000+03:00,endDate=2026-05-08T13:42:00.000+03:00,completeDate=2026-05-13T11:24:56.879+03:00,activatedDate=2026-05-04T13:42:51.327+03:00,sequence=12587,goal=<omitted>]"
+      ],
+      "agileClosedSprints": [
+        {
+          "id": 12587,
+          "state": "closed",
+          "name": "2026-05-04",
+          "startDate": "2026-05-04T13:42:00.000+03:00",
+          "endDate": "2026-05-08T13:42:00.000+03:00",
+          "completeDate": "2026-05-13T11:24:56.879+03:00",
+          "activatedDate": "2026-05-04T13:42:51.327+03:00",
+          "originBoardId": 971
+        }
+      ]
+    }
+  ],
+  "version": "9.12.10",
+  "selectedStatuses": [
+    {
+      "id": "12438",
+      "name": "Отложена",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "13131",
+      "name": "Отложено",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "16233",
+      "name": "Реализация",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "16445",
+      "name": "Реализация оборудования",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "16462",
+      "name": "Проверка идеи",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "18236",
+      "name": "Реализация мебели",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "18732",
+      "name": "Ожидает реализации",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "20354",
+      "name": "Отпуск запланирован",
+      "category": "done",
+      "categoryName": "Выполнено"
+    },
+    {
+      "id": "20446",
+      "name": "Валидация результатов",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "20867",
+      "name": "Отложено (On hold)",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21848",
+      "name": "Валидация",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21851",
+      "name": "Оценка результата",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21863",
+      "name": "[HF] Валидация",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21866",
+      "name": "[HF] Готово к реализации",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21867",
+      "name": "[HF] Реализация",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21869",
+      "name": "[HF] Оценка результата",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "22229",
+      "name": "Запланирован",
+      "category": "new",
+      "categoryName": "К выполнению"
+    },
+    {
+      "id": "22530",
+      "name": "Запланирована",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "23038",
+      "name": "[HF] Проверка идей",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "23039",
+      "name": "[HF] Запланировано",
+      "category": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "23040",
+      "name": "[HF] Отложено",
+      "category": "new",
+      "categoryName": "К выполнению"
+    }
+  ],
+  "sprintFields": [
+    {
+      "id": "customfield_10005",
+      "name": "Sprint",
+      "schema": {
+        "type": "array",
+        "items": "string",
+        "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+        "customId": 10005
+      }
+    }
+  ]
+}

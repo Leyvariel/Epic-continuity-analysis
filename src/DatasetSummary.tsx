@@ -1,0 +1,14 @@
+import type { AnyDataset, SelectionAudit } from '../shared/contracts';
+import { isJiraDataset, keyErrorEntries } from '../shared/contracts';
+import { dateTime } from '../shared/calendar';
+export function SelectionDetails({ audit, localOnly = false }: { audit: SelectionAudit; localOnly?: boolean }) {
+  return <details className="warnings"><summary>{localOnly ? `Ошибки ввода: ${audit.entries.length}` : <>Отбор: включено {new Set(audit.entries.filter(e => e.decision === 'included').map(e => e.issueId)).size} · кандидатов {audit.entries.filter(e => e.decision !== 'invalid').length} · дубликатов {audit.duplicates} · {audit.eligibilityCoverage === 'complete' ? 'признаки проверены' : 'не все признаки проверены'}</>}</summary><ul>{audit.entries.map((entry, i) => <li key={i}>{entry.key ?? entry.requestedKey ?? 'Строка'}{entry.rows.length ? ` · строки ${entry.rows.join(', ')}` : ''}: {entry.reason}</li>)}</ul></details>;
+}
+export function DatasetSummary({ dataset }: { dataset: AnyDataset }) {
+  if (!isJiraDataset(dataset)) return <div className="source-line"><span>{dataset.source.filename} · лист «{dataset.source.sheet}» · сохранённый автономный набор</span><span>Строк: {dataset.source.totalRows} · исключено DF: {dataset.source.excludedDF} · отклонено: {dataset.source.excludedRejected} · некорректных: {dataset.source.invalidRows} · дубликатов: {dataset.source.duplicates}</span></div>;
+  const source = dataset.source;
+  const label = source.kind === 'file' ? `${source.filename}${source.sheet ? ` · лист «${source.sheet}»` : ''}` : source.kind === 'board' ? `Доска ${source.boardName} · ${source.boardId}` : source.kind === 'keys' ? 'Список ключей' : `Эпик ${source.key}`;
+  const localOnly = source.kind === 'keys' && !dataset.epics.length && dataset.audit.entries.length > 0 && dataset.audit.entries.every(entry => entry.decision === 'invalid');
+  const errors = source.kind === 'keys' ? keyErrorEntries(dataset.audit).length : 0;
+  return <><div className="source-line"><span>{label} · {localOnly ? 'ошибки ввода; Jira не запрашивалась' : 'история Jira'}</span><span>{localOnly ? 'Проверено' : 'Загружено'} {dateTime(localOnly ? dataset.savedAt : dataset.syncFinishedAt)} МСК · {localOnly ? 'проверка формата' : dataset.quality === 'complete' ? 'данные полные' : 'данные частичные'}{source.kind === 'keys' && ` · ошибок ${errors}`}</span></div><SelectionDetails audit={dataset.audit} localOnly={localOnly} />{!dataset.epics.length && <div className="notice">{localOnly ? 'В списке есть ошибки ввода. Исправьте строки и запустите анализ снова.' : dataset.audit.eligibilityCoverage === 'complete' ? 'В подтверждённой выборке нет подходящих HF-эпиков. Причины приведены в отборе.' : 'Не удалось проверить всех кандидатов. Среди проверенных подходящих HF-эпиков нет; причины приведены в отборе.'}</div>}</>;
+}

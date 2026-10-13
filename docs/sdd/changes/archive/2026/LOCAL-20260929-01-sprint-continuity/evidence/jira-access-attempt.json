@@ -1,0 +1,13 @@
+{
+  "mode": "sandbox",
+  "command": "tsx /private/tmp/epic-sprint-discovery.ts",
+  "exitCode": 1,
+  "result": "KEYCHAIN_NOT_FOUND",
+  "services": [
+    "Code Jira Relations PAT",
+    "tutu-jira"
+  ],
+  "jiraRequests": 0,
+  "credentialsPrinted": false,
+  "note": "Это результат существующего механизма чтения в sandbox; отсутствие PAT во всей системе не доказано. Запрошен отдельный объём доступа вне sandbox."
+}

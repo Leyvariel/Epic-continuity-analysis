@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-06",
+  "keychainSandboxExitCodes": [
+    44,
+    44
+  ],
+  "keychainAuthorizedExitCodes": [
+    0,
+    0
+  ],
+  "jiraGatewayProbe": "ok",
+  "jiraProfileVersion": "matched",
+  "serverHttpStatus": 200,
+  "cacheUnchanged": true,
+  "fix": "Restarted local production server with previously authorized Keychain access; no credential or permission changes."
+}

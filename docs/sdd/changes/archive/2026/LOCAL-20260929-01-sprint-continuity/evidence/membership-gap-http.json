@@ -1,0 +1,12 @@
+{
+  "httpStatus": 200,
+  "cacheUnchanged": true,
+  "datasetIdUnchanged": true,
+  "epicsAndMetricsUnchanged": true,
+  "hierarchyUnchanged": true,
+  "sprintSegmentsUnchanged": true,
+  "rows": 45,
+  "gapCountBefore": 1,
+  "gapCountAfter": 1,
+  "uiInspection": "blocked: Sky Computer Use native pipe startup failed"
+}

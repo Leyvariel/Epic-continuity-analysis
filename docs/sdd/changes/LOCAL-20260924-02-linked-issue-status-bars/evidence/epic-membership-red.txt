@@ -1,0 +1,116 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/epic-membership.test.ts (12 tests | 11 failed) 13ms
+     × объединяет все страницы, убирает дубли с contains, не отфильтровывает закрытые задачи 6ms
+     × forbidden: неизвестный состав не считается пустым, contains сохраняется 1ms
+     × duplicate: неизвестный состав не считается пустым, contains сохраняется 0ms
+     × empty: неизвестный состав не считается пустым, contains сохраняется 0ms
+     × total-changed: неизвестный состав не считается пустым, contains сохраняется 0ms
+     × limit: неизвестный состав не считается пустым, contains сохраняется 0ms
+     × schema: неизвестный состав не считается пустым, contains сохраняется 0ms
+     × JIRA_UNAUTHORIZED: глобальный отказ не маскируется частичным результатом 1ms
+     × JIRA_NETWORK: глобальный отказ не маскируется частичным результатом 1ms
+     × RATE_LIMITED: глобальный отказ не маскируется частичным результатом 1ms
+     × ABORTED: глобальный отказ не маскируется частичным результатом 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > объединяет все страницы, убирает дубли с contains, не отфильтровывает закрытые задачи
+AssertionError: expected [ 'ANL-19960' ] to deeply equal [ 'ANL-19960', 'RAIL-12909', …(1) ]
+
+- Expected
++ Received
+
+  [
+    "ANL-19960",
+-   "RAIL-12909",
+-   "RAIL-12559",
+  ]
+
+ ❯ tests/epic-membership.test.ts:19:53
+     17|     });
+     18|     const issue = await new ServerJiraAdapter({ get }, profile).getIss…
+     19|     expect(issue.links?.map(edge => edge.childKey)).toEqual(['ANL-1996…
+       |                                                     ^
+     20|     expect(issue.linksKnown).toBe(true);
+     21|     expect(get.mock.calls.filter(([url]) => url.includes('/epic/')).ma…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > forbidden: неизвестный состав не считается пустым, contains сохраняется
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > duplicate: неизвестный состав не считается пустым, contains сохраняется
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > empty: неизвестный состав не считается пустым, contains сохраняется
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > total-changed: неизвестный состав не считается пустым, contains сохраняется
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > limit: неизвестный состав не считается пустым, contains сохраняется
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > schema: неизвестный состав не считается пустым, contains сохраняется
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/epic-membership.test.ts:33:30
+     31|     });
+     32|     const issue = await new ServerJiraAdapter({ get }, profile).getIss…
+     33|     expect(issue.linksKnown).toBe(false);
+       |                              ^
+     34|     expect(issue.links).toEqual([{ parent: '2375238', child: '2496542'…
+     35|     expect(issue.hierarchyWarnings?.some(w => w.code === 'EPIC_MEMBERS…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > JIRA_UNAUTHORIZED: глобальный отказ не маскируется частичным результатом
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > JIRA_NETWORK: глобальный отказ не маскируется частичным результатом
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > RATE_LIMITED: глобальный отказ не маскируется частичным результатом
+ FAIL  tests/epic-membership.test.ts > Epic Link: полный состав эпика вместе с contains > ABORTED: глобальный отказ не маскируется частичным результатом
+AssertionError: promise resolved "{ links: [ { …(3) } ], …(15) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "assignee": "",
++   "created": "2026-01-01T00:00:00Z",
++   "currentStatus": "[DF] Закрыт",
++   "currentStatusId": "1",
++   "flow": "DF",
++   "hierarchyWarnings": [],
++   "id": "2375238",
++   "isEpic": true,
++   "isSubtask": false,
++   "issueType": "Эпик",
++   "key": "RAIL-11361",
++   "links": [
++     {
++       "child": "2496542",
++       "childKey": "ANL-19960",
++       "parent": "2375238",
++     },
++   ],
++   "linksKnown": true,
++   "resolution": "",
++   "title": "Тестовый эпик",
++   "updated": "2026-02-01T00:00:00Z",
+  }
+
+ ❯ tests/epic-membership.test.ts:39:90
+     37|   it.each(['JIRA_UNAUTHORIZED', 'JIRA_NETWORK', 'RATE_LIMITED', 'ABORT…
+     38|     const get = vi.fn(async (url: string) => { if (url.startsWith('/re…
+     39|     await expect(new ServerJiraAdapter({ get }, profile).getIssue('RAI…
+       |                                                                                          ^
+     40|   });
+     41|   it('обычная задача не обходит свой Epic Link или подзадачи', async (…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  11 failed | 1 passed (12)
+   Start at  12:55:52
+   Duration  232ms (transform 41ms, setup 0ms, import 92ms, tests 13ms, environment 0ms)
+

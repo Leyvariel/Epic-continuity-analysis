@@ -1,0 +1,17 @@
+{
+  "markdownFilesChecked": 14,
+  "localLinks": "ok",
+  "preservedAcceptanceIds": "ok",
+  "unchangedBaselineFiles": 102,
+  "deltaDefinitions": 42,
+  "requirements": 10,
+  "acceptanceScenarios": 32,
+  "bddGapDays": [
+    7,
+    5,
+    7,
+    7
+  ],
+  "bddTotalDays": 26,
+  "errors": []
+}

@@ -1,0 +1,58 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/hierarchy-adapter.test.ts (2 tests | 2 failed) 6ms
+     × прямая и обратная стороны дают одинаковое направление 5ms
+     × повреждённые связи не теряют исходную метаинформацию 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hierarchy-adapter.test.ts > T002: связи и типы Jira > прямая и обратная стороны дают одинаковое направление
+AssertionError: expected undefined to match object [ { parent: '1', child: '2' } ]
+
+- Expected:
+[
+  {
+    "child": "2",
+    "parent": "1",
+  },
+]
+
++ Received:
+undefined
+
+ ❯ tests/hierarchy-adapter.test.ts:9:27
+      7|     for (const inverse of [false, true]) {
+      8|       const issue = await new ServerJiraAdapter({ get: vi.fn().mockRes…
+      9|       expect(issue.links).toMatchObject([{ parent: '1', child: '2' }]);
+       |                           ^
+     10|       expect(issue).toMatchObject({ linksKnown: true, isSubtask: false…
+     11|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/hierarchy-adapter.test.ts > T002: связи и типы Jira > повреждённые связи не теряют исходную метаинформацию
+AssertionError: expected undefined to be false // Object.is equality
+
+- Expected:
+false
+
++ Received:
+undefined
+
+ ❯ tests/hierarchy-adapter.test.ts:16:61
+     14|     const value = raw(); value.fields.issuelinks = [{}] as never;
+     15|     const issue = await new ServerJiraAdapter({ get: vi.fn().mockResol…
+     16|     expect(issue.key).toBe('A-1'); expect(issue.linksKnown).toBe(false…
+       |                                                             ^
+     17|   });
+     18| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  21:24:25
+   Duration  166ms (transform 35ms, setup 0ms, import 83ms, tests 6ms, environment 0ms)
+

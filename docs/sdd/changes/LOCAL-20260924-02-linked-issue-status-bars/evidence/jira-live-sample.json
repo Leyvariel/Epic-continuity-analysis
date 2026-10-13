@@ -1,0 +1,71 @@
+{
+  "checkedAt": "2026-09-29T09:25:40.949Z",
+  "root": "BUSDIS-10",
+  "coverage": "complete",
+  "nodes": [
+    {
+      "key": "BUSDIS-10",
+      "type": "epic",
+      "resolution": "[HF] Подтверждена",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "[HF] Закрыт",
+      "statusCategories": {
+        "21860": "new",
+        "21862": "indeterminate",
+        "21865": "indeterminate",
+        "21867": "indeterminate",
+        "21870": "done"
+      },
+      "barState": "complete",
+      "end": "2026-07-23T07:35:01.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-07-23T07:35:01.000Z",
+        "from": "[HF] Реализация",
+        "to": "[HF] Закрыт"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "BUSDEL-6",
+      "type": "epic",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "[DF] Закрыт",
+      "statusCategories": {
+        "21861": "new",
+        "21871": "indeterminate",
+        "21872": "indeterminate",
+        "21873": "indeterminate",
+        "21874": "indeterminate",
+        "21875": "indeterminate",
+        "21876": "indeterminate",
+        "21878": "done"
+      },
+      "barState": "complete",
+      "end": "2026-08-24T09:21:15.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-08-24T09:21:15.000Z",
+        "from": "[DF] Закрыт",
+        "to": "[DF] Закрыт"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    }
+  ],
+  "edges": [
+    {
+      "parent": "BUSDIS-10",
+      "child": "BUSDEL-6"
+    }
+  ],
+  "offlineRestore": true,
+  "reopenCases": [],
+  "note": "Проверка живого получения и восстановления; отсутствие конкретного случая не доказывает его приёмку."
+}

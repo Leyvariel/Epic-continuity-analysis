@@ -1,0 +1,82 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-task-visibility.test.ts (5 tests | 3 failed) 16ms
+   × AC-088: hide boundary/outer empty sprints, keep inner empty and full membership sprints; epic calculation is independent 13ms
+   × AC-089: reopening does not bridge a closed interval, consecutive open statuses do merge 1ms
+   × AC-089: unknown membership is not absence, unknown history does not invent closure 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-task-visibility.test.ts > AC-088: hide boundary/outer empty sprints, keep inner empty and full membership sprints; epic calculation is independent
+AssertionError: expected [] to deeply equal [ '15', '16', '13', '14' ]
+
+- Expected
++ Received
+
+- [
+-   "15",
+-   "16",
+-   "13",
+-   "14",
+- ]
++ []
+
+ ❯ tests/sprint-task-visibility.test.ts:9:30
+      7| it('AC-088: hide boundary/outer empty sprints, keep inner empty and fu…
+      8|  const f=visibilityFixture(),r=analyzeSprints(f.graph,f.input);
+      9|  expect(hidden(r.rows['3'])).toEqual(['15','16','13','14']);
+       |                              ^
+     10|  expect(r.rows['3'].segments).toHaveLength(7);expect(r.rows['3'].segme…
+     11|  expect(hidden(r.rows['2'])).toEqual([]);expect(hidden(r.rows['1'])).t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/sprint-task-visibility.test.ts > AC-089: reopening does not bridge a closed interval, consecutive open statuses do merge
+AssertionError: expected [] to deeply equal [ '12' ]
+
+- Expected
++ Received
+
+- [
+-   "12",
+- ]
++ []
+
+ ❯ tests/sprint-task-visibility.test.ts:17:70
+     15| it('AC-089: reopening does not bridge a closed interval, consecutive o…
+     16|  const f=fixture();f.graph.nodes['3']=node('3','task',[[2,8],[15,22]])…
+     17|  const r=analyzeSprints(f.graph,f.input);expect(hidden(r.rows['3'])).t…
+       |                                                                      ^
+     18|  expect(analyzeSprints(structuredClone(f.graph),JSON.parse(JSON.string…
+     19| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/sprint-task-visibility.test.ts > AC-089: unknown membership is not absence, unknown history does not invent closure
+AssertionError: expected [] to deeply equal [ '15' ]
+
+- Expected
++ Received
+
+- [
+-   "15",
+- ]
++ []
+
+ ❯ tests/sprint-task-visibility.test.ts:25:136
+     23| });
+     24| it('AC-089: unknown membership is not absence, unknown history does no…
+     25|  const f=visibilityFixture();f.input.tasks['3'].membershipCoverage='pa…
+       |                                                                                                                                        ^
+     26|  f.input.tasks['3'].membershipCoverage='complete';f.graph.nodes['3'].h…
+     27| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 2 passed (5)
+   Start at  15:06:36
+   Duration  150ms (transform 47ms, setup 0ms, import 56ms, tests 16ms, environment 0ms)
+

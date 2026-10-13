@@ -1,0 +1,870 @@
+{
+  "checkedAt": "2026-09-29T10:02:39.078Z",
+  "root": "RAILDIS-58",
+  "coverage": "complete",
+  "nodes": [
+    {
+      "key": "RAIL-10019",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "21165": "new"
+      },
+      "barState": "complete",
+      "end": "2026-04-09T20:41:34.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-04-09T20:41:34.000Z",
+        "from": "In Progress",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-10048",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done",
+        "21165": "new",
+        "21166": "indeterminate",
+        "21335": "indeterminate",
+        "21336": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-02-06T09:59:00.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-06T09:59:00.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-10052",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "6": "done",
+        "11530": "new",
+        "21165": "new",
+        "21166": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-02-05T07:14:31.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-05T07:14:31.000Z",
+        "from": "Ожидает обработки",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-10639",
+      "type": "task",
+      "resolution": "Не будет выполняться",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "unavailable",
+      "statusOnLoad": "Отклонить",
+      "statusCategories": {
+        "13629": "done"
+      },
+      "barState": "unavailable",
+      "end": null,
+      "closed": false,
+      "lastTransition": null,
+      "closureDateMatches": null,
+      "warnings": [
+        "RELATED_HISTORY_UNKNOWN"
+      ]
+    },
+    {
+      "key": "RAIL-10650",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done",
+        "21165": "new"
+      },
+      "barState": "complete",
+      "end": "2026-02-13T13:03:21.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-13T13:03:21.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-10815",
+      "type": "task",
+      "resolution": "Не будет выполняться",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "unavailable",
+      "statusOnLoad": "Отклонить",
+      "statusCategories": {
+        "13629": "done"
+      },
+      "barState": "unavailable",
+      "end": null,
+      "closed": false,
+      "lastTransition": null,
+      "closureDateMatches": null,
+      "warnings": [
+        "RELATED_HISTORY_UNKNOWN"
+      ]
+    },
+    {
+      "key": "RAIL-11054",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done",
+        "21165": "new",
+        "21166": "indeterminate",
+        "21335": "indeterminate",
+        "21336": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-02-27T07:12:41.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-27T07:12:41.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11056",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done",
+        "21165": "new",
+        "21166": "indeterminate",
+        "21335": "indeterminate",
+        "21336": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-04-13T08:18:42.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-04-13T08:18:42.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11361",
+      "type": "epic",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "[DF] Закрыт",
+      "statusCategories": {
+        "21861": "new",
+        "21871": "indeterminate",
+        "21872": "indeterminate",
+        "21873": "indeterminate",
+        "21874": "indeterminate",
+        "21875": "indeterminate",
+        "21876": "indeterminate",
+        "21877": "indeterminate",
+        "21878": "done"
+      },
+      "barState": "complete",
+      "end": "2026-09-01T14:52:28.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-09-01T14:52:28.000Z",
+        "from": "[DF] Разработка",
+        "to": "[DF] Закрыт"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11625",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done"
+      },
+      "barState": "complete",
+      "end": "2026-06-02T07:27:20.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-06-02T07:27:20.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAILDIS-58",
+      "type": "epic",
+      "resolution": "[HF] Подтверждена",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "[HF] Закрыт",
+      "statusCategories": {
+        "21860": "new",
+        "21862": "indeterminate",
+        "21863": "indeterminate",
+        "21864": "indeterminate",
+        "21865": "indeterminate",
+        "21866": "indeterminate",
+        "21867": "indeterminate",
+        "21868": "indeterminate",
+        "21869": "indeterminate",
+        "21870": "done"
+      },
+      "barState": "complete",
+      "end": "2026-09-01T14:46:32.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-09-01T14:46:32.000Z",
+        "from": "[HF] Оценка результата",
+        "to": "[HF] Закрыт"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11822",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-02-04T07:28:07.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-04T07:28:07.000Z",
+        "from": "In code review",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11837",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done"
+      },
+      "barState": "complete",
+      "end": "2026-02-11T07:49:03.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-11T07:49:03.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11842",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-02-12T09:55:47.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-12T09:55:47.000Z",
+        "from": "In code review",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11846",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done"
+      },
+      "barState": "complete",
+      "end": "2026-02-04T07:25:17.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-04T07:25:17.000Z",
+        "from": "In Progress",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11959",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate",
+        "18829": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-02-19T07:23:01.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-19T07:23:01.000Z",
+        "from": "In testing",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11963",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done"
+      },
+      "barState": "complete",
+      "end": "2026-03-13T07:19:42.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-03-13T07:19:42.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11964",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done"
+      },
+      "barState": "complete",
+      "end": "2026-03-13T10:17:52.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-03-13T10:17:52.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11965",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done"
+      },
+      "barState": "complete",
+      "end": "2026-04-09T20:41:56.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-04-09T20:41:56.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11991",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done"
+      },
+      "barState": "complete",
+      "end": "2026-04-08T14:18:46.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-04-08T14:18:46.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-11992",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-02-20T07:22:59.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-20T07:22:59.000Z",
+        "from": "In code review",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-12008",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate",
+        "18829": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-02-17T13:55:38.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-17T13:55:38.000Z",
+        "from": "In testing",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-12029",
+      "type": "task",
+      "resolution": "Не будет выполняться",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "unavailable",
+      "statusOnLoad": "Отклонить",
+      "statusCategories": {
+        "13629": "done"
+      },
+      "barState": "unavailable",
+      "end": null,
+      "closed": false,
+      "lastTransition": null,
+      "closureDateMatches": null,
+      "warnings": [
+        "RELATED_HISTORY_UNKNOWN"
+      ]
+    },
+    {
+      "key": "RAIL-12065",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-02-27T07:10:59.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-02-27T07:10:59.000Z",
+        "from": "In code review",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-12112",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "6": "done"
+      },
+      "barState": "complete",
+      "end": "2026-04-10T01:43:32.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-04-10T01:43:32.000Z",
+        "from": "Open",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "ANL-19960",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "5": "done",
+        "6": "done",
+        "11529": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-04-13T10:52:06.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-04-13T10:52:06.000Z",
+        "from": "Resolved",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-12125",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate",
+        "18829": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-03-13T08:24:36.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-03-13T08:24:36.000Z",
+        "from": "In testing",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-12559",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate",
+        "18829": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-06-04T07:26:29.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-06-04T07:26:29.000Z",
+        "from": "In testing",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-12909",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate",
+        "18829": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-09-01T14:51:50.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-09-01T14:51:50.000Z",
+        "from": "In testing",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    },
+    {
+      "key": "RAIL-13017",
+      "type": "task",
+      "resolution": "Сделано",
+      "subtask": false,
+      "branchCoverage": "complete",
+      "historyCoverage": "complete",
+      "statusOnLoad": "Закрыта",
+      "statusCategories": {
+        "1": "new",
+        "3": "indeterminate",
+        "6": "done",
+        "10000": "indeterminate"
+      },
+      "barState": "complete",
+      "end": "2026-07-02T21:21:45.000Z",
+      "closed": true,
+      "lastTransition": {
+        "at": "2026-07-02T21:21:45.000Z",
+        "from": "In code review",
+        "to": "Closed"
+      },
+      "closureDateMatches": true,
+      "warnings": []
+    }
+  ],
+  "edges": [
+    {
+      "parent": "RAILDIS-58",
+      "child": "RAIL-11361"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "ANL-19960"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-10019"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-10048"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-10052"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-10639"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-10650"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-10815"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11054"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11056"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11625"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11822"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11837"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11842"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11846"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11959"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11963"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11964"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11965"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11991"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-11992"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-12008"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-12029"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-12065"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-12112"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-12125"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-12559"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-12909"
+    },
+    {
+      "parent": "RAIL-11361",
+      "child": "RAIL-13017"
+    }
+  ],
+  "offlineRestore": true,
+  "reopenCases": [],
+  "note": "Проверка живого получения и восстановления; отсутствие конкретного случая не доказывает его приёмку."
+}

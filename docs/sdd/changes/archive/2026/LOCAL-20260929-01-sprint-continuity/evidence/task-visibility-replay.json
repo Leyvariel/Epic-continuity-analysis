@@ -1,0 +1,33 @@
+{
+  "key": "HOTELS-11837",
+  "beforeSegments": 22,
+  "visible": [
+    {
+      "id": "11299",
+      "name": "Discovery Воронка S3Q4 2025",
+      "start": "2025-11-05T09:49:00.000Z",
+      "end": "2025-11-20T11:34:42.084Z",
+      "state": "work"
+    },
+    {
+      "id": "11436",
+      "name": "Discovery Воронка S4Q4 2025",
+      "start": "2025-11-20T08:32:00.000Z",
+      "end": "2025-12-02T13:55:57.767Z",
+      "state": "work"
+    },
+    {
+      "id": "11555",
+      "name": "Discovery Воронка S5-6Q4 2025",
+      "start": "2025-12-02T10:55:00.000Z",
+      "end": "2026-01-20T12:21:30.440Z",
+      "state": "work"
+    }
+  ],
+  "hidden": 19,
+  "epicsAndMetricsUnchanged": true,
+  "hierarchyUnchanged": true,
+  "epicSprintAnalysisUnchanged": true,
+  "fullTaskSegmentsUnchanged": true,
+  "network": "local app only; no Jira refresh"
+}

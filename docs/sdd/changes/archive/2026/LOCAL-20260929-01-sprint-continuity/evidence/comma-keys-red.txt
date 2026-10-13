@@ -1,0 +1,112 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/key-candidates.test.ts (9 tests | 3 failed) 9ms
+   × AC-094: exact comma-separated user example produces 17 independent candidates 3ms
+   × AC-094: mixed separators preserve occurrences and individual errors without splitting multi-column tables 1ms
+   × AC-094: unique-key limit applies across comma-separated input without truncation 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/key-candidates.test.ts > AC-094: exact comma-separated user example produces 17 independent candidates
+AssertionError: expected [] to deeply equal [ 'RAILDIS-376', 'RAILDIS-353', …(15) ]
+
+- Expected
++ Received
+
+- [
+-   "RAILDIS-376",
+-   "RAILDIS-353",
+-   "RAILDIS-352",
+-   "RAILDIS-351",
+-   "RAILDIS-346",
+-   "RAILDIS-345",
+-   "RAILDIS-342",
+-   "RAILDIS-267",
+-   "RAILDIS-210",
+-   "RAILDIS-199",
+-   "RAILDIS-195",
+-   "RAILDIS-188",
+-   "RAILDIS-187",
+-   "RAILDIS-183",
+-   "RAILDIS-174",
+-   "RAILDIS-138",
+-   "RAILDIS-83",
+- ]
++ []
+
+ ❯ tests/key-candidates.test.ts:52:46
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/key-candidates.test.ts > AC-094: mixed separators preserve occurrences and individual errors without splitting multi-column tables
+AssertionError: expected [] to deeply equal [ …(4) ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "requestedKey": "TEST-1",
+-     "rows": [
+-       1,
+-       1,
+-     ],
+-   },
+-   {
+-     "requestedKey": "TEST-2",
+-     "rows": [
+-       1,
+-     ],
+-   },
+-   {
+-     "requestedKey": "TEST-3",
+-     "rows": [
+-       3,
+-     ],
+-   },
+-   {
+-     "requestedKey": "TEST-4",
+-     "rows": [
+-       3,
+-     ],
+-   },
+- ]
++ []
+
+ ❯ tests/key-candidates.test.ts:57:23
+     55| it('AC-094: mixed separators preserve occurrences and individual error…
+     56|  const r=parseKeyCandidates('test-1, TEST-2, test-1, bad\r\n, ,\r\n| T…
+     57|  expect(r.candidates).toEqual([{requestedKey:'TEST-1',rows:[1,1]},{req…
+       |                       ^
+     58|  expect(r.invalid.map(e=>[e.requestedKey,e.rows])).toEqual([[' bad',[1…
+     59|  expect(()=>parseKeyCandidates(' , ,\n,')).toThrow(/Введите/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/key-candidates.test.ts > AC-094: unique-key limit applies across comma-separated input without truncation
+AssertionError: expected [] to have a length of 1000 but got +0
+
+- Expected
++ Received
+
+- 1000
++ 0
+
+ ❯ tests/key-candidates.test.ts:62:99
+     60| });
+     61| it('AC-094: unique-key limit applies across comma-separated input with…
+     62|  expect(parseKeyCandidates(Array.from({length:1000},(_,i)=>`TEST-${i+1…
+       |                                                                                                   ^
+     63|  expect(()=>parseKeyCandidates(Array.from({length:1001},(_,i)=>`TEST-$…
+     64| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 6 passed (9)
+   Start at  20:25:16
+   Duration  185ms (transform 65ms, setup 0ms, import 102ms, tests 9ms, environment 0ms)
+

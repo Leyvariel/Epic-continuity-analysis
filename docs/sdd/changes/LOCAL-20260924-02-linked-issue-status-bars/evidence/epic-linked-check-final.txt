@@ -1,0 +1,30 @@
+
+> hf-epic-continuity@1.0.0 check
+> npm test && npm run build
+
+
+> hf-epic-continuity@1.0.0 test
+> vitest run
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  40 passed (40)
+      Tests  292 passed (292)
+   Start at  11:06:17
+   Duration  2.79s (transform 1.57s, setup 0ms, import 5.04s, tests 5.02s, environment 2.65s)
+
+
+> hf-epic-continuity@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 45 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.47 kB │ gzip:  0.32 kB
+dist/assets/index-3gCVOO02.css   16.41 kB │ gzip:  4.65 kB
+dist/assets/index-D1C0rxtj.js   283.38 kB │ gzip: 88.41 kB
+✓ built in 405ms

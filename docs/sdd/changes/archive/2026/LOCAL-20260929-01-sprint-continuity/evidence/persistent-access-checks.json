@@ -1,0 +1,22 @@
+{
+  "liveRules": "/Users/leyva/.codex/rules/default.rules",
+  "mirror": "/Users/leyva/Library/CloudStorage/GoogleDrive-leyvariel@gmail.com/Мой диск/gvault/70 System/Codex Harness/epic-continuity-jira-access",
+  "patterns": [
+    [
+      "/Users/leyva/Projects/Epic Continuity Analisys/node_modules/.bin/tsx",
+      "/Users/leyva/Projects/Epic Continuity Analisys/server/index.ts"
+    ],
+    [
+      "/Users/leyva/Projects/Epic Continuity Analisys/node_modules/.bin/tsx",
+      "/Users/leyva/Projects/Epic Continuity Analisys/scripts/verify-sprint-continuity.ts",
+      "--execute"
+    ]
+  ],
+  "rulesValid": true,
+  "negativeExamplesPassed": true,
+  "scriptMirrorIdentical": true,
+  "ruleTemplateMatches": true,
+  "keychainAclChanged": false,
+  "newSessionAutoApprovalVerified": false,
+  "scriptSha256": "51935c83eeacb3a1dce8116a19cc717ddeb8ec33b7b92f7f78709908e581c952"
+}

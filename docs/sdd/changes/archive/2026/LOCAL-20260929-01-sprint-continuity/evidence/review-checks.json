@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-29",
+  "note": "Проверка документов и действующих ограничений; новая возможность ещё не реализована.",
+  "schemaProbe": {
+    "exitCode": 0,
+    "result": {
+      "note": "Синтетическая проверка действующей схемы, не тест новой реализации или реальных данных Jira",
+      "baseNodes": 8000,
+      "auxiliaryNodes": 3000,
+      "configuredNodeLimit": 10000,
+      "baseAccepted": true,
+      "combinedAccepted": false,
+      "errors": [
+        "Превышен предел узлов"
+      ]
+    }
+  },
+  "baseline": {
+    "exitCode": 0,
+    "checked": 102,
+    "changed": []
+  },
+  "applicationSourceModified": false,
+  "newFeatureTestsRun": false,
+  "liveJiraRequests": 0,
+  "draftValidation": {
+    "exitCode": 0,
+    "output": "OK: SDD validation passed with 0 warning(s)"
+  },
+  "readyValidation": {
+    "exitCode": 1,
+    "output": "ERROR: proposal.md: status must be approved for --ready\nERROR: design.md: status must be approved for --ready\nERROR: tasks.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/jira-ingestion.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/sprint-continuity.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/visualization.md: status must be approved for --ready\nERROR: unresolved blocking question remains\nERROR: requirements checklist is not complete\nFAILED: 8 error(s), 0 warning(s)"
+  },
+  "links": {
+    "exitCode": 0,
+    "localLinksChecked": 84,
+    "broken": []
+  }
+}

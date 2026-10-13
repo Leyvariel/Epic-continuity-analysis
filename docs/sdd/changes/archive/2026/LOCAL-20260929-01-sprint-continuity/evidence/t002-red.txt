@@ -1,0 +1,89 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-adapter.test.ts (4 tests | 4 failed) 6ms
+   × ID history accepts only strict decimal sets, never names or Java strings 3ms
+   × metadata uses own IDs and dates, including valid future without dates 1ms
+   × calendar follows isLast and actual page count, does not require total 1ms
+   × duplicate or missing pages cannot establish completeness 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-adapter.test.ts > ID history accepts only strict decimal sets, never names or Java strings
+AssertionError: expected [] to deeply equal [ '12', '14' ]
+
+- Expected
++ Received
+
+- [
+-   "12",
+-   "14",
+- ]
++ []
+
+ ❯ tests/sprint-adapter.test.ts:4:114
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/sprint-adapter.test.ts > metadata uses own IDs and dates, including valid future without dates
+AssertionError: expected { id: '0', name: '', …(6) } to match object { id: '13', startDate: null, …(2) }
+(4 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "id": "13",
+-   "originBoardId": "10",
++   "id": "0",
++   "originBoardId": null,
+    "startDate": null,
+-   "state": "future",
++   "state": "unknown",
+  }
+
+ ❯ tests/sprint-adapter.test.ts:5:165
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/sprint-adapter.test.ts > calendar follows isLast and actual page count, does not require total
+AssertionError: expected [] to deeply equal [ '1', '2' ]
+
+- Expected
++ Received
+
+- [
+-   "1",
+-   "2",
+- ]
++ []
+
+ ❯ tests/sprint-adapter.test.ts:6:360
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/sprint-adapter.test.ts > duplicate or missing pages cannot establish completeness
+AssertionError: promise resolved "[]" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+[]
+
+ ❯ tests/sprint-adapter.test.ts:7:168
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  21:03:57
+   Duration  103ms (transform 19ms, setup 0ms, import 24ms, tests 6ms, environment 0ms)
+

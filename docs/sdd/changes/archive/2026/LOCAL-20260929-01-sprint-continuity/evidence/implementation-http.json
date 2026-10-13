@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-02T18:48:44.020Z",
+  "applicationUrl": "http://127.0.0.1:4317",
+  "applicationRestarted": true,
+  "applicationStatus": 200,
+  "workingCachePreserved": true,
+  "oldCacheHasNoSprintSupplement": true,
+  "demoUrl": "http://127.0.0.1:4331",
+  "demoStatus": 200,
+  "demoMode": "demo",
+  "demoGaps": 4,
+  "demoMutationRejected": 409,
+  "visualRenderingVerified": false
+}

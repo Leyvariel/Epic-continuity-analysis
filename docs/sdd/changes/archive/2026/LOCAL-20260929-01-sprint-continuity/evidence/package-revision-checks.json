@@ -1,0 +1,204 @@
+{
+  "capturedAt": "2026-09-29T15:03:52.238213+00:00",
+  "scope": "Проверка доработки документов R1–R5, не тест новой реализации",
+  "requirements": 10,
+  "scenarios": 40,
+  "preservedScenarios": [
+    "AC-049",
+    "AC-050",
+    "AC-051",
+    "AC-052",
+    "AC-053",
+    "AC-054",
+    "AC-055",
+    "AC-056",
+    "AC-057",
+    "AC-058",
+    "AC-059",
+    "AC-060",
+    "AC-061",
+    "AC-062",
+    "AC-064",
+    "AC-065",
+    "AC-066",
+    "AC-067",
+    "AC-068",
+    "AC-069",
+    "AC-033",
+    "AC-034",
+    "AC-038",
+    "AC-048",
+    "AC-063",
+    "AC-029",
+    "AC-030",
+    "AC-031",
+    "AC-032",
+    "AC-035",
+    "AC-036",
+    "AC-037"
+  ],
+  "newScenarios": [
+    "AC-070",
+    "AC-071",
+    "AC-072",
+    "AC-073",
+    "AC-074",
+    "AC-075",
+    "AC-076",
+    "AC-077"
+  ],
+  "taskCount": 13,
+  "bddCount": 26,
+  "decisionsPreserved": true,
+  "links": {
+    "checked": 116,
+    "broken": []
+  },
+  "languageMissing": [],
+  "baseline": {
+    "checked": 102,
+    "changed": []
+  },
+  "currentSpecs": {
+    "checked": 6,
+    "changed": []
+  },
+  "expectedIntervalArithmetic": {
+    "B01": {
+      "gap": [
+        [
+          "2026-06-15",
+          "2026-06-22"
+        ],
+        [
+          "2026-07-13",
+          "2026-07-18"
+        ],
+        [
+          "2026-08-17",
+          "2026-08-24"
+        ],
+        [
+          "2026-09-07",
+          "2026-09-14"
+        ]
+      ],
+      "preliminary": [],
+      "unknown": []
+    },
+    "B22_initial": {
+      "gap": [
+        [
+          "2026-09-01",
+          "2026-09-05"
+        ]
+      ],
+      "preliminary": [
+        [
+          "2026-09-05",
+          "2026-09-10"
+        ]
+      ],
+      "unknown": []
+    },
+    "B22_work": {
+      "gap": [
+        [
+          "2026-09-01",
+          "2026-09-05"
+        ]
+      ],
+      "preliminary": [],
+      "unknown": []
+    },
+    "B22_closed": {
+      "gap": [
+        [
+          "2026-09-01",
+          "2026-09-19"
+        ]
+      ],
+      "preliminary": [],
+      "unknown": []
+    },
+    "B25": {
+      "gap": [],
+      "preliminary": [],
+      "unknown": [
+        [
+          "2026-09-01",
+          "2026-09-04"
+        ],
+        [
+          "2026-09-12",
+          "2026-09-15"
+        ]
+      ]
+    },
+    "B26": {
+      "gap": [
+        [
+          "2026-09-01",
+          "2026-09-08"
+        ],
+        [
+          "2026-09-10",
+          "2026-09-15"
+        ]
+      ],
+      "preliminary": [],
+      "unknown": []
+    }
+  },
+  "validators": {
+    "draft": {
+      "exitCode": 0,
+      "output": "OK: SDD validation passed with 0 warning(s)"
+    },
+    "ready": {
+      "exitCode": 1,
+      "output": "ERROR: proposal.md: status must be approved for --ready\nERROR: design.md: status must be approved for --ready\nERROR: tasks.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/jira-ingestion.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/sprint-continuity.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/visualization.md: status must be approved for --ready\nERROR: unresolved blocking question remains\nERROR: requirements checklist is not complete\nFAILED: 8 error(s), 0 warning(s)"
+    }
+  },
+  "errors": [],
+  "liveJiraRequests": 0,
+  "applicationTestsRun": false,
+  "implementationAuthorized": false,
+  "documentHashes": {
+    "review-resolution.md": "7fb1cca42c9e6bbad27636022e5ccad2a2a29492028c967b592773ee5ffa70a4",
+    "tasks.md": "bebf6dcb4192e17569aa739e25d68d9f148887c6f86cce1798a15a65face6bae",
+    "bdd-scenarios.md": "93054a6bf3f32af01869edbd5ec85833387310d75711f62db8f5196e72b1f49c",
+    "tdd-plan.md": "28715475f65e6436264b691380547550f1d48399a25263abbc555c6d4bf93ad8",
+    "verification.md": "2cf1cada82846040f6a3bf01ee895ae3f669ef7e215c50045a2c0e25a0321804",
+    "research.md": "d238a49153a0f03fce6ccaebc19eaa693f94772f86c289fb8bd497216ad050b6",
+    "review-2.md": "ad946ff96d1a5de2b04f573bd99e164b41a2d0a73f88c53b94481ecb8fa522b8",
+    "implementation-review.md": "98f42e71b9d0f8eca24ddf5f858209dcf9d532db00c8a343d3faf8d0e7914045",
+    "design.md": "a523617f744450b8dca71f0caf60ea2a4387edd7861bde47fe67c59e92cf181e",
+    "proposal.md": "c1147946a6fcde8d7006473610dc5b13ec1164bc11752449f2e440110ab364ea",
+    "review.md": "444da890cd9f5d902508656e1b2056ffb7d08d36e253baaad739eb968a3601e0",
+    "evidence/README.md": "41700ec0613fa39dcc7b2d9a1a071dda7de3784bbb84e2645e73a454f01a4d9a",
+    "specs/sprint-continuity.md": "8b5d717577e70d991a4cf8494e56227403e7321ed1fd89f5cbd272c1cf393708",
+    "specs/jira-ingestion.md": "fd1e2cfa0ae2cb38f53f7211b2e5b2a8de794ed63cc826c3e456e9f2cac3b2be",
+    "specs/visualization.md": "49e93df1652f976ba4d505fcfa5dd33e7c494996f3e9351a4301bc59732c876a",
+    "checklists/requirements.md": "d50950c8d9dd033304166d0fdc7a9c9022be387bd366fe28fbc9a082684416fb"
+  },
+  "modifiedPackageFiles": [
+    "review-resolution.md",
+    "tasks.md",
+    "bdd-scenarios.md",
+    "tdd-plan.md",
+    "verification.md",
+    "research.md",
+    "review-2.md",
+    "implementation-review.md",
+    "design.md",
+    "proposal.md",
+    "review.md",
+    "evidence/package-revision-checks.json",
+    "evidence/README.md",
+    "specs/sprint-continuity.md",
+    "specs/jira-ingestion.md",
+    "specs/visualization.md",
+    "checklists/requirements.md"
+  ]
+}

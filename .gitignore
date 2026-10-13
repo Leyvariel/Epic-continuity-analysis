@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.local-data/
+.npm-cache/
+coverage/
+*.log
+.DS_Store
+/*.xlsx
+/temp_imports/

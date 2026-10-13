@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-09-29T10:03:26.745Z",
+  "root": "RAILDIS-58",
+  "childEpic": "RAIL-11361",
+  "fetchedTasks": 28,
+  "screenshotTasks": 27,
+  "missing": [],
+  "additional": [
+    "ANL-19960"
+  ],
+  "visibleTasks": 25,
+  "visibleKeys": [
+    "ANL-19960",
+    "RAIL-10019",
+    "RAIL-10048",
+    "RAIL-10052",
+    "RAIL-10650",
+    "RAIL-11054",
+    "RAIL-11056",
+    "RAIL-11625",
+    "RAIL-11822",
+    "RAIL-11837",
+    "RAIL-11842",
+    "RAIL-11846",
+    "RAIL-11959",
+    "RAIL-11963",
+    "RAIL-11964",
+    "RAIL-11965",
+    "RAIL-11991",
+    "RAIL-11992",
+    "RAIL-12008",
+    "RAIL-12065",
+    "RAIL-12112",
+    "RAIL-12125",
+    "RAIL-12559",
+    "RAIL-12909",
+    "RAIL-13017"
+  ],
+  "excludedKeys": [
+    "RAIL-10639",
+    "RAIL-10815",
+    "RAIL-12029"
+  ],
+  "allVisibleHistoriesComplete": true,
+  "networkCalls": 0
+}

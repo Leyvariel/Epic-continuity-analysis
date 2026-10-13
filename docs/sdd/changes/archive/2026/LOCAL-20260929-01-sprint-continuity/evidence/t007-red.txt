@@ -1,0 +1,46 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-cache.test.ts (2 tests | 2 failed) 11ms
+   × T007: supplement persists, restarts through same builder without Jira or changes to old metrics 9ms
+   × T007: links and cutoff must match; absent supplement remains valid 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-cache.test.ts > T007: supplement persists, restarts through same builder without Jira or changes to old metrics
+AssertionError: expected undefined to be defined
+ ❯ tests/sprint-cache.test.ts:17:89
+     15|  const dir=await mkdtemp(path.join(tmpdir(),'sprint-cache-'));
+     16|  try{
+     17|  const inputs=jiraInputsSchema.parse(sprintDatasetInputs());expect(inp…
+       |                                                                                         ^
+     18|  const withSprints=buildJiraDataset(inputs,at(30),'id');expect(withSpr…
+     19|  const {sprintInputs,...old}=inputs;expect(buildJiraDataset(old,at(30)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-cache.test.ts > T007: links and cutoff must match; absent supplement remains valid
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/sprint-cache.test.ts:27:136
+     25| });
+     26| it('T007: links and cutoff must match; absent supplement remains valid…
+     27|  const input=sprintDatasetInputs();input.sprintInputs!.tasks['3'].subt…
+       |                                                                                                                                        ^
+     28|  input.sprintInputs=fixture().input;input.sprintInputs.asOf=at(29);exp…
+     29|  delete input.sprintInputs;expect(jiraInputsSchema.safeParse(input).su…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  21:15:41
+   Duration  279ms (transform 99ms, setup 0ms, import 192ms, tests 11ms, environment 0ms)
+

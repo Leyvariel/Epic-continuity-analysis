@@ -1,0 +1,26 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/hierarchy-view.test.ts (4 tests | 1 failed) 11ms
+     × исключает реальную резолюцию Не будет выполняться и сохраняет потомков скрытого эпика 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hierarchy-view.test.ts > T003: видимые дети > исключает реальную резолюцию Не будет выполняться и сохраняет потомков скрытого эпика
+AssertionError: expected [ 'B-1', 'C-1', 'R-1' ] to not include 'R-1'
+ ❯ tests/hierarchy-view.test.ts:8:49
+      6|     const g = graph(); g.nodes['R-1'].resolution = 'Не будет выполнять…
+      7|     const children = childrenOf(g, 'A-1').children;
+      8|     expect(children.map(child => child.id)).not.toContain('R-1');
+       |                                                 ^
+      9|     expect(children.map(child => child.id)).not.toContain('C-1');
+     10|     expect(children.find(child => child.id === 'V-1')?.via).toEqual(['…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  13:02:05
+   Duration  120ms (transform 27ms, setup 0ms, import 34ms, tests 11ms, environment 0ms)
+

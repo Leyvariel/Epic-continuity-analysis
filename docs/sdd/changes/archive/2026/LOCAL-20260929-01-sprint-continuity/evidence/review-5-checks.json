@@ -1,0 +1,72 @@
+{
+  "checkedAt": "2026-10-02T16:02:52.551020+00:00",
+  "scope": "Проверка и уточнения понятности/реализуемости, без реализации",
+  "reviewer": "primary agent",
+  "structural": {
+    "exitCode": 0,
+    "output": "OK: SDD validation passed with 0 warning(s)\n"
+  },
+  "ready": {
+    "exitCode": 1,
+    "output": "ERROR: proposal.md: status must be approved for --ready\nERROR: design.md: status must be approved for --ready\nERROR: tasks.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/jira-ingestion.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/sprint-continuity.md: status must be approved for --ready\nERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/visualization.md: status must be approved for --ready\nERROR: unresolved blocking question remains\nERROR: requirements checklist is not complete\nFAILED: 8 error(s), 0 warning(s)\n"
+  },
+  "requirements": 10,
+  "acceptanceScenarios": 48,
+  "bddScenarios": 34,
+  "tasks": 13,
+  "preservedPreviousAC": 45,
+  "addedAC": [
+    "AC-083",
+    "AC-084",
+    "AC-085"
+  ],
+  "preservedPreviousBDD": 31,
+  "addedBDD": [
+    "B32",
+    "B33",
+    "B34"
+  ],
+  "proposalAndUserDecisionsUnchanged": true,
+  "allRequirementAndAcceptanceIdsReferencedInTasks": true,
+  "links": {
+    "checked": 234,
+    "broken": []
+  },
+  "independentArithmetic": {
+    "case": "AC-085/B34",
+    "coverage": "[08.09,22.09)",
+    "gap": "[01.09,08.09)",
+    "gapDays": 7,
+    "productionCodeUsed": false
+  },
+  "unchangedBaselineFiles": 102,
+  "unchangedCurrentSpecs": 6,
+  "implementationAuthorized": false,
+  "applicationTestsRun": false,
+  "jiraRequestsMade": false,
+  "independentAgentReviewedThisRevision": false,
+  "documentHashes": {
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-resolution.md": "bb58ba7e9fdd9aa540c2b38cfb346aadda8acc0385d67ff86b0772aeb443ad4b",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/approval.md": "de0ea60c6e7626afe665aca295a006396e61a0ce12b3607e97c9434690040c6c",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/live-discovery.md": "dcdf9ca409e0fc7ea11a0f1270623c7f4472a8f1b48af49f32c264d122a6b2ca",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-5.md": "f363db3c7a085f0c0630274b094cc2f8e0418176c339718ff936378bcc7962f7",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-4.md": "0cf0469e5d99e0b5f8f20825b058e146424e14a75c055cbafaca416cb84dcefd",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/tasks.md": "4664c60a03120a1a06fd56086211561db2543e19e4249aef32c915f7f17633ca",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/bdd-scenarios.md": "dd42b6f84bfd71f655c43f0e3fec191955b47d72c84cd1c71c960dc5474fa2b5",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/tdd-plan.md": "9ae7d66d949540ffd33ad556ffdd2bc9d771d591a9c3c5cdbd882724bbe97f71",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/d2-decision.md": "c4f2fc7f44bcb5b267b96a699ba87c0f76e32e7e2cf6b5f19200db1b0784c9bd",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/verification.md": "682be52319ab4060c3a216e92ef54ebc15b9109bdab3d0560552c655bd51c732",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/research.md": "702b86bae7040ccaf015419aa8ccdd250348b71a7e9d8d0245568c3c69e90f66",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-3.md": "d0d26371cc317f13f9677b7d9bd6717616e8436fb9929b1ade0be2976c36f3cb",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review-2.md": "ad946ff96d1a5de2b04f573bd99e164b41a2d0a73f88c53b94481ecb8fa522b8",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/implementation-review.md": "7f243ed8572c455ad93eee721e0bd44ee8b75e108408d7ebec166d6278264db7",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/design.md": "5110adf46c35c80551f767e2017d1bf399073ef6a8063e516ba4db6bef96004f",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/proposal.md": "e66e18e62b911280a7ba6c30aa4fa53ffb484eb7ea353d87efa0c74f52ab6b5b",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/review.md": "444da890cd9f5d902508656e1b2056ffb7d08d36e253baaad739eb968a3601e0",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/evidence/README.md": "442b2943474ef136360fa288ae2c3ed9ca5480a3901cfde4a70d038b7857ac46",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/sprint-continuity.md": "fbaf7c7b5bae19bcdc00b2e48e62fe4d2f7f2ae8ac0bee141e92c08bdf3f68a1",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/jira-ingestion.md": "f93413af98fd5bf124dc59cc0a8e9a6b74012f547eed868068324914b96ebba3",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/specs/visualization.md": "f0dd7fbb4c1b317f737825a8953fb0034db9616b7c932f10ed781bf8d3ba8b31",
+    "docs/sdd/changes/LOCAL-20260929-01-sprint-continuity/checklists/requirements.md": "09a5bdd1a2aef9f564fe5eee1f254a44099018f2aeb82fcd88143c66023ab4fb"
+  }
+}

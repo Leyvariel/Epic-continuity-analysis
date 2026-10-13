@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-10-02T20:45:04.941480+00:00",
+  "scope": "DOM diagnosis on current saved dataset; no Jira requests or cache writes",
+  "roots": [
+    {
+      "key": "HOTELS-15665",
+      "visibleChildren": 37
+    },
+    {
+      "key": "HOTELS-15663",
+      "visibleChildren": 4
+    }
+  ],
+  "checks": [
+    "disclosure creates all eligible child rows",
+    "each child retains its key on the left",
+    "status segment count equals saved child timeline",
+    "sprint segment count equals own derived child analysis",
+    "collapse works",
+    "no additional network requests"
+  ],
+  "result": "passed",
+  "actualBrowserRendering": "unverified: CUA native pipe unavailable",
+  "productionCodeChanged": false,
+  "clarificationPending": "Do children fail to appear after disclosure, or should sprint segments be placed directly on the status bars?"
+}

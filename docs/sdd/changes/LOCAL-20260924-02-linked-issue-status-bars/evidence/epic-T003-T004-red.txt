@@ -1,0 +1,131 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/hierarchy-view.test.ts (3 tests | 3 failed) 6ms
+     × общий ребёнок доступен под обоими родителями; подзадача исключена 3ms
+     × продвигает потомка скрытого отклонённого эпика и останавливает цикл 1ms
+     × граф скрытых общих узлов не размножает допустимого ребёнка 1ms
+ ❯ tests/related-timeline.test.ts (5 tests | 4 failed) 7ms
+     × обычная задача даёт точные 2+4 дня и конечный маркер 4ms
+     × переоткрытие сохраняет промежуточное закрытие и продолжается до среза 1ms
+     × категория имеет приоритет над именем 1ms
+     × после среза нет отрицательной полосы, ровно на срезе нет длительности 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hierarchy-view.test.ts > T003: видимые дети > общий ребёнок доступен под обоими родителями; подзадача исключена
+AssertionError: expected [] to include 'C-1'
+ ❯ tests/hierarchy-view.test.ts:6:72
+      4| describe('T003: видимые дети', () => {
+      5|   it('общий ребёнок доступен под обоими родителями; подзадача исключен…
+      6|     const g=graph(); expect(childrenOf(g,'A-1').children.map(x=>x.id))…
+       |                                                                        ^
+      7|   });
+      8|   it('продвигает потомка скрытого отклонённого эпика и останавливает ц…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  tests/hierarchy-view.test.ts > T003: видимые дети > продвигает потомка скрытого отклонённого эпика и останавливает цикл
+AssertionError: expected undefined to deeply equal [ 'R-1' ]
+
+- Expected:
+[
+  "R-1",
+]
+
++ Received:
+undefined
+
+ ❯ tests/hierarchy-view.test.ts:10:69
+      8|   it('продвигает потомка скрытого отклонённого эпика и останавливает ц…
+      9|     const g=graph(); g.nodes['R-1'].resolution='Отклонено'; g.edges.pu…
+     10|     expect(childrenOf(g,'A-1').children.find(x=>x.id==='V-1')?.via).to…
+       |                                                                     ^
+     11|     expect(childrenOf(g,'B-1',['A-1']).warnings.join(' ')).toMatch(/ци…
+     12|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  tests/hierarchy-view.test.ts > T003: видимые дети > граф скрытых общих узлов не размножает допустимого ребёнка
+AssertionError: expected [] to deeply equal [ 'V-1' ]
+
+- Expected
++ Received
+
+- [
+-   "V-1",
+- ]
++ []
+
+ ❯ tests/hierarchy-view.test.ts:17:55
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  tests/related-timeline.test.ts > T004: полный жизненный цикл > обычная задача даёт точные 2+4 дня и конечный маркер
+AssertionError: expected [] to deeply equal [ 172800000, 345600000 ]
+
+- Expected
++ Received
+
+- [
+-   172800000,
+-   345600000,
+- ]
++ []
+
+ ❯ tests/related-timeline.test.ts:5:193
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  tests/related-timeline.test.ts > T004: полный жизненный цикл > переоткрытие сохраняет промежуточное закрытие и продолжается до среза
+AssertionError: expected [] to deeply equal [ Array(4) ]
+
+- Expected
++ Received
+
+- [
+-   172800000,
+-   345600000,
+-   86400000,
+-   172800000,
+- ]
++ []
+
+ ❯ tests/related-timeline.test.ts:6:208
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  tests/related-timeline.test.ts > T004: полный жизненный цикл > категория имеет приоритет над именем
+AssertionError: expected null to be '2026-09-09T21:00:00.000Z' // Object.is equality
+
+- Expected:
+"2026-09-09T21:00:00.000Z"
+
++ Received:
+null
+
+ ❯ tests/related-timeline.test.ts:7:182
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  tests/related-timeline.test.ts > T004: полный жизненный цикл > после среза нет отрицательной полосы, ровно на срезе нет длительности
+AssertionError: expected 'unavailable' to be 'not-present' // Object.is equality
+
+Expected: "not-present"
+Received: "unavailable"
+
+ ❯ tests/related-timeline.test.ts:8:170
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  7 failed | 1 passed (8)
+   Start at  21:26:15
+   Duration  117ms (transform 41ms, setup 0ms, import 56ms, tests 13ms, environment 0ms)
+

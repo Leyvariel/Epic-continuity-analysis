@@ -1,0 +1,43 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/hierarchy-xlsx.test.ts (2 tests | 2 failed) 17ms
+     × сохраняет граф, DF и точную историю обычной задачи 13ms
+     × ошибка одной истории сохраняет другие; Jira-файл не считает вспомогательный лист вторым основным 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hierarchy-xlsx.test.ts > T006: автономный XLSX > сохраняет граф, DF и точную историю обычной задачи
+AssertionError: expected undefined to be 'epic' // Object.is equality
+
+- Expected:
+"epic"
+
++ Received:
+undefined
+
+ ❯ tests/hierarchy-xlsx.test.ts:13:160
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/hierarchy-xlsx.test.ts > T006: автономный XLSX > ошибка одной истории сохраняет другие; Jira-файл не считает вспомогательный лист вторым основным
+AssertionError: expected undefined to be 'unavailable' // Object.is equality
+
+- Expected:
+"unavailable"
+
++ Received:
+undefined
+
+ ❯ tests/hierarchy-xlsx.test.ts:14:221
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  21:43:22
+   Duration  170ms (transform 49ms, setup 0ms, import 82ms, tests 17ms, environment 0ms)
+

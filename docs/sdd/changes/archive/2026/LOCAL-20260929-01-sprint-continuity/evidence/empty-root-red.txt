@@ -1,0 +1,21 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-work.test.ts (18 tests | 1 failed) 17ms
+   × a complete root without ordinary descendants has no invented rhythm and explicitly unknown focus 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-work.test.ts > a complete root without ordinary descendants has no invented rhythm and explicitly unknown focus
+AssertionError: expected [] to include 'Ритм спринтов не определён: нет досту…'
+ ❯ tests/sprint-work.test.ts:35:79
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 17 passed (18)
+   Start at  21:46:23
+   Duration  147ms (transform 44ms, setup 0ms, import 53ms, tests 17ms, environment 0ms)
+

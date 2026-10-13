@@ -1,0 +1,49 @@
+{
+  "checkedAt": "2026-10-01T14:46:32.557969+00:00",
+  "scope": "Проверка живого примера и независимое сопоставление интервалов; не тест реализации",
+  "nativeSubtaskConfirmed": true,
+  "relationSource": "parent/subtasks",
+  "issueLinksEmpty": true,
+  "currentVisibleRosterMatches": true,
+  "currentVisibleChildren": 3,
+  "historiesCompleteAndStable": true,
+  "historicalRosterProven": false,
+  "historicalParentIntervalsProven": false,
+  "conditionalCalculationAssumption": "Если относить истории текущих подзадач к их нынешнему родителю. Это предложение для согласования, не доказанная историческая принадлежность.",
+  "subtasks": [
+    {
+      "key": "RAIL-13346",
+      "workingFrom": "2026-08-20T17:05:30.000+0300",
+      "workingUntil": "2026-08-31T10:47:36.000+0300",
+      "conditionalCoveredSprintIds": [
+        13311
+      ]
+    },
+    {
+      "key": "RAIL-13347",
+      "workingFrom": "2026-08-21T10:35:00.000+0300",
+      "workingUntil": "2026-09-11T15:35:06.000+0300",
+      "conditionalCoveredSprintIds": [
+        13311,
+        13433
+      ]
+    },
+    {
+      "key": "RAIL-13349",
+      "workingFrom": "2026-08-20T17:44:38.000+0300",
+      "workingUntil": "2026-08-27T10:08:31.000+0300",
+      "conditionalCoveredSprintIds": [
+        13311
+      ]
+    }
+  ],
+  "conditionalParentCoveredSprintIds": [
+    13311,
+    13433
+  ],
+  "caveat": "У RAIL-13346 рабочее состояние заканчивается 31.08 10:47:36 МСК; родитель включён в 13433 только в 11:01:46 МСК. Наличие 13433 сейчас у подзадачи не доказывает её работу в этом спринте.",
+  "evidenceHashes": {
+    "jira-d2-rail-example.json": "375a1b5b9713c1b67fea4b27f8e9fba009bbb46b042e8e9e4d3ff5bb759c55a0",
+    "jira-d2-rail-details.json": "8b3705573b6f1a46f7ba49cf2f11d602e9c09669bfc7d1d18373dadd753767a1"
+  }
+}

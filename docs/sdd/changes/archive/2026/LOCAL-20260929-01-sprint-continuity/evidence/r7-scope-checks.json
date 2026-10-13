@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-02T09:37:46.008614+00:00",
+  "structural": {
+    "exitCode": 0,
+    "output": "OK: SDD validation passed with 0 warning(s)\n"
+  },
+  "confirmedRules": [
+    "started active sprint included without completeDate",
+    "confirmed future excluded without expanding uncertainty"
+  ],
+  "closedSprintScope": "Q7 pending; previous draft retained",
+  "unchangedBaselineFiles": 102,
+  "implementationAuthorized": false,
+  "applicationTestsRun": false
+}

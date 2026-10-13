@@ -1,0 +1,414 @@
+{
+  "checkedAt": "2026-10-01T14:45:28.701Z",
+  "requests": [
+    {
+      "path": "/rest/api/2/status"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13308"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13346"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13347"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13349"
+    },
+    {
+      "path": "/rest/agile/1.0/sprint/13311"
+    },
+    {
+      "path": "/rest/agile/1.0/sprint/13433"
+    },
+    {
+      "path": "/rest/api/2/search"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13308"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13346"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13347"
+    },
+    {
+      "path": "/rest/api/2/issue/RAIL-13349"
+    }
+  ],
+  "issues": [
+    {
+      "id": "2708639",
+      "key": "RAIL-13308",
+      "created": "2026-08-16T22:00:05.000+0300",
+      "updated": "2026-09-11T15:35:14.000+0300",
+      "type": {
+        "id": "7",
+        "name": "История",
+        "subtask": false
+      },
+      "parent": null,
+      "subtasks": [
+        {
+          "id": "2713959",
+          "key": "RAIL-13346"
+        },
+        {
+          "id": "2713968",
+          "key": "RAIL-13347"
+        },
+        {
+          "id": "2714088",
+          "key": "RAIL-13349"
+        }
+      ],
+      "status": {
+        "id": "6",
+        "name": "Закрыта",
+        "category": "done"
+      },
+      "history": {
+        "startAt": 0,
+        "total": 17,
+        "received": 17,
+        "unique": 17,
+        "fieldNames": [
+          "Rank",
+          "labels",
+          "Sprint",
+          "Оценка",
+          "description",
+          "assignee",
+          "status",
+          "Дата фактического начала задачи",
+          "Epic Link",
+          "Дата фактического завершения задачи",
+          "resolution"
+        ],
+        "changes": [
+          {
+            "id": "22470919",
+            "at": "2026-08-20T10:39:55.000+0300",
+            "field": "status",
+            "from": "1",
+            "to": "3",
+            "fromString": "Open",
+            "toString": "In Progress"
+          },
+          {
+            "id": "22696024",
+            "at": "2026-09-11T15:35:14.000+0300",
+            "field": "status",
+            "from": "3",
+            "to": "6",
+            "fromString": "In Progress",
+            "toString": "Closed"
+          }
+        ]
+      },
+      "stable": true
+    },
+    {
+      "id": "2713959",
+      "key": "RAIL-13346",
+      "created": "2026-08-20T16:36:17.000+0300",
+      "updated": "2026-08-31T10:47:36.000+0300",
+      "type": {
+        "id": "5",
+        "name": "Подзадача",
+        "subtask": true
+      },
+      "parent": {
+        "id": "2708639",
+        "key": "RAIL-13308"
+      },
+      "subtasks": [],
+      "status": {
+        "id": "6",
+        "name": "Закрыта",
+        "category": "done"
+      },
+      "history": {
+        "startAt": 0,
+        "total": 4,
+        "received": 4,
+        "unique": 4,
+        "fieldNames": [
+          "assignee",
+          "status",
+          "resolution"
+        ],
+        "changes": [
+          {
+            "id": "22477308",
+            "at": "2026-08-20T17:05:30.000+0300",
+            "field": "status",
+            "from": "10028",
+            "to": "3",
+            "fromString": "To Do",
+            "toString": "In Progress"
+          },
+          {
+            "id": "22483069",
+            "at": "2026-08-21T10:20:08.000+0300",
+            "field": "status",
+            "from": "3",
+            "to": "10000",
+            "fromString": "In Progress",
+            "toString": "In code review"
+          },
+          {
+            "id": "22483361",
+            "at": "2026-08-21T10:40:21.000+0300",
+            "field": "status",
+            "from": "10000",
+            "to": "18829",
+            "fromString": "In code review",
+            "toString": "In testing"
+          },
+          {
+            "id": "22567701",
+            "at": "2026-08-31T10:47:36.000+0300",
+            "field": "status",
+            "from": "18829",
+            "to": "6",
+            "fromString": "In testing",
+            "toString": "Closed"
+          }
+        ]
+      },
+      "stable": true
+    },
+    {
+      "id": "2713968",
+      "key": "RAIL-13347",
+      "created": "2026-08-20T16:40:36.000+0300",
+      "updated": "2026-09-11T15:35:06.000+0300",
+      "type": {
+        "id": "5",
+        "name": "Подзадача",
+        "subtask": true
+      },
+      "parent": {
+        "id": "2708639",
+        "key": "RAIL-13308"
+      },
+      "subtasks": [],
+      "status": {
+        "id": "6",
+        "name": "Закрыта",
+        "category": "done"
+      },
+      "history": {
+        "startAt": 0,
+        "total": 5,
+        "received": 5,
+        "unique": 5,
+        "fieldNames": [
+          "assignee",
+          "status",
+          "resolution"
+        ],
+        "changes": [
+          {
+            "id": "22483263",
+            "at": "2026-08-21T10:35:00.000+0300",
+            "field": "status",
+            "from": "10028",
+            "to": "3",
+            "fromString": "To Do",
+            "toString": "In Progress"
+          },
+          {
+            "id": "22606353",
+            "at": "2026-09-03T10:36:17.000+0300",
+            "field": "status",
+            "from": "3",
+            "to": "10000",
+            "fromString": "In Progress",
+            "toString": "In code review"
+          },
+          {
+            "id": "22694248",
+            "at": "2026-09-11T13:35:15.000+0300",
+            "field": "status",
+            "from": "10000",
+            "to": "18829",
+            "fromString": "In code review",
+            "toString": "In testing"
+          },
+          {
+            "id": "22696022",
+            "at": "2026-09-11T15:35:06.000+0300",
+            "field": "status",
+            "from": "18829",
+            "to": "6",
+            "fromString": "In testing",
+            "toString": "Closed"
+          }
+        ]
+      },
+      "stable": true
+    },
+    {
+      "id": "2714088",
+      "key": "RAIL-13349",
+      "created": "2026-08-20T17:44:27.000+0300",
+      "updated": "2026-08-27T10:08:31.000+0300",
+      "type": {
+        "id": "5",
+        "name": "Подзадача",
+        "subtask": true
+      },
+      "parent": {
+        "id": "2708639",
+        "key": "RAIL-13308"
+      },
+      "subtasks": [],
+      "status": {
+        "id": "6",
+        "name": "Закрыта",
+        "category": "done"
+      },
+      "history": {
+        "startAt": 0,
+        "total": 4,
+        "received": 4,
+        "unique": 4,
+        "fieldNames": [
+          "assignee",
+          "status",
+          "resolution"
+        ],
+        "changes": [
+          {
+            "id": "22477677",
+            "at": "2026-08-20T17:44:38.000+0300",
+            "field": "status",
+            "from": "10028",
+            "to": "3",
+            "fromString": "To Do",
+            "toString": "In Progress"
+          },
+          {
+            "id": "22477678",
+            "at": "2026-08-20T17:44:44.000+0300",
+            "field": "status",
+            "from": "3",
+            "to": "10000",
+            "fromString": "In Progress",
+            "toString": "In code review"
+          },
+          {
+            "id": "22501389",
+            "at": "2026-08-24T10:30:27.000+0300",
+            "field": "status",
+            "from": "10000",
+            "to": "18829",
+            "fromString": "In code review",
+            "toString": "In testing"
+          },
+          {
+            "id": "22537134",
+            "at": "2026-08-27T10:08:31.000+0300",
+            "field": "status",
+            "from": "18829",
+            "to": "6",
+            "fromString": "In testing",
+            "toString": "Closed"
+          }
+        ]
+      },
+      "stable": true
+    }
+  ],
+  "sprints": [
+    {
+      "id": 13311,
+      "state": "closed",
+      "name": "16 ЖД СВ 17.08 - 28.10",
+      "startDate": "2026-08-17T15:34:00.000+03:00",
+      "endDate": "2026-08-28T15:34:00.000+03:00",
+      "completeDate": "2026-08-31T11:01:44.068+03:00",
+      "activatedDate": "2026-08-18T10:49:17.935+03:00",
+      "originBoardId": 1416
+    },
+    {
+      "id": 13433,
+      "state": "closed",
+      "name": "17 ЖД СВ 31.08 - 11.09",
+      "startDate": "2026-08-31T10:47:00.000+03:00",
+      "endDate": "2026-09-11T10:47:00.000+03:00",
+      "completeDate": "2026-09-11T15:39:44.366+03:00",
+      "activatedDate": "2026-08-31T12:47:42.608+03:00",
+      "originBoardId": 1416
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Назначена",
+      "category": "new"
+    },
+    {
+      "id": "3",
+      "name": "В работе",
+      "category": "indeterminate"
+    },
+    {
+      "id": "6",
+      "name": "Закрыта",
+      "category": "done"
+    },
+    {
+      "id": "10000",
+      "name": "Отправлена на code review",
+      "category": "indeterminate"
+    },
+    {
+      "id": "10028",
+      "name": "Сделать",
+      "category": "new"
+    },
+    {
+      "id": "18829",
+      "name": "In testing",
+      "category": "indeterminate"
+    }
+  ],
+  "currentChildrenSearch": {
+    "startAt": 0,
+    "total": 3,
+    "issues": [
+      {
+        "id": "2713959",
+        "key": "RAIL-13346",
+        "parent": {
+          "id": "2708639",
+          "key": "RAIL-13308"
+        },
+        "subtask": true
+      },
+      {
+        "id": "2713968",
+        "key": "RAIL-13347",
+        "parent": {
+          "id": "2708639",
+          "key": "RAIL-13308"
+        },
+        "subtask": true
+      },
+      {
+        "id": "2714088",
+        "key": "RAIL-13349",
+        "parent": {
+          "id": "2708639",
+          "key": "RAIL-13308"
+        },
+        "subtask": true
+      }
+    ]
+  }
+}

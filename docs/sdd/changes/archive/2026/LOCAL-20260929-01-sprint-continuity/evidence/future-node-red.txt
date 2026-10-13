@@ -1,0 +1,38 @@
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-work.test.ts (17 tests | 1 failed) 18ms
+   × an element proven created after cutoff cannot make earlier work uncertain even when its type is unknown 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-work.test.ts > an element proven created after cutoff cannot make earlier work uncertain even when its type is unknown
+AssertionError: expected [] to deeply equal [ { …(2) } ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "end": "2026-09-22T00:00:00.000Z",
+-     "start": "2026-09-08T00:00:00.000Z",
+-   },
+- ]
++ []
+
+ ❯ tests/sprint-work.test.ts:31:53
+     29| it('an element proven created after cutoff cannot make earlier work un…
+     30|  const {graph,input}=fixture();graph.nodes['4'].type='unknown';graph.n…
+     31|  expect(analyzeSprints(graph,input).rows['1'].gaps).toEqual([{start:at…
+       |                                                     ^
+     32| });
+     33|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 16 passed (17)
+   Start at  21:44:50
+   Duration  167ms (transform 45ms, setup 0ms, import 54ms, tests 18ms, environment 0ms)
+

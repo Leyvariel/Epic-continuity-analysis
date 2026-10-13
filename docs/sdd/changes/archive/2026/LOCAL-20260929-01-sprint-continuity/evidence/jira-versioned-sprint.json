@@ -1,0 +1,66 @@
+{
+  "checkedAt": "2026-09-29T16:02:32.468Z",
+  "issues": [
+    {
+      "key": "HOTELS-14091",
+      "id": "2542134",
+      "topKeys": [
+        "expand",
+        "id",
+        "self",
+        "key",
+        "versionedRepresentations"
+      ],
+      "versionedSprint": {
+        "1": [
+          "com.atlassian.greenhopper.service.sprint.Sprint@4f74a133[id=12462,rapidViewId=1465,state=CLOSED,name=Shock-Conent S2 Q2 2026,startDate=2026-04-13T10:00:00.000+03:00,endDate=2026-04-24T19:00:00.000+03:00,completeDate=2026-04-27T12:32:21.093+03:00,activatedDate=2026-04-13T12:55:55.924+03:00,sequence=12462,goal=<omitted>]"
+        ],
+        "2": [
+          {
+            "id": 12462,
+            "state": "closed",
+            "name": "Shock-Conent S2 Q2 2026"
+          }
+        ]
+      }
+    },
+    {
+      "key": "HOTELS-14245",
+      "id": "2552051",
+      "topKeys": [
+        "expand",
+        "id",
+        "self",
+        "key",
+        "versionedRepresentations"
+      ],
+      "versionedSprint": {
+        "1": null,
+        "2": []
+      }
+    },
+    {
+      "key": "ANL-20734",
+      "id": "2563314",
+      "topKeys": [
+        "expand",
+        "id",
+        "self",
+        "key",
+        "versionedRepresentations"
+      ],
+      "versionedSprint": {
+        "1": [
+          "com.atlassian.greenhopper.service.sprint.Sprint@68fab31[id=12587,rapidViewId=971,state=CLOSED,name=2026-05-04,startDate=2026-05-04T13:42:00.000+03:00,endDate=2026-05-08T13:42:00.000+03:00,completeDate=2026-05-13T11:24:56.879+03:00,activatedDate=2026-05-04T13:42:51.327+03:00,sequence=12587,goal=<omitted>]"
+        ],
+        "2": [
+          {
+            "id": 12587,
+            "state": "closed",
+            "name": "2026-05-04"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+import type { HierarchyInput, HierarchyNodeInput } from '../shared/hierarchy';
+import type { TableHistory } from '../shared/types';
+export const CUT = '2026-09-10T00:00:00+03:00';
+export const at = (day: number) => `2026-09-${String(day).padStart(2,'0')}T00:00:00+03:00`;
+export function history(key = 'C-1', reopen = false): TableHistory { return { key, title: key, historyStart: at(1), updated: CUT, currentStatus: reopen ? 'В работе' : 'Готово', resolution: '', assignee: '', issueType: 'Задача', importedAt: CUT, statusChanges: [ { id: '1', at: at(3), from: 'Открыто', to: 'В работе' }, { id: '2', at: at(7), from: 'В работе', to: 'Готово' }, ...(reopen ? [{ id: '3', at: at(8), from: 'Готово', to: 'В работе' }] : []) ], flagChanges: [], currentFlag: false, flagAvailable: false, historyCount: reopen ? 3 : 2, warnings: [] }; }
+export function node(id: string, type: HierarchyNodeInput['type'] = 'epic'): HierarchyNodeInput { return { id, key: id, title: id, type, resolution: '', created: at(1), currentStatus: '[HF] Реализация', statusCategories: {}, historyCoverage: 'complete', branchCoverage: 'complete', warnings: [] }; }
+export function graph(): HierarchyInput { return { version: 1, asOf: CUT, roots: { 'A-1': 'A-1' }, nodes: Object.fromEntries(['A-1','B-1','C-1','R-1','V-1','S-1'].map(id => [id, node(id, ['C-1','V-1'].includes(id) ? 'task' : id === 'S-1' ? 'subtask' : 'epic')])), edges: [['A-1','B-1'],['A-1','C-1'],['B-1','C-1'],['B-1','S-1'],['A-1','R-1'],['R-1','V-1']].map(([parent,child])=>({parent,child})), coverage: 'complete', warnings: [] }; }
