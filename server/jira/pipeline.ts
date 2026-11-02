@@ -4,7 +4,7 @@ import type { ParsedKeys } from '../key-candidates';
 import type { EpicSummary } from '../../shared/types';
 import type { GatewayFactory, JiraGateway, JiraIssue, BoardSelection } from './ports';
 import { AppError, safeError } from '../errors';
-import { decideEligibility, decisionReason } from '../selection';
+import { decideEligibility, decisionReason, reasonForDecision } from '../selection';
 import { parseFileCandidates } from '../file-candidates';
 import { JIRA_ORIGIN, parseBoardUrl, parseEpicUrl } from './urls';
 import { historySchema, jiraInputsSchema } from './cache-schema';
@@ -103,7 +103,7 @@ export async function collectJiraInputs(request: JiraRequest, job: ImportJobV3, 
     if (source?.kind === 'board' && (audit.entries.some(entry => entry.decision === 'unresolved') || [...groups.values()].some(group => decideEligibility(group.issue) === 'unresolved'))) {
       audit.entries.push(...[...groups.values()].flatMap(group => group.candidates.map(candidate => {
         const decision = decideEligibility(group.issue);
-        return { ...candidate, key: group.issue.key, decision, reason: decisionReason[decision] };
+        return { ...candidate, key: group.issue.key, decision, reason: reasonForDecision(group.issue, decision) };
       })));
       audit.resolvedIssues = groups.size; audit.eligibilityCoverage = 'partial';
       throw new AppError('SELECTION_UNRESOLVED', 'Не удалось определить HF для всей выборки доски. Причины указаны в отборе; истории не загружались.');
@@ -147,7 +147,7 @@ export async function collectJiraInputs(request: JiraRequest, job: ImportJobV3, 
     });
     for (const { group, candidate, issue, decision, history } of processed) {
       if (request.kind === 'epic' || definition?.kind === 'epic') source = { kind: 'epic', origin: JIRA_ORIGIN, requestedKey: candidate.requestedKey, key: issue.key, issueId: issue.id, url: `${JIRA_ORIGIN}/browse/${issue.key}`, historyMode: 'jira' };
-      audit.entries.push(...group.candidates.map(item => ({ ...item, key: issue.key, decision, reason: decisionReason[decision] })));
+      audit.entries.push(...group.candidates.map(item => ({ ...item, key: issue.key, decision, reason: reasonForDecision(issue, decision) })));
       if (decision === 'included') {
         const controls = group.candidates.flatMap(candidate => candidate.control ? [candidate.control] : []);
         const control = controls[0];

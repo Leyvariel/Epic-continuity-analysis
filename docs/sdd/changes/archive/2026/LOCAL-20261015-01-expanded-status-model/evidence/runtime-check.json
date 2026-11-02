@@ -1,0 +1,11 @@
+{
+  "url": "http://127.0.0.1:4317/",
+  "http": 200,
+  "datasetRestored": true,
+  "epicCount": 1,
+  "newMetricsPresent": true,
+  "cacheUnchanged": true,
+  "cacheSha256": "ac1148b0ea9f96107040bce417df471ef2deb86fc230f415d41c131b2d0abd09",
+  "jiraRefresh": false,
+  "temporaryDemoStopped": true
+}

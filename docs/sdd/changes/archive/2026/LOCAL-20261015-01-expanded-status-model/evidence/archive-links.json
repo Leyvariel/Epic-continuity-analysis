@@ -1,0 +1,12 @@
+{
+  "status": "references redirected",
+  "markdownFiles": [
+    "docs/SDD.md",
+    "docs/sdd/specs/visualization.md",
+    "docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/tasks.md",
+    "docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/research.md",
+    "docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/specs/visualization.md"
+  ],
+  "codeReference": "tests/hotels-status-replay.test.ts",
+  "externalWorkflow": "not configured"
+}

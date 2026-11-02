@@ -19,7 +19,7 @@ it('AC-092: repeated stages retain proven totals independently of ambiguous TTM,
  expect(r.ttmMs).toBeNull();expect(r.returnToOpenMs).toBeNull();expect(r.impedimentMs).toBeNull();expect(r.quality).toBe('partial');
  expect(r.warnings.some(w=>w.code==='AMBIGUOUS_TTM_START')).toBe(true);
  expect(calculateJiraTimeline(summary,JSON.parse(JSON.stringify(h)),at(20))).toEqual(r);
- expect(calculateTimeline(summary,h,at(20)).durations).toBeNull();
+ expect(calculateTimeline(summary,h,at(20)).durations).toEqual(r.durations);
 });
 it('AC-092: counts only observed time at the cutoff',()=>{
  const r=calculateJiraTimeline(summary,fixture(),at(6));

@@ -1,0 +1,31 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-hierarchy.test.ts tests/hierarchy-ui.test.tsx
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/hierarchy-ui.test.tsx (4 tests | 2 failed) 497ms
+     × xlsx: сначала свёрнуто; раскрывает собственные числа и сохраняет ось при 3 масштабах 32ms
+     × jira: сначала свёрнуто; раскрывает собственные числа и сохраняет ось при 3 масштабах 30ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hierarchy-ui.test.tsx > T007/T008: раскрытие на календаре > xlsx: сначала свёрнуто; раскрывает собственные числа и сохраняет ось при 3 масштабах
+ FAIL  tests/hierarchy-ui.test.tsx > T007/T008: раскрытие на календаре > jira: сначала свёрнуто; раскрывает собственные числа и сохраняет ось при 3 масштабах
+AssertionError: expected null not to be null
+ ❯ tests/hierarchy-ui.test.tsx:35:57
+     33|   await act(()=>button('A-1').click());expect(div.querySelectorAll('.r…
+     34|   await act(()=>button('B-1').click());expect(div.querySelectorAll('.r…
+     35|   expect(div.querySelector('.related-row .metric')).not.toBeNull();exp…
+       |                                                         ^
+     36|   expect(div.querySelector('.related-row [data-metric="ttm"]')?.textCo…
+     37|   expect(div.querySelector('.related-row[data-issue-key="C-1"] [data-m…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 5 passed (7)
+   Start at  19:48:44
+   Duration  1.30s (transform 221ms, setup 0ms, import 358ms, tests 502ms, environment 444ms)

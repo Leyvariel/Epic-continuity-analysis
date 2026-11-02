@@ -15,7 +15,7 @@ const position = (ms: number, scale: Scale) => PADDING + ms / scale.maxMs * PLOT
 export function CompositionHeader({ scale }: { scale: Scale }) {
   return <div className="composition-header" style={{ width: COMPOSITION_WIDTH }}>
     <strong>Состав длительностей · дни</strong>
-    <span>Порядок колонок Excel · общая шкала для всех эпиков</span>
+    <span>Порядок этапов для сравнения · общая шкала для всех эпиков</span>
     <div className="composition-axis">{scale.ticks.map(tick => <span key={tick} style={{ left: position(tick, scale) }} title={preciseDuration(tick)}>{format(tick)}</span>)}</div>
   </div>;
 }

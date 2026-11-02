@@ -1,0 +1,248 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-ttm.test.ts tests/timeline.test.ts tests/initial-open.test.ts tests/jira-domain.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/expanded-ttm.test.ts (15 tests | 11 failed) 11ms
+     × AC-110: excludes every Deferred interval while retaining the full calendar 5ms
+     × AC-107/109: uses actual flags, not the planned-status convention 1ms
+     × AC-108: does not subtract Deferred twice when it overlaps a flag 0ms
+     × AC-111: starts Decided only for HOTELS, even without a prefix 0ms
+     × AC-007/112: Deferred before start has a duration but no TTM; current Deferred freezes TTM 1ms
+     × AC-113: preserves initial Open and counts only returns in TTM 0ms
+     × handles same-time transitions and a start exactly at the cutoff 0ms
+     × preserves partial flags independently of complete status proof 0ms
+     × keeps an actually unknown start unknown, but proves stage numbers in either source 0ms
+     × clips flags at exact boundaries across repeated Deferred and intermediate closure 0ms
+     × validates all status and flag transitions even after asOf 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > AC-110: excludes every Deferred interval while retaining the full calendar
+AssertionError: expected 6480000000 to be 1296000000 // Object.is equality
+
+- Expected
++ Received
+
+- 1296000000
++ 6480000000
+
+ ❯ tests/expanded-ttm.test.ts:12:21
+     10|   it('AC-110: excludes every Deferred interval while retaining the ful…
+     11|     const r = calc(modelHistory([['[HF] Проверка идей', 5], ['[HF] Отл…
+     12|     expect(r.ttmMs).toBe(15 * DAY_MS);
+       |                     ^
+     13|     expect(r.durations?.deferred).toBe(60 * DAY_MS);
+     14|     expect(r.excludedDeferredMs).toBe(60 * DAY_MS);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > AC-107/109: uses actual flags, not the planned-status convention
+AssertionError: expected undefined to be 432000000 // Object.is equality
+
+- Expected:
+432000000
+
++ Received:
+undefined
+
+ ❯ tests/expanded-ttm.test.ts:23:67
+     21|     });
+     22|     const r = calc(f);
+     23|     expect(r.ttmMs).toBe(15 * DAY_MS); expect(r.ttmWithoutFlagMs).toBe…
+       |                                                                   ^
+     24|     expect(r.ttmFlaggedMs).toBe(10 * DAY_MS); expect(r.durations?.plan…
+     25|     expect(calc({ ...f, history: { ...f.history, flagChanges: [] } }).…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > AC-108: does not subtract Deferred twice when it overlaps a flag
+AssertionError: expected 6480000000 to be 1296000000 // Object.is equality
+
+- Expected
++ Received
+
+- 1296000000
++ 6480000000
+
+ ❯ tests/expanded-ttm.test.ts:34:21
+     32|       flagChanges: [{ id: '1', at: modelAt(5), from: false, to: true }…
+     33|     }));
+     34|     expect(r.ttmMs).toBe(15 * DAY_MS); expect(r.impedimentMs).toBe(64 …
+       |                     ^
+     35|     expect(r.ttmFlaggedMs).toBe(4 * DAY_MS); expect(r.ttmWithoutFlagMs…
+     36|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > AC-111: starts Decided only for HOTELS, even without a prefix
+AssertionError: expected null to be 172800000 // Object.is equality
+
+- Expected:
+172800000
+
++ Received:
+null
+
+ ❯ tests/expanded-ttm.test.ts:39:27
+     37|   it('AC-111: starts Decided only for HOTELS, even without a prefix', …
+     38|     const f = modelHistory([['Открыто', 1], ['Решили делать', 3], ['[H…
+     39|     expect(calc(f).ttmMs).toBe(2 * DAY_MS);
+       |                           ^
+     40|     const hotels = calc({ ...f, summary: { ...f.summary, key: 'HOTELS-…
+     41|     expect(hotels.ttmMs).toBe(5 * DAY_MS); expect(hotels.durations?.de…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > AC-007/112: Deferred before start has a duration but no TTM; current Deferred freezes TTM
+AssertionError: expected 'indeterminate' to be 'not-started' // Object.is equality
+
+Expected: "not-started"
+Received: "indeterminate"
+
+ ❯ tests/expanded-ttm.test.ts:48:29
+     46|   it('AC-007/112: Deferred before start has a duration but no TTM; cur…
+     47|     const before = calc(modelHistory([['Открыто', 20], ['[HF] Отложено…
+     48|     expect(before.ttmState).toBe('not-started'); expect(before.ttmMs).…
+       |                             ^
+     49|     expect(before.durations?.deferred).toBe(60 * DAY_MS);
+     50|     for (const days of [60, 61]) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > AC-113: preserves initial Open and counts only returns in TTM
+AssertionError: expected undefined to be 777600000 // Object.is equality
+
+- Expected:
+777600000
+
++ Received:
+undefined
+
+ ❯ tests/expanded-ttm.test.ts:61:32
+     59|     const r = calc(modelHistory([['Открыто', 100], ['[HF] Подготовка',…
+     60|     expect(r.ttmMs).toBe(9 * DAY_MS); expect(r.returnToOpenMs).toBe(3 …
+     61|     expect(r.ttmWithoutFlagMs).toBe(9 * DAY_MS); expect(r.initialOpenI…
+       |                                ^
+     62|   });
+     63|   it('handles same-time transitions and a start exactly at the cutoff'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > handles same-time transitions and a start exactly at the cutoff
+AssertionError: expected undefined to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+undefined
+
+ ❯ tests/expanded-ttm.test.ts:65:57
+     63|   it('handles same-time transitions and a start exactly at the cutoff'…
+     64|     const r = calc(modelHistory([['Открыто', 1], ['[HF] Отложено', 0],…
+     65|     expect(r.ttmMs).toBe(0); expect(r.ttmWithoutFlagMs).toBe(0); expec…
+       |                                                         ^
+     66|   });
+     67|   it('preserves partial flags independently of complete status proof',…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > preserves partial flags independently of complete status proof
+AssertionError: expected undefined to be null
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ tests/expanded-ttm.test.ts:70:67
+     68|     const f = modelHistory([['[HF] Запланировано', 10], ['[HF] Реализа…
+     69|     const r = calculateJiraTimeline(f.summary, jiraHistory({ ...f.hist…
+     70|     expect(r.ttmMs).toBe(15 * DAY_MS); expect(r.ttmWithoutFlagMs).toBe…
+       |                                                                   ^
+     71|   });
+     72|   it('keeps an actually unknown start unknown, but proves stage number…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > keeps an actually unknown start unknown, but proves stage numbers in either source
+AssertionError: expected undefined to be null
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ tests/expanded-ttm.test.ts:74:60
+     72|   it('keeps an actually unknown start unknown, but proves stage number…
+     73|     const r = calc(modelHistory([['Неизвестный новый процесс', 2], ['Р…
+     74|     expect(r.ttmMs).toBeNull(); expect(r.ttmWithoutFlagMs).toBeNull();
+       |                                                            ^
+     75|     expect(r.returnToOpenMs).toBeNull(); expect(r.durations?.release).…
+     76|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > clips flags at exact boundaries across repeated Deferred and intermediate closure
+AssertionError: expected 777600000 to be 345600000 // Object.is equality
+
+- Expected
++ Received
+
+- 345600000
++ 777600000
+
+ ❯ tests/expanded-ttm.test.ts:80:21
+     78|     const f = modelHistory([['Открыто', 2], ['[HF] Реализация', 2], ['…
+     79|     const r = calc(f);
+     80|     expect(r.ttmMs).toBe(4 * DAY_MS); expect(r.impedimentMs).toBe(9 * …
+       |                     ^
+     81|     expect(r.ttmWithoutFlagMs).toBe(0); expect(r.excludedDeferredMs).t…
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯
+
+ FAIL  tests/expanded-ttm.test.ts > FR-010/011/013/047: independent calendar, counted TTM and flags > validates all status and flag transitions even after asOf
+AssertionError: expected { preparation: +0, …(13) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "decided": 0,
+  "deferred": 0,
+  "epic-testing": 0,
+  "evaluation": 0,
+  "experiment": 0,
+  "idea-check": 0,
+  "implementation": 0,
+  "planned": 86400000,
+  "preparation": 0,
+  "ready": 0,
+  "release": 0,
+  "scoring": 0,
+  "solution": 0,
+  "validation": 0,
+}
+
+ ❯ tests/expanded-ttm.test.ts:86:31
+     84|     const f = modelHistory([['[HF] Запланировано', 2], ['Релиз', 3]]);
+     85|     f.history.statusChanges[1].from = 'Разрыв'; f.asOf = modelAt(1);
+     86|     expect(calc(f).durations).toBeNull();
+       |                               ^
+     87|     const g = modelHistory([['[HF] Запланировано', 5]], { flagChanges:…
+     88|       { id: '1', at: modelAt(3), from: false, to: true }, { id: '2', a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/11]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  11 failed | 34 passed (45)
+   Start at  19:39:02
+   Duration  203ms (transform 208ms, setup 0ms, import 354ms, tests 55ms, environment 0ms)

@@ -1,0 +1,12 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/jira-adapter.test.ts tests/jira-board.test.ts tests/keys-service.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  3 passed (3)
+      Tests  34 passed (34)
+   Start at  19:42:06
+   Duration  406ms (transform 285ms, setup 0ms, import 498ms, tests 108ms, environment 0ms)

@@ -27,10 +27,10 @@ describe('history provided in a local table', () => {
     ]);
     const epic = buildDataset(parseWorkbook(input, 'local.xlsx', AS_OF), AS_OF).epics[0];
     const metrics = metricsFor([epic], 'excel');
-    expect(metrics.filter(metric => metric.id.startsWith('extra:')).map(metric => metric.name)).toEqual(['Отложено', 'Проверка идей', 'Запланировано']);
+    expect(metrics.slice(2).map(metric => metric.name)).toEqual(['Проверка идей', 'Отложено', 'Запланировано', 'Реализация']);
     expect(metrics.some(metric => metric.id === 'preparation')).toBe(false);
-    expect(metricValue(epic, 'extra:cycle time [hf] проверка идей', 'excel')).toBe(20 * 86400000);
-    expect(metricValue(epic, 'extra:cycle time [hf] проверка идей', 'history')).toBeNull();
+    expect(metricValue(epic, 'idea-check', 'excel')).toBe(20 * 86400000);
+    expect(metricValue(epic, 'idea-check', 'history')).toBeNull();
     expect(epic.summary.sourceMetadata?.assignee).toBe('Исполнитель');
     expect(JSON.stringify(epic)).not.toContain('private@example.test');
   });
@@ -86,7 +86,7 @@ describe('history provided in a local table', () => {
   });
   it('does not silently discard an unknown stage before the first known active stage', () => {
     const input = historyWorkbook([
-      ['TEST-1', '[HF] Проверка идей', '2026-09-02T09:00:00Z', '2026-09-03T09:00:00Z'],
+      ['TEST-1', '[HF] Нестандартный этап', '2026-09-02T09:00:00Z', '2026-09-03T09:00:00Z'],
       ['TEST-1', '[HF] Реализация', '2026-09-03T09:00:00Z', ''],
     ]);
     const epic = buildDataset(parseWorkbook(input, 'local.xlsx', AS_OF), AS_OF).epics[0];

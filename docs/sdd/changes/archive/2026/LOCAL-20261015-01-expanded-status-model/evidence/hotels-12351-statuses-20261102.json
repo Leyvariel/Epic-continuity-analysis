@@ -1,0 +1,161 @@
+{
+  "checkedAt": "2026-11-02T08:00:56.160657+00:00",
+  "source": "https://hq.tutu.ru/browse/HOTELS-12351",
+  "key": "HOTELS-12351",
+  "issueType": {
+    "id": "6",
+    "name": "Большая задача"
+  },
+  "created": "2025-12-03T14:28:59.000+0300",
+  "updated": "2026-10-27T12:59:14.000+0300",
+  "currentStatus": {
+    "id": "21870",
+    "name": "[HF] Закрыт",
+    "categoryKey": "done",
+    "categoryName": "Выполнено"
+  },
+  "resolution": "[HF] Подтверждена",
+  "changelog": {
+    "startAt": 0,
+    "total": 51,
+    "received": 51
+  },
+  "statusTransitions": [
+    {
+      "from": "21860",
+      "fromString": "[HF] Открыт",
+      "to": "21467",
+      "toString": "Решили делать",
+      "historyId": "19397737",
+      "at": "2025-12-03T14:29:12.000+0300"
+    },
+    {
+      "from": "21467",
+      "fromString": "Решили делать",
+      "to": "21862",
+      "toString": "[HF] Подготовка ",
+      "historyId": "19397738",
+      "at": "2025-12-03T14:29:20.000+0300"
+    },
+    {
+      "from": "21862",
+      "fromString": "[HF] Подготовка ",
+      "to": "21863",
+      "toString": "[HF] Валидация",
+      "historyId": "19397739",
+      "at": "2025-12-03T14:29:24.000+0300"
+    },
+    {
+      "from": "21863",
+      "fromString": "[HF] Валидация",
+      "to": "21865",
+      "toString": "[HF] Проработка решения",
+      "historyId": "19397740",
+      "at": "2025-12-03T14:29:28.000+0300"
+    },
+    {
+      "from": "21865",
+      "fromString": "[HF] Проработка решения",
+      "to": "21866",
+      "toString": "[HF] Готово к реализации",
+      "historyId": "19847378",
+      "at": "2026-01-20T15:40:50.000+0300"
+    },
+    {
+      "from": "21866",
+      "fromString": "[HF] Готово к реализации",
+      "to": "21867",
+      "toString": "[HF] Реализация",
+      "historyId": "21681889",
+      "at": "2026-06-22T13:35:37.000+0300"
+    },
+    {
+      "from": "21867",
+      "fromString": "[HF] Реализация",
+      "to": "22135",
+      "toString": "Тестирование эпика",
+      "historyId": "22477229",
+      "at": "2026-08-20T17:01:01.000+0300"
+    },
+    {
+      "from": "22135",
+      "fromString": "Тестирование эпика",
+      "to": "21870",
+      "toString": "[HF] Закрыт",
+      "historyId": "22883877",
+      "at": "2026-09-30T21:53:44.000+0300"
+    }
+  ],
+  "flagTransitions": [],
+  "epicStatusCatalog": [
+    {
+      "id": "21860",
+      "name": "[HF] Открыт",
+      "categoryKey": "new",
+      "categoryName": "К выполнению"
+    },
+    {
+      "id": "21865",
+      "name": "[HF] Проработка решения",
+      "categoryKey": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21866",
+      "name": "[HF] Готово к реализации",
+      "categoryKey": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21867",
+      "name": "[HF] Реализация",
+      "categoryKey": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21868",
+      "name": "[HF] Эксперимент",
+      "categoryKey": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "21870",
+      "name": "[HF] Закрыт",
+      "categoryKey": "done",
+      "categoryName": "Выполнено"
+    },
+    {
+      "id": "22135",
+      "name": "Тестирование эпика",
+      "categoryKey": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "20871",
+      "name": "Релиз",
+      "categoryKey": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "23039",
+      "name": "[HF] Запланировано",
+      "categoryKey": "indeterminate",
+      "categoryName": "В работе"
+    },
+    {
+      "id": "23040",
+      "name": "[HF] Отложено",
+      "categoryKey": "new",
+      "categoryName": "К выполнению"
+    },
+    {
+      "id": "23038",
+      "name": "[HF] Проверка идей",
+      "categoryKey": "indeterminate",
+      "categoryName": "В работе"
+    }
+  ],
+  "limits": [
+    "Проверен один образец; текущие категории каталога не доказывают исторические категории и бизнес-правила TTM."
+  ]
+}

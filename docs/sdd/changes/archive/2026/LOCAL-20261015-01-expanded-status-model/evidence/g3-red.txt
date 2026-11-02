@@ -1,0 +1,53 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/jira-adapter.test.ts tests/jira-board.test.ts tests/keys-service.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/jira-adapter.test.ts (14 tests | 3 failed) 20ms
+     × AC-103: accepts only the HOTELS epic exception for Решили делать 7ms
+     × AC-103: accepts only the HOTELS epic exception for Тестирование эпика 1ms
+     × AC-103: accepts only the HOTELS epic exception for Релиз 0ms
+ ❯ tests/keys-service.test.ts (17 tests | 1 failed) 94ms
+     × AC-103: imports a HOTELS root without a prefix and records the scoped reason 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/jira-adapter.test.ts > Jira Server: фактическая схема метаданных и expand=changelog > AC-103: accepts only the HOTELS epic exception for Решили делать
+ FAIL  tests/jira-adapter.test.ts > Jira Server: фактическая схема метаданных и expand=changelog > AC-103: accepts only the HOTELS epic exception for Тестирование эпика
+ FAIL  tests/jira-adapter.test.ts > Jira Server: фактическая схема метаданных и expand=changelog > AC-103: accepts only the HOTELS epic exception for Релиз
+AssertionError: expected 'unknown' to be 'HF' // Object.is equality
+
+Expected: "HF"
+Received: "unknown"
+
+ ❯ tests/jira-adapter.test.ts:13:24
+     11|     const value=raw(); value.key='HOTELS-12351'; value.fields.status={…
+     12|     const issue=await new ServerJiraAdapter({get:vi.fn().mockResolvedV…
+     13|     expect(issue.flow).toBe('HF'); expect(decideEligibility(issue)).to…
+       |                        ^
+     14|   });
+     15|   it.each(['project','type','id','unknown','df','mixed','rejected'])('…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/keys-service.test.ts > KEYS-PIPELINE: отбор прямого списка > AC-103: imports a HOTELS root without a prefix and records the scoped reason
+ZodError: [
+  {
+    "code": "custom",
+    "message": "Invalid snapshot bounds",
+    "path": []
+  }
+]
+ ❯ collectJiraInputs server/jira/pipeline.ts:171:29
+
+ ❯ tests/keys-service.test.ts:35:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  4 failed | 30 passed (34)
+   Start at  19:41:37
+   Duration  530ms (transform 495ms, setup 0ms, import 800ms, tests 123ms, environment 0ms)

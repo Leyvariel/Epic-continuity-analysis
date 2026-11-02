@@ -38,7 +38,7 @@ export function calculateJiraTimeline(summary: EpicSummary, history: HistorySnap
   }
   if (flag !== history.currentFlag) flagValid = false;
   const flagCoverage = history.flagCoverage === 'complete' && !flagValid ? 'partial' : history.flagCoverage;
-  const epic = calculateTimeline(summary, { ...history, statusChanges: changes, flagAvailable: history.flagAvailable && flagCoverage === 'complete' }, asOf, { preTtmStatuses: ['Решили делать'], independentStageDurations: true });
+  const epic = calculateTimeline(summary, { ...history, statusChanges: changes, flagAvailable: history.flagAvailable && flagCoverage === 'complete' }, asOf);
   if (flagCoverage !== 'complete') {
     epic.quality = 'partial';
     epic.warnings.push({ code: 'FLAG_HISTORY_INCOMPLETE', message: 'Полнота истории impediment не подтверждена; история статусов оценена отдельно.', key: summary.key, severity: 'error' });

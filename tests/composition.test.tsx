@@ -16,7 +16,7 @@ function dataset(aggregates: string[], values: unknown[][]) {
 }
 
 describe('Excel composition without invented chronology', () => {
-  it('keeps the original TTM, excludes all Open, and preserves unknown stage names and column order', () => {
+  it('keeps the original TTM and recognised Deferred separate from Open and calculation', () => {
     const data = dataset(['[HF] Time To Market', 'Cycle Time [HF] Открыто', 'Cycle Time [HF] Отложено', 'Cycle Time [HF] Реализация'], [[20, 99, 3, 7]]);
     const epic = data.epics[0], columns = metricsFor(data.epics, 'excel');
     const before = JSON.stringify(epic);
@@ -24,26 +24,26 @@ describe('Excel composition without invented chronology', () => {
     expect(item.totalMs).toBe(10 * DAY_MS); expect(item.ttmMs).toBe(20 * DAY_MS);
     expect(item.segments.map(segment => segment.name)).toEqual(['Отложено', 'Реализация']);
     expect(item.segments.map(segment => segment.offsetMs)).toEqual([0, 3 * DAY_MS]);
-    expect(item.segments[0].unknown).toBe(true);
+    expect(item.segments[0].unknown).toBe(false);
     expect(item.segments[0].color).not.toBe(STAGES[0].color);
     expect(epic.intervals).toEqual([]); expect(epic.start).toBeNull();
     expect(JSON.stringify(epic)).toBe(before);
   });
-  it('retains workbook order and missing columns even when the first epic has blank cells', () => {
+  it('keeps observed columns with missing per-epic values and hides wholly empty columns', () => {
     const data = dataset(['Cycle Time [HF] Проверка идей', 'Cycle Time [HF] Реализация', 'Cycle Time [HF] Эксперимент'], [['', 7, ''], [2, 0, '']]);
     const columns = metricsFor(data.epics, 'excel');
-    expect(columns.slice(2).map(column => column.name)).toEqual(['Проверка идей', 'Реализация', 'Эксперимент']);
+    expect(columns.slice(2).map(column => column.name)).toEqual(['Проверка идей', 'Реализация']);
     const first = compositionFor(data.epics[0], columns), second = compositionFor(data.epics[1], columns);
-    expect(first.missing.map(column => column.name)).toEqual(['Проверка идей', 'Эксперимент']);
+    expect(first.missing.map(column => column.name)).toEqual(['Проверка идей']);
     expect(first.totalMs).toBe(7 * DAY_MS);
-    expect(second.segments[1].durationMs).toBe(0); expect(second.missing).toHaveLength(1);
+    expect(second.segments[1].durationMs).toBe(0); expect(second.missing).toHaveLength(0);
   });
   it('distinguishes no provided stages from explicit zero durations', () => {
-    const data = dataset(['Cycle Time [HF] Реализация'], [[''], [0]]);
+    const data = dataset(['Cycle Time [HF] Реализация'], [[''], [0], [1]]);
     const columns = metricsFor(data.epics, 'excel');
     expect(compositionFor(data.epics[0], columns).totalMs).toBeNull();
     expect(compositionFor(data.epics[1], columns).totalMs).toBe(0);
-    expect(compositionScale(data.epics.map(epic => compositionFor(epic, columns)))).toEqual({ maxMs: DAY_MS, ticks: [0, DAY_MS / 2, DAY_MS] });
+    expect(compositionScale(data.epics.map(epic => compositionFor(epic, columns)))).toEqual({ maxMs: DAY_MS, ticks: [0, DAY_MS / 5, 2 * DAY_MS / 5, 3 * DAY_MS / 5, 4 * DAY_MS / 5, DAY_MS] });
   });
   it('does not normalize or truncate a stage sum that exceeds TTM', () => {
     const data = dataset(['[HF] Time To Market', 'Cycle Time [HF] Реализация'], [[20, 30], [100, 5]]);
@@ -68,12 +68,12 @@ describe('Excel composition without invented chronology', () => {
     expect(markup).toContain('aria-label="TEST-1.');
     expect(markup).toContain('а не история переходов');
     expect(markup).not.toContain('end-marker');
-    expect(renderToStaticMarkup(<CompositionHeader scale={scale} />)).toContain('Порядок колонок Excel');
+    expect(renderToStaticMarkup(<CompositionHeader scale={scale} />)).toContain('Порядок этапов для сравнения');
   });
   it('does not lose unsupported columns that differ only in casing across old cached epics', () => {
-    const data = dataset(['Cycle Time [HF] Проверка идей'], [[2], [3]]);
+    const data = dataset(['Cycle Time [HF] Нестандартный этап'], [[2], [3]]);
     data.epics[1].summary.excelColumns = undefined;
-    data.epics[1].summary.excelAggregates = { 'cycle time [hf] ПРОВЕРКА ИДЕЙ': 3 };
+    data.epics[1].summary.excelAggregates = { 'cycle time [hf] НЕСТАНДАРТНЫЙ ЭТАП': 3 };
     const columns = metricsFor(data.epics, 'excel');
     expect(columns.filter(column => column.id.startsWith('extra:'))).toHaveLength(1);
     expect(compositionFor(data.epics[1], columns).totalMs).toBe(3 * DAY_MS);

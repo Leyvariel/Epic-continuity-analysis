@@ -1,0 +1,12 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-status-model.test.ts tests/independent-stage-metrics.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  2 passed (2)
+      Tests  9 passed (9)
+   Start at  19:37:31
+   Duration  141ms (transform 71ms, setup 0ms, import 122ms, tests 7ms, environment 0ms)

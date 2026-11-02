@@ -1,0 +1,13 @@
+
+> hf-epic-continuity@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 47 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.47 kB │ gzip:  0.32 kB
+dist/assets/index-CdmJujsN.css   19.09 kB │ gzip:  5.27 kB
+dist/assets/index-Df2PI4fL.js   300.12 kB │ gzip: 93.37 kB
+✓ built in 451ms

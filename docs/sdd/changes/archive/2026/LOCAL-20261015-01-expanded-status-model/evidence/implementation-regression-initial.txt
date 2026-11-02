@@ -1,0 +1,217 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-ui.test.tsx (10 tests | 3 failed) 1304ms
+   × AC-091: gap touches the status from below with unknown TTM, at all scales 10ms
+   × AC-090: unknown TTM preserves epic stage colours, unknown hatching and membership gaps 59ms
+   × B06/B33: unknown numeric TTM keeps raw phases and sprint axis; overlapping equal names have separate lanes 1ms
+ ❯ tests/table-history.test.ts (13 tests | 2 failed) 62ms
+     × retains new HF stage names without mapping them to old stages 5ms
+     × does not silently discard an unknown stage before the first known active stage 3ms
+ ❯ tests/composition.test.tsx (8 tests | 5 failed) 41ms
+     × keeps the original TTM, excludes all Open, and preserves unknown stage names and column order 15ms
+     × retains workbook order and missing columns even when the first epic has blank cells 3ms
+     × distinguishes no provided stages from explicit zero durations 2ms
+     × renders the independent TTM marker and exposes all values to keyboard users 11ms
+     × does not lose unsupported columns that differ only in casing across old cached epics 2ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/composition.test.tsx > Excel composition without invented chronology > keeps the original TTM, excludes all Open, and preserves unknown stage names and column order
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/composition.test.tsx:27:38
+     25|     expect(item.segments.map(segment => segment.name)).toEqual(['Отлож…
+     26|     expect(item.segments.map(segment => segment.offsetMs)).toEqual([0,…
+     27|     expect(item.segments[0].unknown).toBe(true);
+       |                                      ^
+     28|     expect(item.segments[0].color).not.toBe(STAGES[0].color);
+     29|     expect(epic.intervals).toEqual([]); expect(epic.start).toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  tests/composition.test.tsx > Excel composition without invented chronology > retains workbook order and missing columns even when the first epic has blank cells
+AssertionError: expected [ 'Проверка идей', 'Реализация' ] to deeply equal [ 'Проверка идей', 'Реализация', …(1) ]
+
+- Expected
++ Received
+
+  [
+    "Проверка идей",
+    "Реализация",
+-   "Эксперимент",
+  ]
+
+ ❯ tests/composition.test.tsx:35:57
+     33|     const data = dataset(['Cycle Time [HF] Проверка идей', 'Cycle Time…
+     34|     const columns = metricsFor(data.epics, 'excel');
+     35|     expect(columns.slice(2).map(column => column.name)).toEqual(['Пров…
+       |                                                         ^
+     36|     const first = compositionFor(data.epics[0], columns), second = com…
+     37|     expect(first.missing.map(column => column.name)).toEqual(['Проверк…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  tests/composition.test.tsx > Excel composition without invented chronology > distinguishes no provided stages from explicit zero durations
+AssertionError: expected null to be +0 // Object.is equality
+
+- Expected:
+0
+
++ Received:
+null
+
+ ❯ tests/composition.test.tsx:45:60
+     43|     const columns = metricsFor(data.epics, 'excel');
+     44|     expect(compositionFor(data.epics[0], columns).totalMs).toBeNull();
+     45|     expect(compositionFor(data.epics[1], columns).totalMs).toBe(0);
+       |                                                            ^
+     46|     expect(compositionScale(data.epics.map(epic => compositionFor(epic…
+     47|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  tests/composition.test.tsx > Excel composition without invented chronology > renders the independent TTM marker and exposes all values to keyboard users
+AssertionError: expected '<div class="composition-header" style…' to contain 'Порядок колонок Excel'
+
+Expected: "Порядок колонок Excel"
+Received: "<div class="composition-header" style="width:660px"><strong>Состав длительностей · дни</strong><span>Порядок этапов для сравнения · общая шкала для всех эпиков</span><div class="composition-axis"><span style="left:24px" title="0 дн. (0 с)">0</span><span style="left:228px" title="10 дн. (864 000 с)">10</span><span style="left:432px" title="20 дн. (1 728 000 с)">20</span><span style="left:636px" title="30 дн. (2 592 000 с)">30</span></div></div>"
+
+ ❯ tests/composition.test.tsx:71:71
+     69|     expect(markup).toContain('а не история переходов');
+     70|     expect(markup).not.toContain('end-marker');
+     71|     expect(renderToStaticMarkup(<CompositionHeader scale={scale} />)).…
+       |                                                                       ^
+     72|   });
+     73|   it('does not lose unsupported columns that differ only in casing acr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  tests/composition.test.tsx > Excel composition without invented chronology > does not lose unsupported columns that differ only in casing across old cached epics
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/composition.test.tsx:78:70
+     76|     data.epics[1].summary.excelAggregates = { 'cycle time [hf] ПРОВЕРК…
+     77|     const columns = metricsFor(data.epics, 'excel');
+     78|     expect(columns.filter(column => column.id.startsWith('extra:'))).t…
+       |                                                                      ^
+     79|     expect(compositionFor(data.epics[1], columns).totalMs).toBe(3 * DA…
+     80|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  tests/sprint-ui.test.tsx > AC-091: gap touches the status from below with unknown TTM, at all scales
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-ui.test.tsx:15:73
+     13|  }
+     14|  for(const t of Object.values(input.sprintInputs!.tasks))t.sprintIds=[…
+     15|  const d=buildJiraDataset(input,at(30));expect(d.epics[0].ttmMs===null…
+       |                                                                         ^
+     16|  vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stri…
+     17|  const style=document.createElement('style');style.textContent=readFil…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  tests/sprint-ui.test.tsx > AC-090: unknown TTM preserves epic stage colours, unknown hatching and membership gaps
+AssertionError: expected [] to have a length of 17 but got +0
+
+- Expected
++ Received
+
+- 17
++ 0
+
+ ❯ tests/sprint-ui.test.tsx:47:98
+     45|  vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stri…
+     46|  const div=document.createElement('div');document.body.append(div);con…
+     47|  const phases=[...div.querySelectorAll<HTMLElement>('.epic-row .phase-…
+       |                                                                                                  ^
+     48|  for(const stage of STAGES){
+     49|   const bar=phases.find(p=>p.getAttribute('aria-label')===`[HF]\u00a0$…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  tests/sprint-ui.test.tsx > B06/B33: unknown numeric TTM keeps raw phases and sprint axis; overlapping equal names have separate lanes
+AssertionError: expected 2505600000 to be null
+
+- Expected:
+null
+
++ Received:
+2505600000
+
+ ❯ tests/sprint-ui.test.tsx:90:66
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+ FAIL  tests/table-history.test.ts > history provided in a local table > retains new HF stage names without mapping them to old stages
+AssertionError: expected [] to deeply equal [ 'Отложено', 'Проверка идей', …(1) ]
+
+- Expected
++ Received
+
+- [
+-   "Отложено",
+-   "Проверка идей",
+-   "Запланировано",
+- ]
++ []
+
+ ❯ tests/table-history.test.ts:30:97
+     28|     const epic = buildDataset(parseWorkbook(input, 'local.xlsx', AS_OF…
+     29|     const metrics = metricsFor([epic], 'excel');
+     30|     expect(metrics.filter(metric => metric.id.startsWith('extra:')).ma…
+       |                                                                                                 ^
+     31|     expect(metrics.some(metric => metric.id === 'preparation')).toBe(f…
+     32|     expect(metricValue(epic, 'extra:cycle time [hf] проверка идей', 'e…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/10]⎯
+
+ FAIL  tests/table-history.test.ts > history provided in a local table > does not silently discard an unknown stage before the first known active stage
+AssertionError: expected 1382400000 to be null
+
+- Expected:
+null
+
++ Received:
+1382400000
+
+ ❯ tests/table-history.test.ts:93:24
+     91|     ]);
+     92|     const epic = buildDataset(parseWorkbook(input, 'local.xlsx', AS_OF…
+     93|     expect(epic.ttmMs).toBeNull(); expect(epic.warnings.some(w => w.co…
+       |                        ^
+     94|   });
+     95|   it('flags invalid status timestamps and overlapping impediments', ()…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/10]⎯
+
+
+ Test Files  3 failed | 57 passed (60)
+      Tests  10 failed | 433 passed (443)
+   Start at  19:51:46
+   Duration  4.92s (transform 1.97s, setup 0ms, import 7.16s, tests 10.79s, environment 4.40s)

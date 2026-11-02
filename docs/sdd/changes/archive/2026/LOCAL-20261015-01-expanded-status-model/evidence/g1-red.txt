@@ -1,0 +1,58 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-status-model.test.ts tests/independent-stage-metrics.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/expanded-status-model.test.ts (3 tests | 2 failed) 8ms
+     × retains the eight original identities and recognises six distinct additions 4ms
+     × AC-097: sums repeated testing without losing either interval or old stage totals 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/expanded-status-model.test.ts > FR-043/044: expanded status catalogue and independent durations > retains the eight original identities and recognises six distinct additions
+AssertionError: expected 'unknown' to be 'idea-check' // Object.is equality
+
+Expected: "idea-check"
+Received: "unknown"
+
+ ❯ tests/expanded-status-model.test.ts:16:73
+     14|       ['[HF] Запланировано', 'planned'], ['Тестирование эпика', 'epic-…
+     15|     ];
+     16|     for (const [name, kind] of additions) expect(statusInfo(name).kind…
+       |                                                                         ^
+     17|     expect(new Set(STAGES.map(s => s.id)).size).toBe(14);
+     18|     expect(statusInfo('[DF] Реализация').kind).toBe('unknown');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/expanded-status-model.test.ts > FR-043/044: expanded status catalogue and independent durations > AC-097: sums repeated testing without losing either interval or old stage totals
+AssertionError: expected { preparation: 86400000, …(7) } to match object { preparation: 86400000, …(3) }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "epic-testing": 432000000,
+    "implementation": 86400000,
+    "preparation": 86400000,
+-   "release": 0,
+  }
+
+ ❯ tests/expanded-status-model.test.ts:23:28
+     21|     const f = modelHistory([['[HF] Подготовка', 1], ['Тестирование эпи…
+     22|     const epic = calculateTimeline(f.summary, f.history, f.asOf);
+     23|     expect(epic.durations).toMatchObject({ preparation: DAY_MS, implem…
+       |                            ^
+     24|     expect(epic.intervals.filter(s => s.status === 'Тестирование эпика…
+     25|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 7 passed (9)
+   Start at  19:36:54
+   Duration  151ms (transform 71ms, setup 0ms, import 120ms, tests 11ms, environment 0ms)

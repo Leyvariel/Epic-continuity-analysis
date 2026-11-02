@@ -21,7 +21,7 @@ export function compositionFor(epic: EpicTimeline, columns: MetricColumn[]): Com
   const segments: CompositionSegment[] = [], missing: MetricColumn[] = [];
   let offsetMs = 0;
   for (const column of columns) {
-    if (column.id === 'ttm' || column.id === 'open') continue;
+    if (column.id === 'ttm' || column.id === 'ttmWithoutFlag' || column.id === 'open') continue;
     const value = metricValue(epic, column.id, 'excel');
     if (value === null || !Number.isFinite(value) || value < 0) { missing.push(column); continue; }
     const stage = STAGES.find(stage => stage.id === column.id);

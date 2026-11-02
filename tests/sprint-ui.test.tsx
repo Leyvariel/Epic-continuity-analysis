@@ -6,10 +6,15 @@ import {sprintDatasetInputs} from './sprint-dataset-fixture';import {at} from '.
 import {STAGES} from '../shared/statuses';
 import {readFileSync} from 'node:fs';
 const roots:ReturnType<typeof createRoot>[]=[];
+function unknownStart(input:ReturnType<typeof sprintDatasetInputs>){
+ const h=input.histories['jira:1'];h.currentStatus='[HF] Проверка идей';h.statusChanges=[{id:'unknown-start',at:at(2),from:'Discovery вне модели',fromId:'9',to:h.currentStatus,toId:'10'}];
+ h.historyCount=1;h.proof={expected:1,received:1,terminal:true,adapterVersion:'fixture'};input.hierarchy!.nodes['1'].currentStatus=h.currentStatus;
+}
+
 it.each(['known','unknown'] as const)('AC-091: gap touches the status from below with %s TTM, at all scales',async mode=>{
  Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});const input=sprintDatasetInputs();
  if(mode==='unknown'){
-  const h=input.histories['jira:1'];h.currentStatus='[HF] Проверка идей';input.hierarchy!.nodes['1'].currentStatus=h.currentStatus;
+  unknownStart(input);
  }
  for(const t of Object.values(input.sprintInputs!.tasks))t.sprintIds=[];
  const d=buildJiraDataset(input,at(30));expect(d.epics[0].ttmMs===null).toBe(mode==='unknown');
@@ -17,7 +22,7 @@ it.each(['known','unknown'] as const)('AC-091: gap touches the status from below
  const style=document.createElement('style');style.textContent=readFileSync('src/styles.css','utf8');document.body.append(style);
  const div=document.createElement('div');document.body.append(div);const r=createRoot(div);roots.push(r);await act(()=>r.render(<App/>));
  const gap=()=>div.querySelector<HTMLButtonElement>('.epic-row .epic-sprint-gap')!;
- const status=div.querySelector<HTMLElement>(mode==='known'?'.epic-row .status-segment':'.epic-row .phase-fallback')!;
+ const status=div.querySelector<HTMLElement>(mode==='known'?'.epic-row .status-segment':'.epic-row .status-segment[title^="[HF] Проверка идей"]')!;
  const initialColour=status.style.backgroundColor;const originalWidth=parseFloat(gap().style.width);
  for(const [label,pixels] of [['День',26],['Неделя',8],['Месяц',3]] as const){
   await act(()=>[...div.querySelectorAll('button')].find(b=>b.textContent===label)!.click());
@@ -44,9 +49,9 @@ it('AC-090: unknown TTM preserves epic stage colours, unknown hatching and membe
  const d=buildJiraDataset(input,at(30));expect(d.epics[0].ttmMs).toBeNull();
  vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({dataset:d})));
  const div=document.createElement('div');document.body.append(div);const r=createRoot(div);roots.push(r);await act(()=>r.render(<App/>));
- const phases=[...div.querySelectorAll<HTMLElement>('.epic-row .phase-fallback')];expect(phases).toHaveLength(statuses.length);
+ const phases=[...div.querySelectorAll<HTMLElement>('.epic-row .status-segment')];expect(phases).toHaveLength(statuses.length);
  for(const stage of STAGES){
-  const bar=phases.find(p=>p.getAttribute('aria-label')===`[HF]\u00a0${stage.name}`)!;
+  const bar=phases.find(p=>p.getAttribute('aria-label')?.startsWith(`[HF]\u00a0${stage.name} ·`))!;
   const legend=[...div.querySelectorAll<HTMLElement>('.legends i')].find(i=>i.parentElement?.textContent===`${stage.code} ${stage.name}`)!;
   expect(bar.style.backgroundColor,stage.name).toBe(legend.style.backgroundColor);
   expect(bar.classList.contains('hatch')).toBe(false);
@@ -55,7 +60,7 @@ it('AC-090: unknown TTM preserves epic stage colours, unknown hatching and membe
  }
  expect(phases[0].classList.contains('hatch')).toBe(true);expect(phases.at(-2)!.classList.contains('hatch')).toBe(true);
  expect(phases.at(-1)!.classList.contains('hatch')).toBe(true);
- expect(div.querySelectorAll('.epic-sprint-gap.phase-gap').length).toBeGreaterThan(0);
+ expect(div.querySelectorAll('.epic-sprint-gap').length).toBeGreaterThan(0);
  expect(div.querySelector('.unavailable')?.textContent).toContain('TTM неизвестны');
 });
 afterEach(async()=>{for(const r of roots.splice(0))await act(()=>r.unmount());document.body.innerHTML='';vi.restoreAllMocks();});
@@ -85,7 +90,7 @@ it('T008: old Jira cache explicitly has no sprints and does not fetch them',asyn
 });
 it('B06/B33: unknown numeric TTM keeps raw phases and sprint axis; overlapping equal names have separate lanes',async()=>{
  Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});const input=sprintDatasetInputs(),h=input.hierarchy!.nodes['1'].history!;
- h.currentStatus='[HF] Проверка идей';input.histories['jira:1'].currentStatus=h.currentStatus;input.hierarchy!.nodes['1'].currentStatus=h.currentStatus;
+ unknownStart(input);
  input.sprintInputs!.sprints['12']={...input.sprintInputs!.sprints['12'],name:'S11',startDate:at(4),completeDate:at(12)};
  const d=buildJiraDataset(input,at(30));expect(d.epics[0].ttmMs).toBeNull();expect(d.epics[0].ttmState).toBe('indeterminate');
  vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({dataset:d})));const div=document.createElement('div');document.body.append(div);const r=createRoot(div);roots.push(r);await act(()=>r.render(<App/>));
@@ -132,4 +137,14 @@ it('AC-088/089: task display hides outer/boundary empty sprints, keeps whole par
  for(const [label,pixels] of [['День',26],['Месяц',3],['Неделя',8]] as const){await act(()=>[...div.querySelectorAll('button')].find(b=>b.textContent===label)!.click());expect(shown()).toHaveLength(3);expect(parseFloat(shown()[2].style.width)).toBe(7*pixels);}
  await act(()=>shown()[1].focus());expect(div.querySelector('.sprint-details')!.textContent).toContain('S12');
  await click('Свернуть A-1');await click('Раскрыть A-1');await click('Раскрыть A-2');expect(shown()).toHaveLength(3);
+});
+
+it('AC-068: a fully proven Idea Check starts TTM; the existing four gap stages remain unchanged',()=>{
+ const input=sprintDatasetInputs(),h=input.histories['jira:1'];h.currentStatus='[HF] Проверка идей';input.hierarchy!.nodes['1'].currentStatus=h.currentStatus;
+ for(const task of Object.values(input.sprintInputs!.tasks))task.sprintIds=[];
+ const idea=buildJiraDataset(input,at(30));expect(idea.epics[0].ttmMs).toBe(29*86400000);expect(idea.sprintAnalysis!.rows['1'].gaps.length).toBeGreaterThan(0);
+ for(const status of ['[HF] Отложено','[HF] Запланировано','Тестирование эпика','Релиз']){
+  h.currentStatus=status;input.hierarchy!.nodes['1'].currentStatus=status;
+  expect(buildJiraDataset(input,at(30)).sprintAnalysis!.rows['1'].gaps).toEqual([]);
+ }
 });

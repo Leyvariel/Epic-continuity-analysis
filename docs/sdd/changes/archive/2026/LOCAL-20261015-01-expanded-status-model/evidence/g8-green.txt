@@ -1,0 +1,12 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/sprint-ui.test.tsx tests/sprint-flow.test.tsx tests/independent-stage-metrics.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  3 passed (3)
+      Tests  25 passed (25)
+   Start at  19:57:42
+   Duration  1.42s (transform 219ms, setup 0ms, import 354ms, tests 747ms, environment 457ms)

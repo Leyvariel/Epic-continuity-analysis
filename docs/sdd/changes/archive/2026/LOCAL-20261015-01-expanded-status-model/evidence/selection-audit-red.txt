@@ -1,0 +1,33 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/jira-adapter.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/jira-adapter.test.ts (14 tests | 1 failed) 17ms
+     × AC-104: project cannot bypass eligibility 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/jira-adapter.test.ts > Jira Server: фактическая схема метаданных и expand=changelog > AC-104: project cannot bypass eligibility
+AssertionError: expected 'excluded-rejected' to be 'unresolved' // Object.is equality
+
+Expected: "unresolved"
+Received: "excluded-rejected"
+
+ ❯ tests/jira-adapter.test.ts:26:86
+     24|     const issue=await new ServerJiraAdapter({get:vi.fn().mockResolvedV…
+     25|     expect(decideEligibility(issue)).not.toBe('included');
+     26|     if(mode==='project')expect(decideEligibility({...issue,resolution:…
+       |                                                                                      ^
+     27|   });
+     28|   it('сохраняет стабильные id, порядок, flags и доказательство полной …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  20:29:53
+   Duration  194ms (transform 59ms, setup 0ms, import 106ms, tests 17ms, environment 0ms)

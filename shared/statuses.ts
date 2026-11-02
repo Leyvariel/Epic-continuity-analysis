@@ -4,11 +4,17 @@ export const DAY_MS = 86_400_000;
 export const TIME_ZONE = 'Europe/Moscow';
 export const STAGES: { id: Stage; name: string; code: string; color: string; text: string }[] = [
   { id: 'preparation', name: 'Подготовка', code: 'П', color: '#087f45', text: '#fff' },
+  { id: 'idea-check', name: 'Проверка идей', code: 'ПИ', color: '#0e7490', text: '#fff' },
   { id: 'validation', name: 'Валидация', code: 'В', color: '#315ba8', text: '#fff' },
+  { id: 'decided', name: 'Решили делать', code: 'РД', color: '#4d5f8a', text: '#fff' },
+  { id: 'deferred', name: 'Отложено', code: 'Отл', color: '#e2d8c8', text: '#433b30' },
   { id: 'scoring', name: 'Скоринг', code: 'С', color: '#d3d6dc', text: '#252d3a' },
+  { id: 'planned', name: 'Запланировано', code: 'ЗП', color: '#6d5b97', text: '#fff' },
   { id: 'solution', name: 'Проработка решения', code: 'ПР', color: '#af8000', text: '#fff' },
   { id: 'ready', name: 'Готово к реализации', code: 'ГР', color: '#929aa8', text: '#111827' },
   { id: 'implementation', name: 'Реализация', code: 'Р', color: '#b40b16', text: '#fff' },
+  { id: 'epic-testing', name: 'Тестирование эпика', code: 'ТЭ', color: '#0f766e', text: '#fff' },
+  { id: 'release', name: 'Релиз', code: 'Рл', color: '#92400e', text: '#fff' },
   { id: 'experiment', name: 'Эксперимент', code: 'Э', color: '#a452de', text: '#fff' },
   { id: 'evaluation', name: 'Оценка результата', code: 'ОР', color: '#f3ef8b', text: '#36351b' },
 ];
@@ -33,8 +39,12 @@ export function statusInfo(status: string): { kind: StatusKind; code: string; co
   return { kind: 'unknown', code: '?', color: '#d1d5db', text: '#374151' };
 }
 
-export function isActive(kind: StatusKind): kind is Stage {
+export function isStage(kind: StatusKind): kind is Stage {
   return STAGES.some(stage => stage.id === kind);
+}
+
+export function isActive(kind: StatusKind, project = ''): kind is Stage {
+  return isStage(kind) && kind !== 'deferred' && (kind !== 'decided' || project === 'HOTELS');
 }
 
 export function isRejected(resolution: string): boolean {

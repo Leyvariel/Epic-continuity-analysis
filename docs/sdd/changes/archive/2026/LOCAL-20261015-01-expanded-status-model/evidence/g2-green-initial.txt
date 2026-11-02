@@ -1,0 +1,51 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-ttm.test.ts tests/expanded-status-model.test.ts tests/timeline.test.ts tests/initial-open.test.ts tests/jira-domain.test.ts tests/independent-stage-metrics.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/initial-open.test.ts (4 tests | 1 failed) 6ms
+     × только Открыто: календарь есть, TTM ещё не начат 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/initial-open.test.ts > AC-06: Дано первоначальное Открыто → при расчёте оно видно вне TTM > только Открыто: календарь есть, TTM ещё не начат
+AssertionError: expected { preparation: +0, …(13) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "decided": 0,
+  "deferred": 0,
+  "epic-testing": 0,
+  "evaluation": 0,
+  "experiment": 0,
+  "idea-check": 0,
+  "implementation": 0,
+  "planned": 0,
+  "preparation": 0,
+  "ready": 0,
+  "release": 0,
+  "scoring": 0,
+  "solution": 0,
+  "validation": 0,
+}
+
+ ❯ tests/initial-open.test.ts:13:28
+     11|     expect(epic.ttmState).toBe('not-started');
+     12|     expect(epic.ttmMs).toBeNull();
+     13|     expect(epic.durations).toBeNull();
+       |                            ^
+     14|     expect(epic.isOpen).toBe(false);
+     15|     expect(epic.initialOpenIntervals).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 5 passed (6)
+      Tests  1 failed | 53 passed (54)
+   Start at  19:40:01
+   Duration  236ms (transform 265ms, setup 0ms, import 530ms, tests 65ms, environment 0ms)

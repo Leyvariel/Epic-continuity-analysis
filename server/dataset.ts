@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto';
 import type { Dataset, ImportedSelection } from '../shared/types';
 import { calculateTimeline, unavailableTimeline } from './timeline';
 
-/** Pinned legacy-v2 numeric rules; Jira proof requirements belong to jira/dataset.ts. */
+/** Shared timeline rules on proven offline history; Jira proof requirements belong to jira/dataset.ts. */
 export function buildDataset(selection: ImportedSelection, savedAt: string, id: string = randomUUID()): Dataset {
   const epics = selection.epics.map(summary => {
     const history = selection.histories[summary.key];

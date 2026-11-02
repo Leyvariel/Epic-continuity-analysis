@@ -12,6 +12,7 @@ import { collectJiraInputs } from '../server/jira/pipeline';
 import { AppError } from '../server/errors';
 import { fakeGateway, jiraIssue, jiraHistory } from './jira-fixtures';
 import { isJiraDataset, type ImportJobV3 } from '../shared/contracts';
+import { modelHistory } from './status-model-fixtures';
 
 const dirs: string[] = [];
 afterEach(async () => { vi.restoreAllMocks(); for (const dir of dirs.splice(0)) await rm(dir, { recursive: true, force: true }); });
@@ -27,6 +28,15 @@ const invalidInput = () => ({
 const job = (): ImportJobV3 => ({ id: 'job', status: 'queued', total: null, completed: 0, currentKey: null, errors: [], dataset: null, createdAt: AS_OF });
 
 describe('KEYS-PIPELINE: отбор прямого списка', () => {
+  it('AC-103: imports a HOTELS root without a prefix and records the scoped reason', async () => {
+    const gateway=fakeGateway(), f=modelHistory([['Тестирование эпика',2]],{key:'HOTELS-12351',closed:false});
+    gateway.getIssue.mockResolvedValue(jiraIssue({key:f.history.key,flow:'unknown',currentStatus:'Тестирование эпика',currentStatusId:'22135',created:f.history.historyStart,updated:f.asOf}));
+    gateway.getHistory.mockResolvedValue(jiraHistory({...f.history,proof:{expected:0,received:0,terminal:true,adapterVersion:'test'}}));
+    const inputs=await collectJiraInputs({kind:'keys',parsed:parseKeyCandidates('HOTELS-12351')},{...job(),createdAt:f.asOf},async()=>gateway,new AbortController().signal,()=>f.asOf);
+    expect(inputs.epics.map(e=>e.key)).toEqual(['HOTELS-12351']);
+    expect(inputs.audit.entries[0]).toMatchObject({decision:'included',reason:expect.stringContaining('HOTELS')});
+    expect(buildJiraDataset(inputs,f.asOf).epics[0].ttmMs).toBe(2*86400000);
+  });
   it('AC-021: только ошибочные строки дают локальный набор без gateway', async () => {
     const factory = vi.fn();
     const state = job();

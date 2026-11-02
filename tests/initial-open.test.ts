@@ -10,7 +10,8 @@ describe('AC-06: Дано первоначальное Открыто → при
     const epic = calculateTimeline(summary, snapshot({ currentStatus: '[HF] Открыт', statusChanges: [] }), AS_OF);
     expect(epic.ttmState).toBe('not-started');
     expect(epic.ttmMs).toBeNull();
-    expect(epic.durations).toBeNull();
+    expect(Object.values(epic.durations!)).toEqual(expect.arrayContaining([0]));
+    expect(Object.values(epic.durations!).every(value => value === 0)).toBe(true);
     expect(epic.isOpen).toBe(false);
     expect(epic.initialOpenIntervals).toHaveLength(1);
     expect(displayIntervals(epic)[0]).toMatchObject({ role: 'initial-open', code: 'Открыто', durationMs: 17 * DAY_MS, openEnded: false });

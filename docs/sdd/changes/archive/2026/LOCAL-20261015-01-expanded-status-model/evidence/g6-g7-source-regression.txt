@@ -1,0 +1,12 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-sources.test.ts tests/cache-v3.test.ts tests/hierarchy-cache.test.ts tests/keys-api.test.ts tests/table-history.test.ts tests/hierarchy-xlsx.test.ts tests/import.test.ts tests/composition.test.tsx
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  19:54:31
+   Duration  557ms (transform 863ms, setup 0ms, import 1.85s, tests 605ms, environment 1ms)

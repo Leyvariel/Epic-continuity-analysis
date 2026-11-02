@@ -1,0 +1,27 @@
+WARNING: tasks.md: affected repository '.' has no task
+ERROR: missing required file: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/design.md
+ERROR: missing required file: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/tasks.md
+ERROR: missing required file: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/checklists/requirements.md
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/design.md: change_id differs from proposal.md
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/tasks.md: change_id differs from proposal.md
+ERROR: tasks.md: no valid tasks found
+ERROR: design.md: affected repository '.' is not mentioned
+ERROR: tasks.md: AC-095 is not covered by any task
+ERROR: tasks.md: AC-096 is not covered by any task
+ERROR: tasks.md: AC-097 is not covered by any task
+ERROR: tasks.md: AC-098 is not covered by any task
+ERROR: tasks.md: AC-099 is not covered by any task
+ERROR: tasks.md: AC-100 is not covered by any task
+ERROR: tasks.md: FR-043 is not covered by any task
+ERROR: tasks.md: FR-044 is not covered by any task
+ERROR: tasks.md: FR-045 is not covered by any task
+ERROR: design.md: AC-095 is not traced
+ERROR: design.md: AC-096 is not traced
+ERROR: design.md: AC-097 is not traced
+ERROR: design.md: AC-098 is not traced
+ERROR: design.md: AC-099 is not traced
+ERROR: design.md: AC-100 is not traced
+ERROR: design.md: FR-043 is not traced
+ERROR: design.md: FR-044 is not traced
+ERROR: design.md: FR-045 is not traced
+FAILED: 25 error(s), 1 warning(s)

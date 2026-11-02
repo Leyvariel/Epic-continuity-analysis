@@ -1,5 +1,5 @@
 import type { HierarchyInput, Hierarchy } from './hierarchy';
-export type Stage = 'preparation' | 'validation' | 'scoring' | 'solution' | 'ready' | 'implementation' | 'experiment' | 'evaluation';
+export type Stage = 'preparation' | 'idea-check' | 'validation' | 'decided' | 'deferred' | 'scoring' | 'planned' | 'solution' | 'ready' | 'implementation' | 'epic-testing' | 'release' | 'experiment' | 'evaluation';
 export type StatusKind = Stage | 'open' | 'closed' | 'unknown';
 export type Quality = 'complete' | 'partial';
 
@@ -112,9 +112,14 @@ export interface EpicTimeline {
   start: string | null;
   end: string | null;
   ttmMs: number | null;
+  ttmWithoutFlagMs: number | null;
+  ttmFlaggedMs: number | null;
+  excludedDeferredMs: number | null;
   isOpen: boolean;
   returnToOpenMs: number | null;
   durations: Record<Stage, number> | null;
+  /** Complete own history, including pre-TTM time; null when its chain is not proven. */
+  provenIntervals: StatusInterval[] | null;
   intervals: StatusInterval[];
   impediments: ImpedimentInterval[];
   impedimentMs: number | null;

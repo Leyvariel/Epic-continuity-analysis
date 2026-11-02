@@ -7,7 +7,7 @@ export const HEAT_COLORS: Record<Heat, string> = {
 };
 
 // Lower bounds are inclusive, except scoring, whose 30-day boundary is explicit.
-export const HEAT_BANDS: Record<Exclude<Stage, 'scoring'> | 'ttm', readonly (readonly [number, Heat])[]> = {
+export const HEAT_BANDS: Partial<Record<Stage | 'ttm', readonly (readonly [number, Heat])[]>> = {
   ttm: [[0, 'yellow'], [60, 'orange'], [100, 'red'], [200, 'burgundy']],
   preparation: [[0, 'blue'], [1, 'green'], [10, 'yellow'], [20, 'orange'], [30, 'red'], [50, 'burgundy']],
   validation: [[0, 'blue'], [1, 'green'], [20, 'orange'], [30, 'red'], [50, 'burgundy']],
@@ -18,8 +18,8 @@ export const HEAT_BANDS: Record<Exclude<Stage, 'scoring'> | 'ttm', readonly (rea
   evaluation: [[0, 'blue'], [1, 'green'], [10, 'yellow'], [20, 'orange'], [30, 'red'], [40, 'burgundy']],
 };
 
-export function heatFor(metric: Stage | 'ttm' | 'open', days: number | null): Heat {
-  if (days === null || !Number.isFinite(days) || days < 0 || metric === 'open') return 'none';
+export function heatFor(metric: Stage | 'ttm' | 'ttmWithoutFlag' | 'open', days: number | null): Heat {
+  if (days === null || !Number.isFinite(days) || days < 0 || metric === 'open' || metric === 'ttmWithoutFlag') return 'none';
   if (metric === 'scoring') return days > 30 ? 'orange' : 'none';
-  return HEAT_BANDS[metric].findLast(([lower]) => days >= lower)?.[1] ?? 'none';
+  return HEAT_BANDS[metric]?.findLast(([lower]) => days >= lower)?.[1] ?? 'none';
 }

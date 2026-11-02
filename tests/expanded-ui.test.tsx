@@ -1,0 +1,32 @@
+// @vitest-environment jsdom
+import { act } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import { App } from '../src/App';
+import { calculateTimeline } from '../server/timeline';
+import { buildDataset } from '../server/service';
+import { parseWorkbook } from '../server/import';
+import { historyWorkbook, AS_OF } from './fixtures';
+import { modelHistory, modelAt } from './status-model-fixtures';
+let el:HTMLDivElement,root:Root;
+beforeEach(()=>{Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});el=document.createElement('div');document.body.append(el);root=createRoot(el);});
+afterEach(async()=>{await act(async()=>root.unmount());el.remove();vi.restoreAllMocks();});
+const button=(text:string)=>[...el.querySelectorAll('button')].find(b=>b.textContent===text)!;
+it('AC-115: shows 15/5, keeps nulls last in either sort direction, explains excluded time',async()=>{
+ const f=modelHistory([['[HF] Запланировано',10],['[HF] Проработка решения',5]],{flagChanges:[{id:'f',at:modelAt(10),from:true,to:false}]});
+ const first=calculateTimeline({...f.summary,key:'HOTELS-2'},f.history,f.asOf);
+ const unknown=calculateTimeline({...f.summary,key:'HOTELS-1'},{...f.history,flagAvailable:false},f.asOf);
+ const data=buildDataset(parseWorkbook(historyWorkbook(),'fixture.xlsx',AS_OF),AS_OF);data.epics=[unknown,first];
+ vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({dataset:data})));
+ await act(async()=>root.render(<App/>));
+ const sort=el.querySelector<HTMLSelectElement>('select[aria-label="Сортировка"]')!;
+ await act(async()=>{sort.value='ttmWithoutFlag';sort.dispatchEvent(new Event('change',{bubbles:true}));});
+ expect([...el.querySelectorAll('.epic-row .epic-title strong')].map(n=>n.textContent?.replace('⚠',''))).toEqual(['HOTELS-2','HOTELS-1']);
+ expect([...el.querySelectorAll('.epic-row')][0].querySelector('[data-metric="ttmWithoutFlag"]')?.textContent).toBe('5,00');
+ expect([...el.querySelectorAll('.epic-row')][0].querySelector('[data-metric="ttm"]')?.textContent).toBe('15,00');
+ await act(async()=>el.querySelector<HTMLButtonElement>('[aria-label="Изменить направление сортировки"]')!.click());
+ expect(el.querySelector('.epic-row .epic-title strong')?.textContent).toBe('HOTELS-2');
+ await act(async()=>button('Правила расчёта').click());
+ expect(el.querySelector('[role="dialog"]')?.textContent).toContain('Отложено');
+ expect(el.querySelector('[role="dialog"]')?.textContent).toContain('TTM без флага');
+});

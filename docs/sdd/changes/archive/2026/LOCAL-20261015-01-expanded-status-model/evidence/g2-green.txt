@@ -1,0 +1,12 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-ttm.test.ts tests/expanded-status-model.test.ts tests/timeline.test.ts tests/initial-open.test.ts tests/jira-domain.test.ts tests/independent-stage-metrics.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  6 passed (6)
+      Tests  54 passed (54)
+   Start at  19:40:21
+   Duration  249ms (transform 362ms, setup 0ms, import 623ms, tests 74ms, environment 0ms)

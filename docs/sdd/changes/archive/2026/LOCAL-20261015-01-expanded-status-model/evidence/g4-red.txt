@@ -1,0 +1,212 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-metrics.test.ts tests/expanded-ui.test.tsx
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/expanded-metrics.test.ts (7 tests | 7 failed) 9ms
+     × orders the full observed catalogue, including returns, without sorting calendar transitions 5ms
+     × hides all absent stages and initial Open; retains zero-length observations 1ms
+     × keeps observed names in partial data without inventing durations or future states 0ms
+     × keeps the two calculated values distinct and never mixes history into aggregate values 0ms
+     × orders known aggregates and retains unknown names, but suppresses empty template columns 1ms
+     × marks Deferred inside the calendar as excluded, not pre-TTM 1ms
+     × adds no heat thresholds for new statuses or the flagless metric 0ms
+ ❯ tests/expanded-ui.test.tsx (1 test | 1 failed) 114ms
+   × AC-115: shows 15/5, keeps nulls last in either sort direction, explains excluded time 113ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/expanded-metrics.test.ts > FR-045/046/048: observed columns and separate TTM metrics > orders the full observed catalogue, including returns, without sorting calendar transitions
+AssertionError: expected [ 'ttm', 'open', 'preparation', …(13) ] to deeply equal [ 'ttm', 'ttmWithoutFlag', …(15) ]
+
+- Expected
++ Received
+
+@@ -1,8 +1,7 @@
+  [
+    "ttm",
+-   "ttmWithoutFlag",
+    "open",
+    "preparation",
+    "idea-check",
+    "validation",
+    "decided",
+
+ ❯ tests/expanded-metrics.test.ts:15:52
+     13|     const order=['preparation','idea-check','validation','decided','de…
+     14|     const r=epic([['Открыто',1],...STAGES.slice().reverse().map(s=>[s.…
+     15|     expect(metricsFor([r],'history').map(c=>c.id)).toEqual(['ttm','ttm…
+       |                                                    ^
+     16|     expect(r.intervals[0].status).toBe('Оценка результата');
+     17|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  tests/expanded-metrics.test.ts > FR-045/046/048: observed columns and separate TTM metrics > hides all absent stages and initial Open; retains zero-length observations
+AssertionError: expected [ 'ttm', 'open', 'preparation', …(13) ] to deeply equal [ 'ttm', 'ttmWithoutFlag', …(2) ]
+
+- Expected
++ Received
+
+  [
+    "ttm",
+-   "ttmWithoutFlag",
++   "open",
++   "preparation",
++   "idea-check",
++   "validation",
++   "decided",
++   "deferred",
++   "scoring",
++   "planned",
++   "solution",
++   "ready",
+    "implementation",
++   "epic-testing",
+    "release",
++   "experiment",
++   "evaluation",
+  ]
+
+ ❯ tests/expanded-metrics.test.ts:20:52
+     18|   it('hides all absent stages and initial Open; retains zero-length ob…
+     19|     const r=epic([['Открыто',10],['[HF] Реализация',2],['Релиз',0]]);
+     20|     expect(metricsFor([r],'history').map(c=>c.id)).toEqual(['ttm','ttm…
+       |                                                    ^
+     21|     expect(metricValue(r,'release','history')).toBe(0);
+     22|     expect(metricsFor([epic([['Открыто',10]])],'history').some(c=>c.id…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  tests/expanded-metrics.test.ts > FR-045/046/048: observed columns and separate TTM metrics > keeps observed names in partial data without inventing durations or future states
+AssertionError: expected [ 'ttm', 'open', 'preparation', …(13) ] to deeply equal [ 'ttm', 'ttmWithoutFlag', 'release' ]
+
+- Expected
++ Received
+
+  [
+    "ttm",
+-   "ttmWithoutFlag",
++   "open",
++   "preparation",
++   "idea-check",
++   "validation",
++   "decided",
++   "deferred",
++   "scoring",
++   "planned",
++   "solution",
++   "ready",
++   "implementation",
++   "epic-testing",
+    "release",
++   "experiment",
++   "evaluation",
+  ]
+
+ ❯ tests/expanded-metrics.test.ts:27:52
+     25|     const r=unavailableTimeline(modelHistory([['Открыто',1]]).summary,…
+     26|     r.transitions=[{id:'1',at:modelAt(1),from:'Открыто',to:'Релиз'},{i…
+     27|     expect(metricsFor([r],'history').map(c=>c.id)).toEqual(['ttm','ttm…
+       |                                                    ^
+     28|     expect(metricValue(r,'release','history')).toBeNull();
+     29|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  tests/expanded-metrics.test.ts > FR-045/046/048: observed columns and separate TTM metrics > keeps the two calculated values distinct and never mixes history into aggregate values
+AssertionError: expected null to be 432000000 // Object.is equality
+
+- Expected:
+432000000
+
++ Received:
+null
+
+ ❯ tests/expanded-metrics.test.ts:34:55
+     32|     const r=calculateTimeline(f.summary,f.history,f.asOf);
+     33|     expect(metricValue(r,'ttm','history')).toBe(15*DAY_MS);
+     34|     expect(metricValue(r,'ttmWithoutFlag','history')).toBe(5*DAY_MS);
+       |                                                       ^
+     35|     expect(metricValue(r,'ttmWithoutFlag','excel')).toBeNull();
+     36|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  tests/expanded-metrics.test.ts > FR-045/046/048: observed columns and separate TTM metrics > orders known aggregates and retains unknown names, but suppresses empty template columns
+AssertionError: expected [ 'Time to Market', …(5) ] to deeply equal [ 'Time to Market', …(4) ]
+
+- Expected
++ Received
+
+  [
+    "Time to Market",
+-   "TTM без флага",
++   "Возврат в открыто",
++   "Релиз",
++   "Эксперимент",
+    "Отложено",
+-   "Релиз",
+    "Особый этап",
+  ]
+
+ ❯ tests/expanded-metrics.test.ts:41:33
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  tests/expanded-metrics.test.ts > FR-045/046/048: observed columns and separate TTM metrics > marks Deferred inside the calendar as excluded, not pre-TTM
+AssertionError: expected 'ttm' to be 'excluded' // Object.is equality
+
+Expected: "excluded"
+Received: "ttm"
+
+ ❯ tests/expanded-metrics.test.ts:47:68
+     45|   it('marks Deferred inside the calendar as excluded, not pre-TTM', ()…
+     46|     const r=epic([['[HF] Реализация',5],['[HF] Отложено',60],['Релиз',…
+     47|     expect(displayIntervals(r).find(s=>s.kind==='deferred')?.role).toB…
+       |                                                                    ^
+     48|     expect(displayIntervals(r).reduce((sum,s)=>sum+s.durationMs,0)).to…
+     49|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  tests/expanded-metrics.test.ts > FR-045/046/048: observed columns and separate TTM metrics > adds no heat thresholds for new statuses or the flagless metric
+TypeError: Cannot read properties of undefined (reading 'findLast')
+ ❯ heatFor shared/heatmap.ts:24:29
+     22|   if (days === null || !Number.isFinite(days) || days < 0 || metric ==…
+     23|   if (metric === 'scoring') return days > 30 ? 'orange' : 'none';
+     24|   return HEAT_BANDS[metric].findLast(([lower]) => days >= lower)?.[1] …
+       |                             ^
+     25| }
+     26|
+ ❯ tests/expanded-metrics.test.ts:51:126
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  tests/expanded-ui.test.tsx > AC-115: shows 15/5, keeps nulls last in either sort direction, explains excluded time
+TypeError: Cannot read properties of undefined (reading 'findLast')
+ ❯ heatFor shared/heatmap.ts:24:29
+     22|   if (days === null || !Number.isFinite(days) || days < 0 || metric ==…
+     23|   if (metric === 'scoring') return days > 30 ? 'orange' : 'none';
+     24|   return HEAT_BANDS[metric].findLast(([lower]) => days >= lower)?.[1] …
+       |                             ^
+     25| }
+     26|
+ ❯ src/App.tsx:231:121
+ ❯ src/App.tsx:230:20
+ ❯ TimelineTable src/App.tsx:226:14
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:28571:20
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:8030:22
+ ❯ updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10569:19
+ ❯ beginWork node_modules/react-dom/cjs/react-dom-client.development.js:12205:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  8 failed (8)
+   Start at  19:44:46
+   Duration  949ms (transform 207ms, setup 0ms, import 345ms, tests 123ms, environment 458ms)

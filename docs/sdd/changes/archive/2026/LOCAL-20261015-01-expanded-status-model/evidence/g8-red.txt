@@ -1,0 +1,29 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/sprint-ui.test.tsx tests/sprint-flow.test.tsx tests/independent-stage-metrics.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-ui.test.tsx (11 tests | 1 failed) 743ms
+   × AC-090: unknown TTM preserves epic stage colours, unknown hatching and membership gaps 32ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-ui.test.tsx > AC-090: unknown TTM preserves epic stage colours, unknown hatching and membership gaps
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/sprint-ui.test.tsx:64:57
+     62|  expect(phases.at(-1)!.classList.contains('hatch')).toBe(true);
+     63|  expect(div.querySelectorAll('.epic-sprint-gap').length).toBeGreaterTh…
+     64|  expect(div.querySelector('.unavailable')?.textContent).toContain('TTM…
+       |                                                         ^
+     65| });
+     66| afterEach(async()=>{for(const r of roots.splice(0))await act(()=>r.unm…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 24 passed (25)
+   Start at  19:55:41
+   Duration  1.42s (transform 212ms, setup 0ms, import 352ms, tests 766ms, environment 459ms)

@@ -1,0 +1,11 @@
+ERROR: proposal.md: status must be approved for --ready
+ERROR: design.md: status must be approved for --ready
+ERROR: tasks.md: status must be approved for --ready
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/specs/dataset-lifecycle.md: status must be approved for --ready
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/specs/legacy-compatibility.md: status must be approved for --ready
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/specs/source-selection.md: status must be approved for --ready
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/specs/sprint-continuity.md: status must be approved for --ready
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/specs/timeline.md: status must be approved for --ready
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/specs/visualization.md: status must be approved for --ready
+ERROR: requirements checklist is not complete
+FAILED: 10 error(s), 0 warning(s)

@@ -1,0 +1,61 @@
+WARNING: tasks.md: affected repository '.' has no task
+ERROR: missing required file: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/design.md
+ERROR: missing required file: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/tasks.md
+ERROR: missing required file: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/checklists/requirements.md
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/design.md: change_id differs from proposal.md
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261015-01-expanded-status-model/tasks.md: change_id differs from proposal.md
+ERROR: tasks.md: no valid tasks found
+ERROR: design.md: affected repository '.' is not mentioned
+ERROR: tasks.md: AC-003 is not covered by any task
+ERROR: tasks.md: AC-029 is not covered by any task
+ERROR: tasks.md: AC-030 is not covered by any task
+ERROR: tasks.md: AC-031 is not covered by any task
+ERROR: tasks.md: AC-032 is not covered by any task
+ERROR: tasks.md: AC-035 is not covered by any task
+ERROR: tasks.md: AC-036 is not covered by any task
+ERROR: tasks.md: AC-037 is not covered by any task
+ERROR: tasks.md: AC-095 is not covered by any task
+ERROR: tasks.md: AC-096 is not covered by any task
+ERROR: tasks.md: AC-097 is not covered by any task
+ERROR: tasks.md: AC-098 is not covered by any task
+ERROR: tasks.md: AC-099 is not covered by any task
+ERROR: tasks.md: AC-100 is not covered by any task
+ERROR: tasks.md: AC-101 is not covered by any task
+ERROR: tasks.md: AC-102 is not covered by any task
+ERROR: tasks.md: AC-103 is not covered by any task
+ERROR: tasks.md: AC-104 is not covered by any task
+ERROR: tasks.md: AC-105 is not covered by any task
+ERROR: tasks.md: AC-106 is not covered by any task
+ERROR: tasks.md: FR-005 is not covered by any task
+ERROR: tasks.md: FR-030 is not covered by any task
+ERROR: tasks.md: FR-043 is not covered by any task
+ERROR: tasks.md: FR-044 is not covered by any task
+ERROR: tasks.md: FR-045 is not covered by any task
+ERROR: tasks.md: FR-046 is not covered by any task
+ERROR: design.md: AC-003 is not traced
+ERROR: design.md: AC-029 is not traced
+ERROR: design.md: AC-030 is not traced
+ERROR: design.md: AC-031 is not traced
+ERROR: design.md: AC-032 is not traced
+ERROR: design.md: AC-035 is not traced
+ERROR: design.md: AC-036 is not traced
+ERROR: design.md: AC-037 is not traced
+ERROR: design.md: AC-095 is not traced
+ERROR: design.md: AC-096 is not traced
+ERROR: design.md: AC-097 is not traced
+ERROR: design.md: AC-098 is not traced
+ERROR: design.md: AC-099 is not traced
+ERROR: design.md: AC-100 is not traced
+ERROR: design.md: AC-101 is not traced
+ERROR: design.md: AC-102 is not traced
+ERROR: design.md: AC-103 is not traced
+ERROR: design.md: AC-104 is not traced
+ERROR: design.md: AC-105 is not traced
+ERROR: design.md: AC-106 is not traced
+ERROR: design.md: FR-005 is not traced
+ERROR: design.md: FR-030 is not traced
+ERROR: design.md: FR-043 is not traced
+ERROR: design.md: FR-044 is not traced
+ERROR: design.md: FR-045 is not traced
+ERROR: design.md: FR-046 is not traced
+FAILED: 59 error(s), 1 warning(s)

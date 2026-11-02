@@ -46,7 +46,11 @@ h1 { margin: 9px 0 6px; font-size: 29px; font-weight: 650; letter-spacing: -.7px
 .timeline-header, .epic-row, .error-row { display: flex; }
 .timeline-header { position: sticky; top: 0; height: 94px; z-index: 6; box-shadow: 0 1px 0 #cbd2dd; }
 .left-area { position: sticky; left: 0; width: var(--left-width); flex-shrink: 0; z-index: 3; background: white; box-shadow: 3px 0 6px #2c41611c; border-right: 2px solid #bdc7d6; }
-.metric-grid { display: grid; grid-template-columns: minmax(190px, 3.6fr) repeat(var(--metric-count, 10), minmax(0, 1fr)); }
+.metric-grid { display: grid; grid-template-columns: minmax(240px, 3.6fr) repeat(var(--metric-count, 10), minmax(52px, 1fr)); }
+.wide-metrics .left-area { position: sticky; left: calc(240px - var(--left-width)); }
+.wide-metrics .epic-heading, .wide-metrics .related-title, .wide-metrics .key-heading { position: sticky; left: 0; z-index: 4; background: #fff; }
+.wide-metrics .key-heading { background: #eef1f6; }
+.excluded-ttm { border-bottom: 3px dashed #6c5940 !important; }
 .timeline-header .left-area { z-index: 8; background: #eef1f6; }
 .timeline-header button { border: 0; border-radius: 0; border-right: 1px solid #d4dbe5; background: transparent; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 6px 2px; gap: 6px; overflow: hidden; }
 .timeline-header button b { font-size: 13px; }
@@ -95,6 +99,7 @@ h1 { margin: 9px 0 6px; font-size: 29px; font-weight: 650; letter-spacing: -.7px
 .flag-callout { position: absolute; top: -2px; font-size: 15px; padding: 0; border: 0; background: transparent; color: #a15d0a; }
 .ongoing-flag { border-right: 1px dashed #a7651d; }
 .unavailable { display: inline-block; margin: 65px 14px 0; padding: 7px 10px; font-size: 10px; color: #7a8290; border: 1px dashed #c9ced8; }
+.proven-history-warning { position: absolute; top: 122px; left: 14px; margin: 0; padding: 2px 6px; z-index: 3; background: #fff; }
 .calendar-placeholder { padding: 35px 20px; font-size: 12px; color: #79859a; }
 .calendar-body.no-history { background-image: none; background-color: #fafbfc; }
 .selected-row .epic-title { background: #eaf0ff; box-shadow: inset 3px 0 #587bd0; }
@@ -170,7 +175,9 @@ dd { margin: 0; overflow-wrap: anywhere; }
 @media (min-width: 1700px) { :root { --left-width: 930px; } .metric { font-size: 12px; } }
 @media (max-width: 1150px) { .app { padding: 20px 16px 0; } .app-header { align-items: flex-start; } .actions { justify-content: flex-end; max-width: 350px; } .dataset-meta { gap: 20px; } .dataset-meta strong { font-size: 19px; } .source-line { flex-wrap: wrap; gap: 4px; } .source-line > span:first-child { max-width: 100%; } .legend-name { display: none; } .toolbar { flex-wrap: wrap; gap: 10px; } }
 @media (max-width: 800px) { :root { --left-width: 650px; } .app-header { flex-direction: column; gap: 15px; } .actions { max-width: none; justify-content: flex-start; } .dataset-meta { flex-wrap: wrap; } .dataset-meta .snapshot { margin-left: 0; } .timeline-scroll { min-height: 400px; } .left-area { position: relative; } .table-note { display: block; } .table-note > span { display: block; } h1 { font-size: 26px; } }
-/* Related elements share the calendar, without numeric metric cells. */
+/* Related elements share the same columns and calendar; their own totals never roll up. */
+.related-metric { display: flex; align-items: center; justify-content: center; border-right: 1px solid #e5e9ef; background: #f9fafc; min-width: 0; }
+.related-row .metric-grid { grid-template-rows: minmax(94px, auto); }
 .disclosure { width: 26px; height: 28px; padding: 0; flex-shrink: 0; font-size: 18px; }
 .root-disclosure { position: absolute; left: 3px; top: 40px; z-index: 4; }
 .left-area:has(.root-disclosure) .epic-title { padding-left: 34px; }
@@ -213,3 +220,6 @@ dd { margin: 0; overflow-wrap: anywhere; }
 .epic-sprint-gap:hover { background: #111827; }
 .epic-sprint-gap:focus-visible { outline: 2px solid #1e56a0; outline-offset: 1px; }
 .legends i.gap-swatch { height: 5px; background: #374151; border-radius: 0; }
+
+.epic-heading { position: relative; min-width: 0; background: #fff; }
+.epic-heading .epic-title { width: 100%; height: 100%; }

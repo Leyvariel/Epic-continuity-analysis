@@ -1,0 +1,12 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/hotels-status-replay.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  20:29:00
+   Duration  147ms (transform 62ms, setup 0ms, import 72ms, tests 3ms, environment 0ms)

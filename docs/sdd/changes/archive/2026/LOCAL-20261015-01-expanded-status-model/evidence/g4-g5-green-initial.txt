@@ -1,0 +1,12 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-metrics.test.ts tests/expanded-ui.test.tsx tests/expanded-hierarchy.test.ts tests/hierarchy-ui.test.tsx
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  4 passed (4)
+      Tests  15 passed (15)
+   Start at  19:50:17
+   Duration  1.52s (transform 552ms, setup 0ms, import 913ms, tests 680ms, environment 980ms)

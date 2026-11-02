@@ -8,6 +8,7 @@ import { AppError } from '../errors';
 import { boardProfileSchema, readBoard } from './board';
 import { collectPages } from './pagination';
 import { HIERARCHY_LIMITS } from '../../shared/hierarchy';
+import { hasHotelsStatusException } from '../selection';
 
 export const profileSchema = z.object({ version: z.literal('9.12.10'), epicTypeIds: z.array(z.string()).min(1), flagFieldId: z.string().regex(/^customfield_\d+$/), flagOptionId: z.string(), historyMode: z.literal('issue-expand'), flowRule: z.literal('status-prefix'), boards: z.array(boardProfileSchema).optional() });
 export type JiraProfile = z.infer<typeof profileSchema>;
@@ -49,7 +50,9 @@ export class ServerJiraAdapter implements JiraGateway {
     const raw = schemaParse(rawIssue, await this.client.get(this.issuePath(idOrKey), { fields: this.fields() }, signal));
     const status = normalize(raw.fields.status.name);
     const matches = [...status.matchAll(/\[(HF|DF)\]/gi)];
-    const flow = matches.length === 1 && /^\[(HF|DF)\]/i.test(status) ? matches[0][1].toUpperCase() as 'HF' | 'DF' : 'unknown';
+    const isEpic = this.profile.epicTypeIds.includes(raw.fields.issuetype.id);
+    const flow = matches.length === 1 && /^\[(HF|DF)\]/i.test(status) ? matches[0][1].toUpperCase() as 'HF' | 'DF'
+      : matches.length === 0 && hasHotelsStatusException({ isEpic, key: raw.key, currentStatus: status, currentStatusId: raw.fields.status.id }) ? 'HF' : 'unknown';
     const links: NonNullable<JiraIssue['links']> = [], hierarchyWarnings: NonNullable<JiraIssue['hierarchyWarnings']> = [];
     let linksKnown = Array.isArray(raw.fields.issuelinks);
     const target = issueReference;
@@ -64,7 +67,6 @@ export class ServerJiraAdapter implements JiraGateway {
         links.push(label === 'contains' ? { parent: raw.id, child: other.id, childKey: other.key } : { parent: other.id, child: raw.id, childKey: raw.key });
       }
     }
-    const isEpic = this.profile.epicTypeIds.includes(raw.fields.issuetype.id);
     if (isEpic && raw.fields.issuetype.subtask !== true) {
       try {
         // Epic Link membership is separate from issuelinks, including in the Jira UI.
