@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "checks": [
+    "Mixed: 3 exact days cover 3 of 14; two gaps; descendants, day/week/month and scrolling",
+    "Reset: cancel, narrow modal, server error, successful deletion and empty reload on disposable cache only",
+    "New offline workbook imports and persists after reset",
+    "Full cycle without sprints: 29 days minus 3 active = 26 days; exact sources visible",
+    "Main saved HOTELS-13142: 13.93 days, August realization gap visible; no main reset/import"
+  ],
+  "errors": []
+}

@@ -1,10 +1,13 @@
 import { canonical, DAY_MS, isStage, normalize, STAGES, statusInfo } from './statuses';
 import type { EpicTimeline, Stage, StatusChange } from './types';
+import type {SprintAnalysis} from './sprints';
 import type { Hierarchy, HierarchyNode } from './hierarchy';
-import { eligibleHierarchyIds } from './hierarchy-view';
 
-export type Metric = Stage | 'ttm' | 'ttmWithoutFlag' | 'open' | `extra:${string}` | `status:${string}`;
+export type Metric = Stage | 'sprintFocus' | 'ttm' | 'ttmWithoutFlag' | 'open' | `extra:${string}` | `status:${string}`;
 export type MetricsSource = 'history' | 'excel';
+export interface MetricContext {sprintAnalysis?: SprintAnalysis; hierarchy?: Pick<Hierarchy, 'roots'>}
+export const focusFor = (epic: EpicTimeline, context?: MetricContext) => context?.sprintAnalysis?.rows[context.hierarchy?.roots[epic.summary.key] ?? '']?.focus;
+export const FOCUS_METRIC: MetricColumn = {id:'sprintFocus',code:'БР',name:'Без работы'};
 export interface MetricColumn { id: Metric; code: string; name: string }
 export const TTM_LABELS = ['[hf] time to market', 'time to market', 'ttm', 'значение ттм'];
 export const PREVIOUS_TTM_LABEL = 'ттм на начало недели';
@@ -28,11 +31,9 @@ function hasReturn(statuses: string[]): boolean {
   for (const status of statuses) { if (isOpenStatus(status) && leftOpen) return true; if (!isOpenStatus(status)) leftOpen = true; }
   return false;
 }
-function statusColumn(status: string, allowRaw: boolean): MetricColumn | undefined {
+function statusColumn(status: string): MetricColumn | undefined {
   const kind = statusInfo(status).kind;
-  if (isStage(kind)) return STAGES.find(s => s.id === kind);
-  if (kind === 'closed' || isOpenStatus(status) || !allowRaw) return undefined;
-  return { id: `status:${canonical(status)}`, name: normalize(status), code: '·' };
+  return isStage(kind) ? STAGES.find(s => s.id === kind) : undefined;
 }
 function aggregateColumn(label: string): MetricColumn | undefined {
   const name = canonical(label);
@@ -41,30 +42,19 @@ function aggregateColumn(label: string): MetricColumn | undefined {
   if (isOpenStatus(status)) return undefined;
   return STAGES.find(s => canonical(s.name) === status) ?? { id: `extra:${name}`, code: '?', name: normalize(label).replace(/^cycle time\s*\[hf\]\s*/i, '') };
 }
-export function metricsFor(epics: EpicTimeline[], source: MetricsSource, hierarchy?: Hierarchy): MetricColumn[] {
+export function metricsFor(epics: EpicTimeline[], source: MetricsSource, withSprintFocus=false): MetricColumn[] {
   const columns = new Map<Metric, MetricColumn>();
   const add = (column: MetricColumn | undefined) => { if (column && !columns.has(column.id)) columns.set(column.id,column); };
   if (source === 'history') {
+    // Only source hypotheses define numeric columns; descendants keep their own calendar bars.
     for (const epic of epics) {
       if (epic.ttmState === 'not-present') continue;
       const statuses = observedStatuses(epic.transitions,epic.metadata?.currentStatus,epic.asOf);
-      for (const status of statuses) add(statusColumn(status,false));
+      for (const status of statuses) add(statusColumn(status));
       if (epic.intervals.some(i => i.kind === 'open') || epic.returnToOpenMs !== null && epic.returnToOpenMs > 0 ||
         epic.ttmState === 'indeterminate' && hasReturn(statuses)) add(BASE_METRICS[2]);
     }
-    if (hierarchy) {
-      const roots = new Set(Object.values(hierarchy.roots)), children = new Set(hierarchy.edges.map(e => e.child));
-      // Root histories already have the stricter root TTM/return policy above.
-      for (const id of eligibleHierarchyIds(hierarchy)) {
-        if (roots.has(id) && !children.has(id)) continue;
-        const node=hierarchy.nodes[id];
-        if (node.timeline.state === 'not-present') continue;
-        const statuses = node.timeline.state === 'complete' ? node.timeline.intervals.map(i=>i.status)
-          : observedStatuses(node.history?.statusChanges ?? [],node.currentStatus,hierarchy.asOf);
-        for (const status of statuses) add(statusColumn(status,true));
-        if (hasReturn(statuses)) add(BASE_METRICS[2]);
-      }
-    }
+
   } else {
     for (const epic of epics) for (const label of epic.summary.excelColumns ?? Object.keys(epic.summary.excelAggregates)) {
       const column=aggregateColumn(label);
@@ -74,9 +64,10 @@ export function metricsFor(epics: EpicTimeline[], source: MetricsSource, hierarc
   const known = BASE_METRICS.slice(2).filter(c=>columns.has(c.id));
   const extra = [...columns.values()].filter(c=>c.id.startsWith('extra:') || c.id.startsWith('status:'));
   if(source==='history')extra.sort((a,b)=>a.id.localeCompare(b.id,'ru'));
-  return [...BASE_METRICS.slice(0,2),...known,...extra];
+  return [...BASE_METRICS.slice(0,2),...(source==='history'&&withSprintFocus?[FOCUS_METRIC]:[]),...known,...extra];
 }
-export function metricValue(epic: EpicTimeline, metric: Metric, source: MetricsSource): number | null {
+export function metricValue(epic: EpicTimeline, metric: Metric, source: MetricsSource, context?: MetricContext): number | null {
+  if(metric==='sprintFocus')return source==='history'?focusFor(epic,context)?.totalMs??null:null;
   if (metric.startsWith('status:')) return source==='history' && epic.provenIntervals
     ? epic.provenIntervals.filter(i=>canonical(i.status)===metric.slice(7)).reduce((sum,i)=>sum+i.durationMs,0) : null;
   if (metric.startsWith('extra:')) {
@@ -93,7 +84,7 @@ export function metricValue(epic: EpicTimeline, metric: Metric, source: MetricsS
   return values.length === 1 ? values[0][1] * DAY_MS : null;
 }
 export function relatedMetricValue(node: HierarchyNode, metric: Metric): number | null {
-  if (node.timeline.state !== 'complete' || metric==='ttm' || metric==='ttmWithoutFlag' || metric.startsWith('extra:')) return null;
+  if (node.timeline.state !== 'complete' || metric==='ttm' || metric==='ttmWithoutFlag' || metric==='sprintFocus' || metric.startsWith('extra:')) return null;
   let leftOpen=false, total=0;
   for(const interval of node.timeline.intervals) {
     const open=isOpenStatus(interval.status);
@@ -103,7 +94,8 @@ export function relatedMetricValue(node: HierarchyNode, metric: Metric): number 
   }
   return total;
 }
-export function metricUnavailableReason(epic: EpicTimeline, metric: Metric, source: MetricsSource): string {
+export function metricUnavailableReason(epic: EpicTimeline, metric: Metric, source: MetricsSource, context?: MetricContext): string {
+  if(metric==='sprintFocus')return source==='excel'?'Нужна история Jira и спринтов':focusFor(epic,context)?.reasons.join(' ') || 'Спринты не загружены или расчёт недоступен для этой гипотезы';
   if(source==='excel')return metric==='ttmWithoutFlag' ? 'Нет точной истории флага в агрегатах Excel; выберите «История»' : 'Нет исходного значения в Excel';
   if(metric==='ttmWithoutFlag' && epic.ttmMs!==null)return 'История флага не подтверждена';
   if(epic.ttmState==='not-started' && (metric==='ttm' || metric==='ttmWithoutFlag'))return 'TTM ещё не начат';

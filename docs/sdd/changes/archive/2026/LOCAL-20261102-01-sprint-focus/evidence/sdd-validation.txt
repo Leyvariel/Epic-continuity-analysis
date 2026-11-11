@@ -1,0 +1,21 @@
+Структура пакета
+Команда: python3 /Users/leyva/.agents/skills/sdd-writer/scripts/validate_sdd.py docs/sdd/changes/LOCAL-20261102-01-sprint-focus
+Код выхода: 0 (ожидался 0)
+OK: SDD validation passed with 0 warning(s)
+
+SDD репозитория
+Команда: python3 /Users/leyva/.agents/skills/sdd-writer/scripts/validate_sdd.py .
+Код выхода: 0 (ожидался 0)
+OK: SDD validation passed with 0 warning(s)
+
+Допуск к реализации
+Команда: python3 /Users/leyva/.agents/skills/sdd-writer/scripts/validate_sdd.py docs/sdd/changes/LOCAL-20261102-01-sprint-focus --ready
+Код выхода: 1 (ожидался 1)
+ERROR: proposal.md: status must be approved for --ready
+ERROR: design.md: status must be approved for --ready
+ERROR: tasks.md: status must be approved for --ready
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261102-01-sprint-focus/specs/sprint-continuity.md: status must be approved for --ready
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261102-01-sprint-focus/specs/sprint-focus.md: status must be approved for --ready
+ERROR: /Users/leyva/Projects/Epic Continuity Analisys/docs/sdd/changes/LOCAL-20261102-01-sprint-focus/specs/visualization.md: status must be approved for --ready
+ERROR: requirements checklist is not complete
+FAILED: 7 error(s), 0 warning(s)

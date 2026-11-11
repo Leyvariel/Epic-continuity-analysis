@@ -1,0 +1,28 @@
+2026-11-09: закрытие Q1 и Q4 и подготовка полных дельт.
+Бизнес-правила согласованы. Технические артефакты остаются draft/proposed; строгая готовность --ready не заявляется.
+SDD: OK: SDD validation passed with 0 warning(s)
+git diff --check: exit 0
+Проверка ID: сохранены все прежние AC изменённых FR; маркеров открытых бизнес-вопросов нет.
+При первой структурной проверке таблица трассировки с одними ID потребовала русских наименований; наименования добавлены, повтор успешен.
+npm run check: exit 0
+
+ Test Files  65 passed (65)
+      Tests  485 passed (485)
+   Start at  21:13:44
+   Duration  5.21s (transform 2.37s, setup 0ms, import 8.10s, tests 10.50s, environment 6.09s)
+
+
+> hf-epic-continuity@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 48 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.47 kB │ gzip:  0.32 kB
+dist/assets/index-Bff6OAwT.css   19.28 kB │ gzip:  5.34 kB
+dist/assets/index-DG6vLk0q.js   306.34 kB │ gzip: 94.78 kB
+✓ built in 430ms
+
+Код новых правил, сброс, новые тесты и визуальные проверки не выполнены в этом шаге.

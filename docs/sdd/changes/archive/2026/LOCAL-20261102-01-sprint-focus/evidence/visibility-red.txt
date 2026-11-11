@@ -1,0 +1,126 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/sprint-task-visibility.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-task-visibility.test.ts (5 tests | 5 failed) 9ms
+   × AC-088: hide every nonworking sprint, preserve complete analytical segments; epic calculation is independent 6ms
+   × AC-089: reopening does not bridge a closed interval, consecutive open statuses do merge 1ms
+   × AC-089: included idle sprint is hidden even across closure 1ms
+   × AC-089: unknown membership is not absence, unknown history does not invent closure 1ms
+   × AC-089: active sprint without work is hidden while its observed interval remains analytical 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-task-visibility.test.ts > AC-088: hide every nonworking sprint, preserve complete analytical segments; epic calculation is independent
+AssertionError: expected [ '11', '12', '17' ] to deeply equal [ '11', '17' ]
+
+- Expected
++ Received
+
+  [
+    "11",
++   "12",
+    "17",
+  ]
+
+ ❯ tests/sprint-task-visibility.test.ts:10:29
+      8| it('AC-088: hide every nonworking sprint, preserve complete analytical…
+      9|  const f=visibilityFixture(),r=analyzeSprints(f.graph,f.input);
+     10|  expect(shown(r.rows['3'])).toEqual(['11','17']);
+       |                             ^
+     11|  expect(r.rows['3'].segments).toHaveLength(7);expect(r.rows['3'].segme…
+     12|  expect(shown(r.rows['2'])).toEqual(['11','17']);expect(shown(r.rows['…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/sprint-task-visibility.test.ts > AC-089: reopening does not bridge a closed interval, consecutive open statuses do merge
+AssertionError: expected [ '11', '13' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "11",
++   "13",
++ ]
+
+ ❯ tests/sprint-task-visibility.test.ts:19:69
+     17| it('AC-089: reopening does not bridge a closed interval, consecutive o…
+     18|  const f=fixture();f.graph.nodes['3']=node('3','task',[[2,8],[15,22]])…
+     19|  const r=analyzeSprints(f.graph,f.input);expect(shown(r.rows['3'])).to…
+       |                                                                     ^
+     20|  expect(analyzeSprints(structuredClone(f.graph),JSON.parse(JSON.string…
+     21| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/sprint-task-visibility.test.ts > AC-089: included idle sprint is hidden even across closure
+AssertionError: expected [ '12', '14' ] to not include '14'
+ ❯ tests/sprint-task-visibility.test.ts:24:90
+     22| it('AC-089: included idle sprint is hidden even across closure',()=>{
+     23|  const f=visibilityFixture();f.input.tasks['3'].sprintIds=['14'];const…
+     24|  expect(r.segments.find(s=>s.sprintId==='14')!.state).toBe('empty');ex…
+       |                                                                                          ^
+     25| });
+     26| it('AC-089: unknown membership is not absence, unknown history does no…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/sprint-task-visibility.test.ts > AC-089: unknown membership is not absence, unknown history does not invent closure
+AssertionError: expected [ '16', '11', '12', '13', '17', '14' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "16",
++   "11",
++   "12",
++   "13",
++   "17",
++   "14",
++ ]
+
+ ❯ tests/sprint-task-visibility.test.ts:27:135
+     25| });
+     26| it('AC-089: unknown membership is not absence, unknown history does no…
+     27|  const f=visibilityFixture();f.input.tasks['3'].membershipCoverage='pa…
+       |                                                                                                                                       ^
+     28|  f.input.tasks['3'].membershipCoverage='complete';f.graph.nodes['3'].h…
+     29| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/sprint-task-visibility.test.ts > AC-089: active sprint without work is hidden while its observed interval remains analytical
+AssertionError: expected [ '11', '12', '13' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "11",
++   "12",
++   "13",
++ ]
+
+ ❯ tests/sprint-task-visibility.test.ts:32:59
+     30| it('AC-089: active sprint without work is hidden while its observed in…
+     31|  const f=fixture();f.graph.nodes['3']=node('3');f.input.tasks['3'].spr…
+     32|  expect(shown(analyzeSprints(f.graph,f.input).rows['3'])).toEqual([]);
+       |                                                           ^
+     33| });
+     34|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  21:13:05
+   Duration  155ms (transform 58ms, setup 0ms, import 82ms, tests 9ms, environment 0ms)

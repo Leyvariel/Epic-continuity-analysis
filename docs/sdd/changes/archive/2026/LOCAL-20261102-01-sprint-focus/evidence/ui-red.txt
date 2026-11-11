@@ -1,0 +1,91 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/sprint-focus-ui.test.tsx
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-focus-ui.test.tsx (5 tests | 5 failed) 146ms
+   × AC-135/136: renders neutral number and explanation distinct from old membership gaps 66ms
+   × AC-135: sorting uses the same value, unknown last in both directions, zero stays zero 22ms
+   × AC-137: children show dash; Excel excludes the metric and resets its sorting 36ms
+   × AC-134: missing sprint inputs produce an explicit unavailable value without a fetch 12ms
+   × AC-088/089: all hidden segments leave diagnostics and analytical bounds, no buttons or lanes 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-focus-ui.test.tsx > AC-135/136: renders neutral number and explanation distinct from old membership gaps
+AssertionError: expected null not to be null
+ ❯ tests/sprint-focus-ui.test.tsx:21:108
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/sprint-focus-ui.test.tsx > AC-135: sorting uses the same value, unknown last in both directions, zero stays zero
+TypeError: Cannot read properties of undefined (reading 'branchCoverage')
+ ❯ src/App.tsx:229:286
+
+ ❯ src/App.tsx:229:619
+ ❯ TimelineTable src/App.tsx:226:14
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:28571:20
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:8030:22
+ ❯ updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10569:19
+ ❯ beginWork node_modules/react-dom/cjs/react-dom-client.development.js:12205:18
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:1048:13
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:19176:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/sprint-focus-ui.test.tsx > AC-137: children show dash; Excel excludes the metric and resets its sorting
+AssertionError: expected undefined to be '—' // Object.is equality
+
+- Expected:
+"—"
+
++ Received:
+undefined
+
+ ❯ tests/sprint-focus-ui.test.tsx:41:183
+     39| it('AC-137: children show dash; Excel excludes the metric and resets i…
+     40|  const input=sprintDatasetInputs();input.epics[0].excelAggregates={'TT…
+     41|  await act(()=>div.querySelector<HTMLButtonElement>('button[aria-label…
+       |                                                                                                                                                                                       ^
+     42|  const sort=div.querySelector<HTMLSelectElement>('select[aria-label="С…
+     43|  const source=div.querySelector<HTMLSelectElement>('select[aria-label=…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/sprint-focus-ui.test.tsx > AC-134: missing sprint inputs produce an explicit unavailable value without a fetch
+AssertionError: expected undefined to be '—' // Object.is equality
+
+- Expected:
+"—"
+
++ Received:
+undefined
+
+ ❯ tests/sprint-focus-ui.test.tsx:48:88
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/sprint-focus-ui.test.tsx > AC-088/089: all hidden segments leave diagnostics and analytical bounds, no buttons or lanes
+AssertionError: expected <button …(4)></button>
+…(2) to have a length of +0 but got 3
+
+- Expected
++ Received
+
+- 0
++ 3
+
+ ❯ tests/sprint-focus-ui.test.tsx:54:50
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  21:14:11
+   Duration  881ms (transform 137ms, setup 0ms, import 186ms, tests 146ms, environment 470ms)

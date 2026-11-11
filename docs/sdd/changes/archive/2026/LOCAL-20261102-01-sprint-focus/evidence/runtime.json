@@ -1,0 +1,13 @@
+{
+  "http": 200,
+  "epics": 1,
+  "focusStates": [
+    "unknown"
+  ],
+  "cacheUnchanged": true,
+  "previousEpicsUnchanged": true,
+  "previousSprintAnalysisUnchangedExceptFocus": true,
+  "idAsOfSavedAtAuditUnchanged": true,
+  "cacheSha256": "ac1148b0ea9f96107040bce417df471ef2deb86fc230f415d41c131b2d0abd09",
+  "url": "http://127.0.0.1:4317/"
+}

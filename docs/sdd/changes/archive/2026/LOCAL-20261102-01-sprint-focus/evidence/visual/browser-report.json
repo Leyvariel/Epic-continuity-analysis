@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "browser": "installed Google Chrome, isolated temporary profile",
+  "checks": [
+    "Six numerical states: 14, 0, provisional 15, unknown, not started, 21; no nonworking sprint buttons",
+    "Both directions: numeric values shared with cells, null last",
+    "Two levels, whole working sprints, stable axis, day/week/month, metric alignment and horizontal scroll",
+    "Details include dates, task links and distinction from membership gaps; Escape restores focus",
+    "All sprints hidden: diagnostics remain accessible",
+    "Provisional label, rules, overlay close, Excel source preserves 42 and resets unavailable sort",
+    "800px viewport: horizontal and vertical scrolling",
+    "Wide status columns, 200-row pagination and deep vertical scroll",
+    "Old dataset without sprint inputs has an explanatory dash"
+  ],
+  "errors": []
+}

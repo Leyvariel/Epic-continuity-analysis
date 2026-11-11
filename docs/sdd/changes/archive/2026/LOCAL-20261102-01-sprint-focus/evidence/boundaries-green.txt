@@ -1,0 +1,12 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/sprint-focus.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  1 passed (1)
+      Tests  22 passed (22)
+   Start at  21:25:08
+   Duration  165ms (transform 57ms, setup 0ms, import 68ms, tests 20ms, environment 0ms)

@@ -1,0 +1,11 @@
+{
+  "initialSha256": "ac1148b0ea9f96107040bce417df471ef2deb86fc230f415d41c131b2d0abd09",
+  "finalSha256": "ad9381a5cffcf17890473bd2a99c21d1468502768aba84142abb927f6427e8a0",
+  "initialRootCount": 1,
+  "finalRootCount": 155,
+  "initialSourceKind": "keys",
+  "finalSourceKind": "file",
+  "unchangedThroughoutTask": false,
+  "taskWroteWorkingCache": false,
+  "restoredOverCurrentData": false
+}

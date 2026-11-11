@@ -70,6 +70,6 @@ it('AC-046/044: own numbers and stable columns survive offline hierarchy restore
  const original=service.getDataset()!,next=new DatasetService(new CacheStore(dir),()=>modelAt(400),network);await next.initialize();const restored=next.getDataset()!;
  expect(restored).toEqual(original);
  expect(relatedMetricValue(restored.hierarchy!.nodes['C-1'],'status:в работе')).toBe(4*DAY_MS);
- expect(metricsFor(restored.epics,'history',restored.hierarchy)).toEqual(metricsFor(original.epics,'history',original.hierarchy));
+ expect(metricsFor(restored.epics,'history')).toEqual(metricsFor(original.epics,'history'));
  expect(network).not.toHaveBeenCalled();
 });

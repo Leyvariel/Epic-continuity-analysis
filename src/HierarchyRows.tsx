@@ -3,12 +3,8 @@ import type {SprintAnalysis} from '../shared/sprints';
 import {useState,useEffect} from 'react';
 import type {Hierarchy} from '../shared/hierarchy';import {HIERARCHY_LIMITS} from '../shared/hierarchy';
 import {childrenOf,hierarchyIndex} from '../shared/hierarchy-view';import type {CalendarRange} from '../shared/calendar';import {RelatedStatusBar} from './RelatedStatusBar';
-import {relatedMetricValue,type MetricColumn} from '../shared/metrics';
-import {DAY_MS} from '../shared/statuses';
-import {preciseDuration} from '../shared/calendar';
-const days=(value:number|null)=>value===null?'—':new Intl.NumberFormat('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}).format(value/DAY_MS);
 export const branchKey=(path:string[])=>JSON.stringify(path);
-export function HierarchyRows({metrics,sprintAnalysis,index,graph,parent,open,toggle,range,pixels,width}:{metrics:MetricColumn[];sprintAnalysis?:SprintAnalysis;index:ReturnType<typeof hierarchyIndex>;graph:Hierarchy;parent:string;open:Set<string>;toggle:(path:string[])=>void;range:CalendarRange;pixels:number;width:number}){
+export function HierarchyRows({sprintAnalysis,index,graph,parent,open,toggle,range,pixels,width}:{sprintAnalysis?:SprintAnalysis;index:ReturnType<typeof hierarchyIndex>;graph:Hierarchy;parent:string;open:Set<string>;toggle:(path:string[])=>void;range:CalendarRange;pixels:number;width:number}){
  const [limit,setLimit]=useState<number>(HIERARCHY_LIMITS.page),rootOpen=open.has(branchKey([parent]));
  useEffect(()=>{if(!rootOpen)setLimit(HIERARCHY_LIMITS.page);},[rootOpen]);
  if(!rootOpen)return null;
@@ -23,7 +19,7 @@ export function HierarchyRows({metrics,sprintAnalysis,index,graph,parent,open,to
     <div>{result&&<button className="disclosure" disabled={empty} aria-expanded={expanded} aria-label={`${expanded?'Свернуть':'Раскрыть'} ${node.key}`} title={empty?'Нет связанных элементов':undefined} onClick={()=>toggle(row.path)}>{empty?'·':expanded?'▾':'▸'}</button>}<strong>{node.key}</strong> <span>{node.title}</span></div>
     <small>{node.type==='epic'?'Связанный эпик':node.type==='task'?'Связанная задача':'Тип элемента не подтверждён'}{row.via.length>0&&` · через скрытый отклонённый эпик ${row.via.map(id=>graph.nodes[id].key).join(' → ')}`}{node.timeline.closureSource==='name'&&' · закрытие по названию статуса'}{empty&&' · Нет связанных элементов'}</small>
     {node.timeline.warnings.length>0 && <small className="related-warning">⚠ {node.timeline.warnings.map(w=>w.message).join(' ')}</small>}
-   </div>{metrics.map(metric=>{const value=relatedMetricValue(node,metric.id),reason=metric.id==='ttm'||metric.id==='ttmWithoutFlag'?'Для дочерних объектов TTM не рассчитывается':'Собственная история элемента не подтверждена';return <div key={metric.id} className="metric related-metric" data-metric={metric.id} tabIndex={0} title={`${metric.name}: ${value===null?reason:preciseDuration(value)} · ${node.key}`}>{days(value)}</div>;})}</div><div className="row-calendar" style={{width}}><RelatedStatusBar node={node} range={range} pixels={pixels} width={width}/><SprintRows row={sprintAnalysis?.rows[row.id]} range={range} pixels={pixels} width={width}/></div></div>;
+   </div></div><div className="row-calendar" style={{width}}><RelatedStatusBar node={node} range={range} pixels={pixels} width={width}/><SprintRows row={sprintAnalysis?.rows[row.id]} range={range} pixels={pixels} width={width}/></div></div>;
   })}
   {stack.length>0&&<div className="hierarchy-notice"><button onClick={()=>setLimit(n=>n+HIERARCHY_LIMITS.page)}>Показать ещё</button></div>}
  </>;

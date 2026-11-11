@@ -1,0 +1,28 @@
+2026-11-09: подготовка кнопки сброса в пакете LOCAL-20261109-01.
+Изменены только документы и план проверок; рабочие данные не сбрасывались.
+Первый запуск SDD обнаружил неполную формальную трассировку диапазона AC-145–152; перечисление раскрыто до отдельных ID.
+Повторная валидация:
+OK: SDD validation passed with 0 warning(s)
+git diff --check: exit 0
+npm run check: exit 0
+
+ Test Files  65 passed (65)
+      Tests  485 passed (485)
+   Start at  20:43:52
+   Duration  5.29s (transform 2.46s, setup 0ms, import 7.91s, tests 10.63s, environment 6.76s)
+
+
+> hf-epic-continuity@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 48 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.47 kB │ gzip:  0.32 kB
+dist/assets/index-Bff6OAwT.css   19.28 kB │ gzip:  5.34 kB
+dist/assets/index-DG6vLk0q.js   306.34 kB │ gzip: 94.78 kB
+✓ built in 528ms
+
+Тесты и браузерные проверки самой кнопки ещё не выполнялись: реализация отсутствует.

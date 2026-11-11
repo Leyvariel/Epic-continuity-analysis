@@ -1,0 +1,10 @@
+python3 /Users/leyva/.agents/skills/sdd-writer/scripts/validate_sdd.py .
+OK: SDD validation passed with 0 warning(s)
+exit=0
+
+python3 /Users/leyva/.agents/skills/sdd-writer/scripts/validate_sdd.py docs/sdd/changes/archive/2026/LOCAL-20261103-01-hypothesis-status-columns --ready
+OK: SDD validation passed with 0 warning(s)
+exit=0
+
+git diff --check
+exit=0

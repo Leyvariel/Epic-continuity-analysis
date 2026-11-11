@@ -1,0 +1,240 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/unsprinted-activity.test.ts tests/dataset-reset.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/unsprinted-activity.test.ts (14 tests | 10 failed) 21ms
+     × TEXT covers exact dates and measures the full cycle 13ms
+     × CONTENT covers exact dates and measures the full cycle 1ms
+     × MLE covers exact dates and measures the full cycle 1ms
+     × UX covers exact dates and measures the full cycle 1ms
+     × AC-139 mixed: 3 active days cover only 3 of 14, including old gaps 1ms
+     × future addition is validated but does not invent past membership; cutoff addition counts 1ms
+     × AC-142 uses subtasks, retains known activity and bounds unknown exactly 0ms
+     × AC-153 excludes Deferred and ends at experiment 1ms
+     × AC-154 unions overlap and shared descendants without counting twice 0ms
+     × Q4: membership alone is not work; positive sprint work still covers a whole sprint 0ms
+ ❯ tests/dataset-reset.test.ts (7 tests | 5 failed) 89ms
+     × AC-146/147 clears only owned analysis, jobs and survives restart; next import is fresh 44ms
+     × AC-148 rejects stale ID and busy import without changing the dataset 13ms
+     × AC-149 failure removing a backup preserves the current usable dataset 9ms
+     × AC-150 repeats empty reset and clears corrupt cache without parsing it 2ms
+     × AC-151 rejects cross-site and malformed reset 7ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/dataset-reset.test.ts > FR-055 dataset reset > AC-146/147 clears only owned analysis, jobs and survives restart; next import is fresh
+AssertionError: expected 404 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 404
+
+ ❯ tests/dataset-reset.test.ts:22:38
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+ FAIL  tests/dataset-reset.test.ts > FR-055 dataset reset > AC-148 rejects stale ID and busy import without changing the dataset
+AssertionError: expected 404 to be 409 // Object.is equality
+
+- Expected
++ Received
+
+- 409
++ 404
+
+ ❯ tests/dataset-reset.test.ts:26:124
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  tests/dataset-reset.test.ts > FR-055 dataset reset > AC-149 failure removing a backup preserves the current usable dataset
+AssertionError: expected 404 to be 500 // Object.is equality
+
+- Expected
++ Received
+
+- 500
++ 404
+
+ ❯ tests/dataset-reset.test.ts:30:233
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+ FAIL  tests/dataset-reset.test.ts > FR-055 dataset reset > AC-150 repeats empty reset and clears corrupt cache without parsing it
+AssertionError: expected 404 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 404
+
+ ❯ tests/dataset-reset.test.ts:33:62
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯
+
+ FAIL  tests/dataset-reset.test.ts > FR-055 dataset reset > AC-151 rejects cross-site and malformed reset
+AssertionError: expected 404 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 404
+
+ ❯ tests/dataset-reset.test.ts:36:411
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯
+
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > TEXT covers exact dates and measures the full cycle
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > CONTENT covers exact dates and measures the full cycle
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > MLE covers exact dates and measures the full cycle
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > UX covers exact dates and measures the full cycle
+AssertionError: expected { state: 'unknown', …(16) } to match object { state: 'known', …(4) }
+(13 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "coveredMs": 259200000,
+-   "evaluatedMs": 2505600000,
+-   "scope": "cycle",
+-   "state": "known",
+-   "totalMs": 2246400000,
++   "coveredMs": 0,
++   "evaluatedMs": 0,
++   "state": "unknown",
++   "totalMs": null,
+  }
+
+ ❯ tests/unsprinted-activity.test.ts:16:47
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯
+
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > AC-139 mixed: 3 active days cover only 3 of 14, including old gaps
+AssertionError: expected { state: 'unknown', …(16) } to match object { state: 'known', …(2) }
+(15 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "scope": "sprints",
+-   "state": "known",
+-   "totalMs": 950400000,
++   "state": "unknown",
++   "totalMs": null,
+  }
+
+ ❯ tests/unsprinted-activity.test.ts:19:59
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯
+
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > future addition is validated but does not invent past membership; cutoff addition counts
+AssertionError: expected null to be 2246400000 // Object.is equality
+
+- Expected:
+2246400000
+
++ Received:
+null
+
+ ❯ tests/unsprinted-activity.test.ts:30:157
+     28|  });
+     29|  it('future addition is validated but does not invent past membership;…
+     30|   const f=setup();f.input.tasks['3'].sprintIds=['11'];f.input.tasks['3…
+       |                                                                                                                                                             ^
+     31|   f.input.tasks['3'].changes[0].at=at(30);expect(row(f).focus!.totalMs…
+     32|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯
+
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > AC-142 uses subtasks, retains known activity and bounds unknown exactly
+AssertionError: expected null to be 1036800000 // Object.is equality
+
+- Expected:
+1036800000
+
++ Received:
+null
+
+ ❯ tests/unsprinted-activity.test.ts:34:153
+     32|  });
+     33|  it('AC-142 uses subtasks, retains known activity and bounds unknown e…
+     34|   const f=setup('TEXT',[[2,20]],true);f.graph.nodes['6']=node('6','sub…
+       |                                                                                                                                                         ^
+     35|   delete f.graph.nodes['6'].statusCategories['3'];const r=row(f);expec…
+     36|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯
+
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > AC-153 excludes Deferred and ends at experiment
+AssertionError: expected { state: 'unknown', …(16) } to match object { totalMs: 777600000, …(2) }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "deferredMs": 432000000,
+-   "evaluatedMs": 1296000000,
+-   "totalMs": 777600000,
++   "evaluatedMs": 0,
++   "totalMs": null,
+  }
+
+ ❯ tests/unsprinted-activity.test.ts:41:24
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/15]⎯
+
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > AC-154 unions overlap and shared descendants without counting twice
+AssertionError: expected null to be 518400000 // Object.is equality
+
+- Expected:
+518400000
+
++ Received:
+null
+
+ ❯ tests/unsprinted-activity.test.ts:44:315
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/15]⎯
+
+ FAIL  tests/unsprinted-activity.test.ts > FR-054 exact activity > Q4: membership alone is not work; positive sprint work still covers a whole sprint
+AssertionError: expected null to be 950400000 // Object.is equality
+
+- Expected:
+950400000
+
++ Received:
+null
+
+ ❯ tests/unsprinted-activity.test.ts:50:104
+     48|  });
+     49|  it('Q4: membership alone is not work; positive sprint work still cove…
+     50|   const f=setup('TEXT',[[4,7]],true);f.input.tasks['5'].sprintIds=['11…
+       |                                                                                                        ^
+     51|   f.graph.nodes['5']=node('5','task',[[12,13]]);expect(row(f).focus!.t…
+     52|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/15]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  15 failed | 6 passed (21)
+   Start at  21:54:09
+   Duration  462ms (transform 198ms, setup 0ms, import 403ms, tests 109ms, environment 0ms)

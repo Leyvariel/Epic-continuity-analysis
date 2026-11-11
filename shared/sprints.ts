@@ -25,7 +25,19 @@ export interface SprintSegment extends SprintInterval {
   state: 'work' | 'empty' | 'unknown' | 'active-empty'; taskKeys: string[]; subtaskKeys: string[]; warnings: string[];
   coveredBy: string[];
 }
+export interface SprintFocusResult {
+  scope?: 'sprints' | 'cycle';
+  state: 'not-started' | 'not-applicable' | 'known' | 'preliminary' | 'unknown';
+  cycles: SprintInterval[]; window: SprintInterval[]; evaluated: SprintInterval[]; covered: SprintInterval[];
+  withoutWork: SprintInterval[]; preliminary: SprintInterval[]; unknown: SprintInterval[];
+  totalMs: number | null; closedMs: number; preliminaryMs: number;
+  windowMs: number; deferredMs: number; evaluatedMs: number; coveredMs: number; outsideSprintMs: number | null;
+  reasons: string[];
+}
 export interface SprintRow {
+  activity?: {taskKey:string;intervals:SprintInterval[];unknown:SprintInterval[];subtaskKeys:string[]}[];
+  /** Derived for source hypotheses only, never persisted as raw input. */
+  focus?: SprintFocusResult;
   issueId: string; segments: SprintSegment[]; warnings: string[];
   /** Display-only filter for task rows; full segments remain available for epic analysis. */
   hiddenSprintIds?: string[];

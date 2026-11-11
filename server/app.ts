@@ -42,6 +42,14 @@ export function createApp(service: DatasetService, nonce?: string, mode: Applica
     res.status(202).json({ id: job.id });
   });
   const json = express.json({ limit: '16kb' });
+  app.post('/api/reset', json, async (req, res) => {
+    if (!req.is('application/json')) throw new AppError('INVALID_CONTENT_TYPE', 'Нужен JSON.', 415);
+    const body = req.body;
+    if (!body || Array.isArray(body) || typeof body !== 'object' || Object.keys(body).length !== 1 || !('datasetId' in body) || !(body.datasetId === null || typeof body.datasetId === 'string' && body.datasetId.length > 0))
+      throw new AppError('INVALID_INPUT', 'Передайте единственное поле datasetId: идентификатор набора или null.');
+    await service.reset(body.datasetId);
+    res.json({dataset: null});
+  });
   app.post('/api/keys/import', json, (req, res) => {
     if (!req.is('application/json')) throw new AppError('INVALID_CONTENT_TYPE', 'Нужен JSON.', 415);
     if (!req.body || Array.isArray(req.body) || typeof req.body !== 'object' || typeof req.body.text !== 'string' || Object.keys(req.body).length !== 1)

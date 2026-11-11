@@ -1,0 +1,104 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-ui.test.tsx (11 tests | 5 failed) 1052ms
+   × T008: independent three-level segments, fixed axis, scales, keyboard details and old-cache message 28ms
+   × B06/B33: unknown numeric TTM keeps raw phases and sprint axis; overlapping equal names have separate lanes 21ms
+   × 05.10: unknown-membership has no gap or unknown overlay and preserves child status/sprint rows 68ms
+   × 05.10: included-idle has no gap or unknown overlay and preserves child status/sprint rows 49ms
+   × AC-088/089: task display hides outer/boundary empty sprints, keeps whole participation and inner empties at every scale 84ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-ui.test.tsx > T008: independent three-level segments, fixed axis, scales, keyboard details and old-cache message
+AssertionError: expected <button …(4)></button> to have a length of 3 but got 1
+
+- Expected
++ Received
+
+- 3
++ 1
+
+ ❯ tests/sprint-ui.test.tsx:72:133
+     70|  const d=buildJiraDataset(input,at(30));const fetch=vi.spyOn(globalThi…
+     71|  const div=document.createElement('div');document.body.append(div);con…
+     72|  expect(div.textContent).toContain('Анализ по текущему составу подзада…
+       |                                                                                                                                     ^
+     73|  const axis=()=>div.querySelector<HTMLElement>('.calendar-header')!.st…
+     74|  const expand=async(key:string)=>act(()=>div.querySelector<HTMLButtonE…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/sprint-ui.test.tsx > B06/B33: unknown numeric TTM keeps raw phases and sprint axis; overlapping equal names have separate lanes
+AssertionError: expected <button …(4)></button> to have a length of 3 but got 1
+
+- Expected
++ Received
+
+- 3
++ 1
+
+ ❯ tests/sprint-ui.test.tsx:97:60
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/sprint-ui.test.tsx > 05.10: unknown-membership has no gap or unknown overlay and preserves child status/sprint rows
+AssertionError: expected  to have a length of 3 but got +0
+
+- Expected
++ Received
+
+- 3
++ 0
+
+ ❯ tests/sprint-ui.test.tsx:122:229
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/sprint-ui.test.tsx > 05.10: included-idle has no gap or unknown overlay and preserves child status/sprint rows
+AssertionError: expected  to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/sprint-ui.test.tsx:122:229
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/sprint-ui.test.tsx > AC-088/089: task display hides outer/boundary empty sprints, keeps whole participation and inner empties at every scale
+AssertionError: expected [ '✓ S11', '✓ S17' ] to deeply equal [ '✓ S11', '○ S12', '✓ S17' ]
+
+- Expected
++ Received
+
+  [
+    "✓ S11",
+-   "○ S12",
+    "✓ S17",
+  ]
+
+ ❯ tests/sprint-ui.test.tsx:133:48
+    131|  await click('Раскрыть A-1');await click('Раскрыть A-2');
+    132|  const shown=()=>[...div.querySelectorAll<HTMLButtonElement>('[data-is…
+    133|  expect(shown().map(s=>s.textContent?.trim())).toEqual(['✓ S11','○ S12…
+       |                                                ^
+    134|  // S12 is empty only when there is no membership: the fixture's paren…
+    135|  expect(shown()[1].title).toContain('Нет работы в закрытом спринте');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed | 63 passed (64)
+      Tests  5 failed | 470 passed (475)
+   Start at  21:15:58
+   Duration  4.95s (transform 2.50s, setup 0ms, import 7.86s, tests 10.64s, environment 4.42s)

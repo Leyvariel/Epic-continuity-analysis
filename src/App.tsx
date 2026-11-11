@@ -1,3 +1,4 @@
+import {SprintFocusDetails} from './SprintFocusDetails';
 import {SprintRows,sprintBounds} from './SprintRows';
 import type {SprintAnalysis,SprintRow} from '../shared/sprints';
 import type { Hierarchy } from '../shared/hierarchy';
@@ -16,7 +17,7 @@ import { displayIntervals } from '../shared/display';
 import { SourceForm, type SourceInput } from './SourceForm';
 import { DatasetSummary, SelectionDetails } from './DatasetSummary';
 
-import { BASE_METRICS, metricsFor, metricValue, metricUnavailableReason } from '../shared/metrics';
+import { BASE_METRICS, metricsFor, metricValue, metricUnavailableReason, focusFor } from '../shared/metrics';
 import type { Metric, MetricColumn, MetricsSource } from '../shared/metrics';
 import { segmentLabels } from '../shared/layout';
 import { compositionFor, compositionScale } from '../shared/composition';
@@ -26,7 +27,7 @@ import { PREVIEW_MESSAGE, WORKING_APP_URL, type ApplicationMode } from '../share
 type Sort = Metric | 'key' | 'title';
 type Zoom = 'day' | 'week' | 'month';
 const ZOOM: Record<Zoom, { label: string; pixels: number }> = { day: { label: 'День', pixels: 26 }, week: { label: 'Неделя', pixels: 8 }, month: { label: 'Месяц', pixels: 3 } };
-const QUALITY = { complete: 'Без разрывов', partial: 'Неполные данные' };
+const QUALITY = { complete: 'Полная история', partial: 'Неполные данные' };
 const COVERAGE = { complete: 'Полная', partial: 'Неполная', unavailable: 'Недоступна' };
 const METRICS = BASE_METRICS;
 const days = (value: number | null) => value === null ? '—' : new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value / DAY_MS);
@@ -39,9 +40,14 @@ export function App() {
   const [statusMessage, setStatusMessage] = useState('');
   const [job, setJob] = useState<ImportJob | null>(null);
   const [starting, setStarting] = useState(false);
+  const [resetting, setResetting] = useState(false);
+  const [resetTarget, setResetTarget] = useState<{datasetId:string|null}|null>(null);
+  const [viewGeneration, setViewGeneration] = useState(0);
+  const requestGeneration = useRef(0), resetLock = useRef(false);
+  const closeReset = useCallback(() => { if (!resetLock.current) setResetTarget(null); }, []);
   const [sourceChoice, setSourceChoice] = useState<MetricsSource | null>(null);
   const metricsSource: MetricsSource = sourceChoice ?? defaultMetricsSource(dataset);
-  const metrics = useMemo(() => metricsFor(dataset?.epics ?? [], metricsSource, dataset?.hierarchy), [dataset, metricsSource]);
+  const metrics = useMemo(() => metricsFor(dataset?.epics ?? [], metricsSource, isJiraDataset(dataset)), [dataset, metricsSource]);
   const [query, setQuery] = useState('');
   const [assignee, setAssignee] = useState('');
   const [sort, setSort] = useState<{ field: Sort; descending: boolean }>({ field: 'ttm', descending: true });
@@ -50,24 +56,24 @@ export function App() {
   const [showRules, setShowRules] = useState(false);
   const closeEpic = useCallback(() => setSelectedKey(null), []);
   const closeRules = useCallback(() => setShowRules(false), []);
-  const active = starting || job?.status === 'queued' || job?.status === 'running';
+  const active = resetting || starting || job?.status === 'queued' || job?.status === 'running';
 
   useEffect(() => {
-    let live = true;
+    let live = true; const generation = requestGeneration.current;
     const controller = new AbortController();
-    request<{ dataset: Dataset | null; mode?: ApplicationMode }>('/api/dataset', { signal: controller.signal }).then(body => { if (live) { setDataset(body.dataset); setMode(body.mode ?? 'application'); } })
+    request<{ dataset: Dataset | null; mode?: ApplicationMode }>('/api/dataset', { signal: controller.signal }).then(body => { if (live && generation === requestGeneration.current) { setDataset(body.dataset); setMode(body.mode ?? 'application'); } })
       .catch(e => { if (live) setError(e.message); }).finally(() => { if (live) setLoading(false); });
     return () => { live = false; controller.abort(); };
   }, []);
   useEffect(() => {
     if (!job || !['queued', 'running'].includes(job.status)) return;
-    let stopped = false;
+    let stopped = false; const generation = requestGeneration.current;
     const controller = new AbortController();
     let timer: ReturnType<typeof setTimeout>;
     const poll = async () => {
       try {
         const result = await readImportStatus(job.id, controller.signal);
-        if (stopped) return;
+        if (stopped || generation !== requestGeneration.current) return;
         if (result.kind === 'restored') {
           setDataset(result.dataset); setJob(null); setSelectedKey(null); setSourceChoice(null); setAssignee(''); setQuery(''); setSort({ field: 'ttm', descending: true }); setError('');
           setStatusMessage('Состояние импорта потеряно после перезапуска сервера. Открыт последний сохранённый набор; при необходимости загрузите файл повторно.');
@@ -79,7 +85,7 @@ export function App() {
         if (next.status === 'completed') { setDataset(next.dataset); setSelectedKey(null); setSourceChoice(null); setAssignee(''); setQuery(''); setSort({ field: 'ttm', descending: true }); }
         if (next.status === 'failed') setError(next.errors.map(e => e.message).join(' '));
       } catch (e) {
-        if (!stopped) {
+        if (!stopped && generation === requestGeneration.current) {
           setError((e as Error).message);
           if (e instanceof LocalApiError) setJob(null);
           else timer = setTimeout(poll, 3000);
@@ -103,6 +109,29 @@ export function App() {
     } catch (e) { setError((e as Error).message); }
     finally { setStarting(false); }
   };
+  const finishReset = () => {
+    requestGeneration.current++;
+    setDataset(null); setJob(null); setSelectedKey(null); setShowRules(false); setSourceChoice(null);
+    setAssignee(''); setQuery(''); setSort({field:'ttm',descending:true}); setZoom('week'); setError('');
+    setViewGeneration(n=>n+1); setStatusMessage('Данные сброшены. Выберите источник для нового анализа.');
+  };
+  const resetData = async () => {
+    if (!resetTarget || active || resetLock.current) return;
+    resetLock.current = true; setResetting(true); setError(''); setStatusMessage(''); requestGeneration.current++;
+    try {
+      await request<{dataset:null}>('/api/reset', {method:'POST',headers:{'Content-Type':'application/json','X-Local-Request':'1'},body:JSON.stringify(resetTarget)});
+      finishReset();
+    } catch (e) {
+      const failure = e as Error;
+      if (!(e instanceof LocalApiError) || e.code === 'STALE_DATASET') {
+        try {
+          const current = await request<{dataset:Dataset|null}>('/api/dataset');
+          if (!current.dataset && !(e instanceof LocalApiError)) finishReset();
+          else {setDataset(current.dataset); setSelectedKey(null); setError(failure.message);}
+        } catch {setError('Результат сброса не подтверждён: сервер недоступен. Показан прежний снимок. Проверьте соединение и повторите действие.');}
+      } else setError(failure.message);
+    } finally {resetLock.current=false; setResetting(false); setResetTarget(null);}
+  };
   const filtered = useMemo(() => {
     const term = query.trim().toLocaleLowerCase('ru');
     return [...(dataset?.epics ?? [])].filter(epic => `${epic.summary.key} ${epic.metadata?.title ?? epic.summary.title}`.toLocaleLowerCase('ru').includes(term) && (!assignee || epicAssignee(epic) === assignee)).sort((a, b) => {
@@ -111,7 +140,7 @@ export function App() {
         const field = sort.field;
         difference = a.summary[field].localeCompare(b.summary[field], 'ru', { numeric: true });
       } else {
-        const av = metricValue(a, sort.field, metricsSource), bv = metricValue(b, sort.field, metricsSource);
+        const av = metricValue(a, sort.field, metricsSource, dataset ?? undefined), bv = metricValue(b, sort.field, metricsSource, dataset ?? undefined);
         if (av === null || bv === null) return av === bv ? a.summary.key.localeCompare(b.summary.key) : av === null ? 1 : -1;
         difference = av - bv;
       }
@@ -141,22 +170,23 @@ export function App() {
   const median = ttmValues.length ? ttmValues.length % 2 ? ttmValues[middle] : (ttmValues[middle - 1] + ttmValues[middle]) / 2 : null;
   const changeSource = (source: MetricsSource) => {
     setSourceChoice(source);
-    if (!['key', 'title'].includes(sort.field) && !metricsFor(dataset?.epics ?? [], source, dataset?.hierarchy).some(metric => metric.id === sort.field)) setSort({ field: 'ttm', descending: true });
+    if (!['key', 'title'].includes(sort.field) && !metricsFor(dataset?.epics ?? [], source, isJiraDataset(dataset)).some(metric => metric.id === sort.field)) setSort({ field: 'ttm', descending: true });
   };
 
   return <div className="app">
     <header className="app-header">
       <div><div className="eyebrow">ПРОДУКТОВЫЕ ПРОЦЕССЫ <span>Локально</span></div><h1>Анализ HF-эпиков</h1><p>История этапов и Time to Market по данным Jira</p></div>
-      <div className="actions"><button onClick={() => setShowRules(true)}>Правила расчёта</button>
+      <div className="actions">{mode === 'application' && <button className="reset-action" disabled={loading || active} title={active ? 'Дождитесь завершения текущего действия' : 'Удалить сохранённые данные анализа'} onClick={() => setResetTarget({datasetId:dataset?.id ?? null})}>Сбросить все данные</button>}<button onClick={() => setShowRules(true)}>Правила расчёта</button>
         {mode === 'application' && isJiraDataset(dataset) && <button className="primary" disabled={active} onClick={() => void startJob({ kind: 'refresh', datasetId: dataset.id })}>Обновить</button>}
       </div>
     </header>
-    {!loading && (mode === 'application' ? <SourceForm busy={active} onSubmit={startJob} /> : <div className="notice preview-notice" role="status"><strong>{mode === 'demo' ? 'Демонстрационные данные.' : 'Сохранённый снимок.'}</strong> {PREVIEW_MESSAGE} <a href={WORKING_APP_URL}>Открыть основное приложение</a></div>)}
+    {resetTarget && <ResetDialog busy={resetting} onClose={closeReset} onConfirm={()=>void resetData()}/>}
+    {!loading && (mode === 'application' ? <SourceForm key={viewGeneration} busy={active} onSubmit={startJob} /> : <div className="notice preview-notice" role="status"><strong>{mode === 'demo' ? 'Демонстрационные данные.' : 'Сохранённый снимок.'}</strong> {PREVIEW_MESSAGE} <a href={WORKING_APP_URL}>Открыть основное приложение</a></div>)}
     {error && <div className="notice error" role="alert">{error}</div>}
     {statusMessage && <div className="notice" role="status">{statusMessage}</div>}
     {job?.status === 'failed' && dataset && <div className="notice">Новая загрузка не завершена. Показан предыдущий сохранённый набор.</div>}
     {job?.status === 'failed' && job.audit && <SelectionDetails audit={job.audit} />}
-    {active && <div className="progress" role="status"><div><strong>{phaseLabel(job?.phase)}</strong><span>{job?.currentKey ?? 'Подготовка'} · {job?.completed ?? 0} из {job?.total ?? '…'}</span></div><progress value={job?.total == null ? undefined : job.phase === 'selecting' ? job.progress?.checked ?? job.completed : job.completed} max={job?.total || 1} />{job?.progress && <small>Найдено: {job.progress.found} · признаки проверены: {job.progress.checked} · отобрано HF: {job.progress.selected} · историй получено: {job.progress.histories}</small>}{dataset && <small>До завершения загрузки показан предыдущий набор.</small>}</div>}
+    {active && !resetting && <div className="progress" role="status"><div><strong>{phaseLabel(job?.phase)}</strong><span>{job?.currentKey ?? 'Подготовка'} · {job?.completed ?? 0} из {job?.total ?? '…'}</span></div><progress value={job?.total == null ? undefined : job.phase === 'selecting' ? job.progress?.checked ?? job.completed : job.completed} max={job?.total || 1} />{job?.progress && <small>Найдено: {job.progress.found} · признаки проверены: {job.progress.checked} · отобрано HF: {job.progress.selected} · историй получено: {job.progress.histories}</small>}{dataset && <small>До завершения загрузки показан предыдущий набор.</small>}</div>}
     {loading ? <div className="empty">Загрузка последнего локального набора…</div> : !dataset ? <main className="empty">{mode !== 'application' ? <h2>Нет сохранённых данных для просмотра</h2> : <><div className="empty-symbol">↗</div><h2>Выберите эпики для анализа</h2><p>Вставьте список ключей, загрузите CSV/XLSX или вставьте ссылку на доску либо отдельный эпик.</p><p className="hint">История берётся из Jira. Последний результат сохраняется на этом компьютере.</p></>}</main> : <main>
       <section className="dataset-meta" aria-label="Состояние набора">
         <div><strong>{filtered.length}<small> / {dataset.epics.length}</small></strong><span>HF-эпиков в выборке</span></div>
@@ -165,7 +195,7 @@ export function App() {
         <div className="snapshot"><strong>{dateTime(localOnly ? dataset.savedAt : hasHistory || isJiraDataset(dataset) ? dataset.asOf : dataset.source.importedAt)} МСК</strong><span>{localOnly ? `время проверки ввода · ошибок ${keyErrors.length}` : `${hasHistory || isJiraDataset(dataset) ? 'момент среза истории' : 'время импорта · момент среза не указан'} · полная история: ${completeCount} / ${dataset.epics.length}`}</span></div>
       </section>
       <DatasetSummary dataset={dataset} />
-      {isJiraDataset(dataset) && !localOnly && <div className="sprint-notice">{sprintAnalysis ? <>Анализ по текущему составу подзадач. Удалённые и ушедшие подзадачи не восстанавливаются; обнаруженный перенос отмечается как неизвестность. Спринты показаны целиком: ✓ работа, ○ нет работы в закрытом спринте, ◌ активный без работы, ? недостаточно данных. Тёмная отметка вплотную под полосой статусов эпика — доказанное отсутствие включённых в спринт дочерних задач. Пустой спринт сам по себе не означает брешь: включённая задача без работы или задача в пересекающемся спринте исключает её. Недостаточность данных отметкой бреши не обозначается. Бреши показаны только на этапах «Проверка идей», «Валидация», «Реализация» и «Оценка результата».{sprintAnalysis.diagnostics&&<p>Основной граф: {sprintAnalysis.diagnostics.primaryNodes} узлов · добавлено подзадач: {sprintAnalysis.diagnostics.addedSubtasks} · непрочитано: {sprintAnalysis.diagnostics.unreadSubtasks}</p>}{sprintAnalysis.warnings.map((w,i)=><p key={i}>{w}</p>)}</> : 'Спринты не загружены. Обновите набор для анализа спринтов.'}</div>}
+      {isJiraDataset(dataset) && !localOnly && <div className="sprint-notice">{sprintAnalysis ? <>Анализ по текущему составу подзадач. Удалённые и ушедшие подзадачи не восстанавливаются; обнаруженный перенос отмечается как неизвестность. Показаны только спринты с подтверждённой работой (✓), целиком до закрытия или среза. Пустые и неизвестные спринты скрыты; причины неполноты доступны в пояснениях. Тёмная отметка вплотную под полосой статусов эпика — доказанное отсутствие включённых в спринт дочерних задач. Пустой спринт сам по себе не означает брешь: включённая задача без работы или задача в пересекающемся спринте исключает её. «Без работы» — отдельное число: отсутствие подтверждённой работы между реализацией и экспериментом, без Отложено. Область оценки пояснена ниже. Оно может быть положительным без тёмной отметки. Незакрытые спринты дают предварительное число. Недостаточность данных отметкой бреши не обозначается. Для TEXT, CONTENT, MLE и UX без спринтов работа покрывает только активные интервалы задач или подзадач. Если все задачи гипотезы такие, число оценивает весь цикл без Отложено; иначе — только время внутри календарей. Точная активность также исключает тёмную отметку на совпадающем времени. Бреши показаны только на этапах «Проверка идей», «Валидация», «Реализация» и «Оценка результата».{sprintAnalysis.diagnostics&&<p>Основной граф: {sprintAnalysis.diagnostics.primaryNodes} узлов · добавлено подзадач: {sprintAnalysis.diagnostics.addedSubtasks} · непрочитано: {sprintAnalysis.diagnostics.unreadSubtasks}</p>}{sprintAnalysis.warnings.map((w,i)=><p key={i}>{w}</p>)}</> : 'Спринты не загружены. Обновите набор для анализа спринтов.'}</div>}
       {dataset.quality !== 'complete' && !localOnly && <div className="notice">Данные частичные: проверьте результаты отбора и замечания к эпикам. Неизвестные интервалы не достраиваются.{dataset.epics.some(e => Object.keys(e.summary.excelAggregates).length) && ' Агрегаты из файла доступны отдельно и не определяют последовательность этапов.'}</div>}
       {metrics.some(metric => metric.id.startsWith('extra:')) && <div className="notice">Колонки со знаком «?» сохранены из файла. Для этих названий нет согласованных порогов heatmap; цветовая оценка не применяется.</div>}
       {dataset.warnings.length > 0 && <details className="warnings"><summary>Замечания импорта и отбора ({dataset.warnings.length})</summary><ul>{dataset.warnings.map((w, i) => <li key={i}>{w.key && `${w.key}: `}{w.row && `Строка ${w.row}: `}{w.message}</li>)}</ul></details>}
@@ -179,13 +209,13 @@ export function App() {
         {!localOnly && metricsSource === 'history' && <div className="zoom" aria-label="Масштаб календаря">{(Object.keys(ZOOM) as Zoom[]).map(z => <button key={z} aria-pressed={z === zoom} onClick={() => setZoom(z)}>{ZOOM[z].label}</button>)}</div>}
         {(query || assignee) && <button onClick={() => { setQuery(''); setAssignee(''); }}>Сбросить фильтры</button>}
       </div>
-      {!localOnly && <div className="legends"><span className="legend-caption">Этапы:</span>{metrics.filter(metric => !['ttm', 'ttmWithoutFlag', 'open'].includes(metric.id)).map(metric => <span key={metric.id}><i className={metric.id.startsWith('extra:') ? 'hatch' : ''} style={{ backgroundColor: STAGES.find(stage => stage.id === metric.id)?.color ?? '#d1d5db' }} />{metric.code} {metric.name}</span>)}{metricsSource === 'history' ? <><span><i className="initial-swatch" />До начала TTM</span><span><i className="return-swatch" />↩О Возврат в открыто</span><span><i className="hatch" />Неизвестный / промежуточное закрытие</span><span>⚑ Impediment</span>{sprintAnalysis && <span><i className="gap-swatch" />Брешь: нет включённых задач · под статусом</span>}</> : <span><i className="ttm-swatch" />TTM из Excel</span>}</div>}
+      {!localOnly && <div className="legends"><span className="legend-caption">Этапы:</span>{metrics.filter(metric => !['ttm', 'ttmWithoutFlag', 'sprintFocus', 'open'].includes(metric.id)).map(metric => <span key={metric.id}><i className={metric.id.startsWith('extra:') ? 'hatch' : ''} style={{ backgroundColor: STAGES.find(stage => stage.id === metric.id)?.color ?? '#d1d5db' }} />{metric.code} {metric.name}</span>)}{metricsSource === 'history' ? <><span><i className="initial-swatch" />До начала TTM</span><span><i className="return-swatch" />↩О Возврат в открыто</span><span><i className="hatch" />Неизвестный / промежуточное закрытие</span><span>⚑ Impediment</span>{sprintAnalysis && <span><i className="gap-swatch" />Брешь: нет включённых задач · под статусом</span>}</> : <span><i className="ttm-swatch" />TTM из Excel</span>}</div>}
       <div className="table-note"><span>{localOnly ? 'Ошибочные строки показаны без метрик и календарной истории.' : metricsSource === 'excel' ? 'Слева: предоставленные агрегаты Excel, дни. TTM сохранён как в файле; возврат в открыто неизвестен.' : 'Слева: длительности по истории, дни. Цвет ячейки оценивает длительность, цвет полосы обозначает статус.'}</span><span>{filtered.length + visibleErrors.length} из {dataset.epics.length + keyErrors.length} строк · Europe/Moscow</span></div>
       {metricsSource === 'excel' && <div className="composition-note">Справа — сумма длительностей этапов на общей шкале дней. Известные этапы расположены в согласованном порядке; это не последовательность переходов. Пунктир — исходный TTM, который может отличаться от суммы.</div>}
       {range && <TimelineTable sprintAnalysis={sprintAnalysis} key={dataset.id} hierarchy={dataset.hierarchy} epics={filtered} errors={visibleErrors} localOnly={localOnly} range={range} zoom={zoom} onSelect={setSelectedKey} sort={sort} sortBy={sortBy} selectedKey={selectedKey} metricsSource={metricsSource} metrics={metrics} aggregateScale={aggregateScale} />}
       {!localOnly && <footer>{metricsSource === 'history' ? 'TTM по истории: от первого учитываемого статуса до окончательного закрытия или среза, без Отложено. TTM без флага дополнительно исключает фактическое время под флагом.' : 'Из Excel: исходные значения могут использовать другое определение TTM и вычитание impediment.'}</footer>}
     </main>}
-    {selected && <EpicPanel epic={selected} columns={metricsFor(dataset?.epics ?? [], 'excel')} onClose={closeEpic} />}
+    {selected && <EpicPanel sprintRow={sprintAnalysis?.rows[dataset?.hierarchy?.roots[selected.summary.key] ?? '']} showSprintFocus={isJiraDataset(dataset)} epic={selected} columns={metricsFor(dataset?.epics ?? [], 'excel')} onClose={closeEpic} />}
     {showRules && <RulesPanel onClose={closeRules} />}
   </div>;
 }
@@ -229,13 +259,13 @@ function TimelineTable({ sprintAnalysis, hierarchy, epics, errors, localOnly, ra
           {metricsSource==='history' && hierarchy && hierarchy.roots[epic.summary.key] && (()=>{const id=hierarchy.roots[epic.summary.key],n=hierarchy.nodes[id],result=childrenOf(hierarchy,id,[],hierarchyAdjacency),expanded=open.has(branchKey([id])),empty=!result.children.length && n.branchCoverage==='complete'&&!result.warnings.length;return <button className="disclosure root-disclosure" disabled={empty} aria-expanded={expanded} aria-label={`${expanded?'Свернуть':'Раскрыть'} ${epic.summary.key}`} title={empty?'Нет связанных элементов':undefined} onClick={()=>toggle([id])}>{empty?'·':expanded?'▾':'▸'}</button>;})()}
           <button className="epic-title" onClick={() => onSelect(epic.summary.key)}><strong>{epic.summary.key}<span>{epic.warnings.length > 0 && '⚠'}</span></strong><span className="title-text">{epic.metadata?.title ?? epic.summary.title}</span><small>{metricsSource === 'excel' ? `Из Excel · ${epic.summary.sourceMetadata?.currentStatus ?? 'статус не указан'}` : `${QUALITY[epic.quality]} · ${epicStateLabel(epic)}`}</small></button></div>
           {metrics.map(metric => {
-            const value = metricValue(epic, metric.id, metricsSource), heat = metric.id.startsWith('extra:') || metric.id.startsWith('status:') ? 'none' : heatFor(metric.id as Parameters<typeof heatFor>[0], value === null ? null : value / DAY_MS);
-            return <button key={metric.id} data-metric={metric.id} onClick={() => onSelect(epic.summary.key)} className={`metric heat-${heat}`} style={{ backgroundColor: HEAT_COLORS[heat] }} title={`${metric.name}: ${value === null ? metricUnavailableReason(epic, metric.id, metricsSource) : preciseDuration(value)}${metricsSource === 'history' && epic.ttmMs === null && value !== null ? ' · длительность этапа по полной истории; начало TTM неизвестно' : ''}`}><span>{days(value)}</span></button>;
+            const context={sprintAnalysis,hierarchy}, value = metricValue(epic, metric.id, metricsSource, context), preliminary=metric.id==='sprintFocus'&&focusFor(epic,context)?.state==='preliminary', heat = metric.id==='sprintFocus' || metric.id.startsWith('extra:') || metric.id.startsWith('status:') ? 'none' : heatFor(metric.id as Parameters<typeof heatFor>[0], value === null ? null : value / DAY_MS);
+            return <button key={metric.id} data-metric={metric.id} onClick={() => onSelect(epic.summary.key)} className={`metric heat-${heat}`} style={{ backgroundColor: HEAT_COLORS[heat] }} title={`${metric.name}: ${value === null ? metricUnavailableReason(epic, metric.id, metricsSource, context) : preciseDuration(value)}${preliminary?' · предварительно, до среза':''}${metric.id!=='sprintFocus' && metricsSource === 'history' && epic.ttmMs === null && value !== null ? ' · длительность этапа по полной истории; начало TTM неизвестно' : ''}`}><span>{days(value)}</span>{preliminary&&<small className="metric-preliminary" title="Предварительно: работа в активном спринте может уменьшить число">предв.</small>}</button>;
           })}
           <div className="flag-caption">{metricsSource === 'excel' ? <>Исполнитель <b>{epicAssignee(epic)}</b></> : <>⚑ Impediment <b>{epic.ttmState === 'not-started' ? 'TTM ещё не начат' : epic.impedimentMs === null ? 'нет данных' : `${days(epic.impedimentMs)} дн.`}</b></>}</div>
         </div>
         {metricsSource === 'excel' ? <CompositionBar epic={epic} columns={metrics} scale={aggregateScale} onSelect={() => onSelect(epic.summary.key)} /> : <EpicBar sprintRow={sprintAnalysis?.rows[hierarchy?.roots[epic.summary.key] ?? '']} epic={epic} range={range} pixels={pixels} width={width} onSelect={() => onSelect(epic.summary.key)} />}
-      </div>{metricsSource==='history' && hierarchy && hierarchy.roots[epic.summary.key] && <HierarchyRows metrics={metrics} sprintAnalysis={sprintAnalysis} index={hierarchyAdjacency!} graph={hierarchy} parent={hierarchy.roots[epic.summary.key]} open={open} toggle={toggle} range={range} pixels={pixels} width={width}/>}</Fragment>)}
+      </div>{metricsSource==='history' && hierarchy && hierarchy.roots[epic.summary.key] && <HierarchyRows sprintAnalysis={sprintAnalysis} index={hierarchyAdjacency!} graph={hierarchy} parent={hierarchy.roots[epic.summary.key]} open={open} toggle={toggle} range={range} pixels={pixels} width={width}/>}</Fragment>)}
       {errors.map(({ id, entry }) => <div key={id} className="error-row">
         <div className="left-area metric-grid">
           <div className="error-title"><strong>{entry.requestedKey}</strong><span>Ошибка · Строка {entry.rows.join(', ')}</span></div>
@@ -310,7 +340,20 @@ function usePanelClose(onClose: () => void, panel: React.RefObject<HTMLElement |
   }, [onClose, panel]);
 }
 
-function EpicPanel({ epic, columns, onClose }: { epic: EpicTimeline; columns: MetricColumn[]; onClose: () => void }) {
+function ResetDialog({busy,onClose,onConfirm}:{busy:boolean;onClose:()=>void;onConfirm:()=>void}) {
+  const panel=useRef<HTMLElement>(null);
+  usePanelClose(onClose,panel);
+  return <div className="overlay reset-overlay" onMouseDown={e=>{if(e.target===e.currentTarget)onClose();}}>
+    <section className="reset-dialog" role="dialog" aria-modal="true" aria-labelledby="reset-title" aria-busy={busy} ref={panel} tabIndex={-1}>
+      <h2 id="reset-title">Сбросить все данные анализа?</h2>
+      <p>Сохранённый набор будет удалён. Чтобы вернуть его, потребуется загрузить данные заново.</p>
+      <p>Настройки подключения к Jira и исходные файлы сохранятся.</p>
+      <div className="actions"><button disabled={busy} onClick={onClose}>Отмена</button><button className="danger" disabled={busy} onClick={onConfirm}>{busy?'Сброс данных…':'Сбросить данные'}</button></div>
+    </section>
+  </div>;
+}
+
+function EpicPanel({ epic, columns, onClose, sprintRow, showSprintFocus }: { epic: EpicTimeline; columns: MetricColumn[]; onClose: () => void; sprintRow?:SprintRow; showSprintFocus:boolean }) {
   const panel = useRef<HTMLElement>(null);
   const composition = compositionFor(epic, columns);
   const difference = composition.totalMs === null || composition.ttmMs === null ? null : composition.totalMs - composition.ttmMs;
@@ -340,6 +383,7 @@ function EpicPanel({ epic, columns, onClose }: { epic: EpicTimeline; columns: Me
     <div className="stage-breakdown">{composition.segments.map(segment => <div key={segment.id}><span><i className={segment.unknown ? 'hatch' : ''} style={{ backgroundColor: segment.color }} />{segment.name}</span><strong title={preciseDuration(segment.durationMs)}>{days(segment.durationMs)} дн.</strong></div>)}</div>
     {composition.missing.length > 0 && <p>Нет значений: {composition.missing.map(column => column.name).join(', ')}.</p>}
     </>}
+    {showSprintFocus&&<SprintFocusDetails row={sprintRow} asOf={epic.asOf}/>}
     <h3>Календарная история</h3><p className={`quality-${epic.quality}`}>{QUALITY[epic.quality]} · {epicStateLabel(epic)}</p>
     <dl><dt>Момент среза (МСК)</dt><dd>{epic.metadata ? dateTime(epic.asOf) : 'Нет истории'}</dd><dt>Начало предоставленной истории</dt><dd>{dateTime(epic.metadata?.historyStart ?? null)}</dd><dt>TTM по истории</dt><dd>{epic.ttmMs === null ? 'Нет расчёта' : preciseDuration(epic.ttmMs)}</dd><dt>TTM без флага</dt><dd>{epic.ttmWithoutFlagMs == null ? metricUnavailableReason(epic, 'ttmWithoutFlag', 'history') : preciseDuration(epic.ttmWithoutFlagMs)}</dd><dt>Отложено внутри периода — исключено</dt><dd>{epic.excludedDeferredMs == null ? '—' : preciseDuration(epic.excludedDeferredMs)}</dd><dt>Флаг на учитываемом времени TTM</dt><dd>{epic.ttmFlaggedMs == null ? 'Нет данных' : preciseDuration(epic.ttmFlaggedMs)}</dd><dt>Календарная длительность периода</dt><dd>{epic.ttmMs === null ? '—' : preciseDuration(epic.intervals.reduce((sum, s) => sum + s.durationMs, 0))}</dd><dt>Общий impediment в календарных границах</dt><dd>{epic.impedimentMs === null ? 'Нет данных' : preciseDuration(epic.impedimentMs)}</dd></dl>
     <h3>Замечания ({epic.warnings.length})</h3>{epic.warnings.length ? <ul className="panel-warnings">{epic.warnings.map((warning, i) => <li key={i}>{warning.message}</li>)}</ul> : <p>Разрывов и неизвестных статусов не обнаружено.</p>}
@@ -359,11 +403,11 @@ function RulesPanel({ onClose }: { onClose: () => void }) {
     <p>Для исходной выборки HF и резолюция проверяются по выбранному источнику. DF и отклонённые исходные эпики исключаются. Для подтверждённых эпиков HOTELS разрешены текущие Решили делать, Тестирование эпика и Релиз без [HF]; другие проекты сохраняют прежний отбор. Связанные DF и обычные задачи доступны по стрелке; подзадачи и отклонённые строки скрыты. Допустимые потомки отклонённого эпика остаются видны с пояснением.</p>
     <h3>Состав из Excel</h3><p>Числа берутся из TTM и Cycle Time [HF] без изменения. Справа — сумма длительностей на общей абсолютной шкале дней, с отдельной пунктирной отметкой TTM. Известные этапы показаны в согласованном порядке, дополнительные — в порядке файла. Это не последовательность переходов. Это не календарная шкала. Открыто исключено из состава, поскольку первоначальное ожидание и возвраты в агрегате неразделимы; исходный TTM сохраняется целиком.</p>
     <p>Неизвестные названия этапов показаны нейтральной штриховкой без порогов heatmap. Пропуск остаётся неизвестным, ноль остаётся нулём. Сумма этапов может отличаться от TTM. Медиана и максимум основного TTM считаются по текущим фильтрам и выбранному источнику; значения без TTM исключаются из этих двух показателей.</p>
-    <p>Показываются только встречающиеся в наборе статусы, включая допустимые дочерние объекты. Фильтрация и сворачивание не меняют состав колонок. Первоначальное Открыто не получает числовой колонки; ↩О отражает возвраты. TTM без флага недоступен по одним агрегатам Excel.</p><h3>Календарь по истории</h3>
+    <p>Числовые колонки определяются только по статусам исходных гипотез. Подготовка, Валидация, Скоринг, Тестирование эпика и Релиз появляются, если встречались хотя бы у одной исходной гипотезы. Статусы дочерних элементов не добавляют колонок. Фильтрация и сворачивание не меняют состав колонок. Первоначальное Открыто не получает числовой колонки; ↩О отражает возвраты. TTM без флага недоступен по одним агрегатам Excel.</p><h3>Календарь по истории</h3>
     <p>TTM начинается с первого учитываемого статуса, включая Проверку идей и Запланировано. В HOTELS Решили делать тоже начинает TTM; в других проектах до старта он остаётся предрабочим. Первоначальное Открыто и Отложено не запускают отсчёт. Всё время Отложено исключается из TTM, даже после начала работы; календарные интервалы при этом сохраняются. Если работа ещё не началась, TTM отсутствует. Конец — последний переход в окончательный Закрыт либо единый момент среза для незакрытых эпиков.</p>
     <p>Повторные этапы остаются отдельными сегментами. Открыто внутри TTM учитывается как ↩О, включая незавершённый возврат. Время промежуточного закрытия при переоткрытии сохраняется. Неизвестные и DF-статусы внутри HF-истории показаны серой штриховкой.</p>
     <p>TTM без флага — отдельный показатель: из основного TTM вычитается только фактическое время под флагом, входящее в TTM. Пересечение с Отложено не вычитается повторно. Общий impediment сохраняет время флага в календарных границах от старта до конца; он может включать Отложено. Если история флага неизвестна, основной TTM сохраняется, а TTM без флага неизвестен. Флаг не восстанавливается по договорённости о статусе. Показатель без флага не равен трудозатратам. Точные даты, время и длительности доступны в подсказках и деталях эпика. Короткие сегменты имеют выносные подписи; ширина полосы не увеличивается.</p>
-    <p>Источник истории файла выбирается явно: Jira или автономный XLSX без сети. Последний набор восстанавливается из локального кэша. История не достраивается из агрегатов. Повторный импорт полностью заменяет набор; история из прежнего файла не подмешивается.</p><h3>Связанные элементы</h3><p>Изначально ветки свёрнуты. Стрелка раскрывает один уровень связанных эпиков и задач, повторное нажатие сворачивает ветку. Дочерние строки показывают собственные статусы и их длительности от создания до окончательного закрытия либо среза. Числа детей не прибавляются к родителю; дочерние TTM и impediment не рассчитываются. Возврат задачи в Открыто — повторный вход после выхода из начального Открыто. Повторное открытие сохраняется в истории. При недоступности одной истории остальные полосы остаются видны.</p><p>Закрытие определяется категорией статуса, а при её отсутствии — названием: для эпиков [HF] Закрыт или [DF] Закрыт, для задач — распознанными названиями завершения. Неопределённая граница отмечается предупреждением. Поиск и сортировка относятся к исходным эпикам.</p><h3>Спринты и фокус</h3><p>Задача должна состоять в спринте во время работы. Если у неё сейчас есть Jira Sub-task, работа определяется их категорией «В работе»; иначе — категорией самой задачи. Учитываются закрытые и начавшиеся активные спринты, каждый по собственным датам. Любая подтверждённая работа покрывает целый спринт; активный спринт ограничен срезом. Брешь на полосе эпика означает, что ни одна дочерняя задача не была включена в закрытый спринт. Включение хотя бы одной задачи убирает брешь независимо от её рабочих статусов. Неизвестность и предварительное отсутствие работы на полосе эпика не отображаются; сведения о неполных данных сохраняются у спринтов. Метрики TTM и Cycle Time не изменяются.</p><h3>Автономный XLSX со связями</h3><p>Основной лист сохраняет исходные HF-эпики. В Параметрах нужны общий asOf и hierarchyVersion = 1. Листы Элементы и Связи задают метаданные и отношения contains / is contained in; лист История — точные интервалы. Категория статуса на срезе необязательна. Старые книги без связей продолжают открываться.</p>
+    <p>Источник истории файла выбирается явно: Jira или автономный XLSX без сети. Последний набор восстанавливается из локального кэша. История не достраивается из агрегатов. Повторный импорт полностью заменяет набор; история из прежнего файла не подмешивается.</p><h3>Связанные элементы</h3><p>Изначально ветки свёрнуты. Стрелка раскрывает один уровень связанных эпиков и задач, повторное нажатие сворачивает ветку. Дочерние строки показывают собственные полосы статусов от создания до окончательного закрытия либо среза и подтверждённые рабочие спринты. Числовая часть этих строк остаётся пустой; время детей не прибавляется к родителю; дочерние TTM и impediment не рассчитываются. Возврат задачи в Открыто — повторный вход после выхода из начального Открыто. Повторное открытие сохраняется в истории. При недоступности одной истории остальные полосы остаются видны.</p><p>Закрытие определяется категорией статуса, а при её отсутствии — названием: для эпиков [HF] Закрыт или [DF] Закрыт, для задач — распознанными названиями завершения. Неопределённая граница отмечается предупреждением. Поиск и сортировка относятся к исходным эпикам.</p><h3>Время без работы</h3><p>Показатель «Без работы» оценивает каждый цикл от реализации до эксперимента, окончательного закрытия без эксперимента или среза. Отложено исключается; флаг отдельно не вычитается. В смешанном и спринтовом режиме исключаются дни вне календарей. Если все допустимые задачи из TEXT, CONTENT, MLE и UX доказанно без спринтов, оценивается весь цикл, а работу покрывают только активные интервалы. Достаточно работы любой команды, пересечения не удваиваются. В незакрытом спринте число предварительное: поздняя работа может покрыть весь спринт и уменьшить его. Неизвестные данные дают прочерк с причиной. Для TEXT, CONTENT, MLE и UX без спринтов берутся точные активные интервалы по правилу подзадач. Это оценка непрерывности работы, а не трудозатраты. Число доступно только для исходной гипотезы в истории Jira.</p><p>Пустые и неизвестные спринты скрыты на всех уровнях; пояснения остаются доступными. Даже короткая работа внутри спринта покрывает его целиком, в том числе часть до её начала. Для спринтовых задач прежние тёмные отметки оценивают включение. Точные активные интервалы задач без спринтов также исключают отметку на совпадающем времени.</p><h3>Подтверждение работы и прежние бреши</h3><p>Для спринтового способа учёта задача должна состоять в спринте во время работы. Если у неё сейчас есть Jira Sub-task, работа определяется их категорией «В работе»; иначе — категорией самой задачи. Учитываются закрытые и начавшиеся активные спринты, каждый по собственным датам. Любая подтверждённая работа спринтовой задачи покрывает целый спринт; активный спринт ограничен срезом. Брешь на полосе эпика означает, что ни одна дочерняя задача не была включена в закрытый спринт. Включение хотя бы одной задачи убирает брешь независимо от её рабочих статусов. Неизвестность и предварительное отсутствие работы на полосе эпика не отображаются; сведения о неполных данных сохраняются в текстовых пояснениях строк. Метрики TTM и Cycle Time не изменяются.</p><h3>Автономный XLSX со связями</h3><p>Основной лист сохраняет исходные HF-эпики. В Параметрах нужны общий asOf и hierarchyVersion = 1. Листы Элементы и Связи задают метаданные и отношения contains / is contained in; лист История — точные интервалы. Категория статуса на срезе необязательна. Старые книги без связей продолжают открываться.</p>
     <h3>Совместимость прежней истории в XLSX</h3><p>Лист «История»: Ключ эпика, Статус, Начало, Окончание. Строки должны непрерывно покрывать историю. Пустое окончание разрешено только для последнего статуса. Закрытие — отдельная строка «[HF] Закрыт» с точным началом.</p><p>Лист «Параметры»: в первой колонке asOf, во второй — момент среза с точным временем. Лист «Impediment»: Ключ эпика, Начало, Окончание. Пустой лист с этими заголовками означает, что флагов не было; отсутствие листа означает, что данные о флагах неизвестны.</p>
     <h3>Пороги heatmap, дни</h3><p>Нижняя граница включается. Для скоринга: до 30 включительно — без цвета; более 30 — оранжевый. Для возврата в открыто, новых статусов и TTM без флага цветовая оценка не применяется. Календарный цвет обозначает статус, а не норму длительности.</p>
     {Object.entries(HEAT_BANDS).map(([id, bands]) => <div className="heat-rule" key={id}><strong>{METRICS.find(m => m.id === id)?.name}</strong><div>{bands.map(([lower, heat], index) => <span key={lower} style={{ background: HEAT_COLORS[heat], color: heat === 'burgundy' ? 'white' : undefined }}>{lower}–{bands[index + 1]?.[0] ?? '∞'}</span>)}</div></div>)}

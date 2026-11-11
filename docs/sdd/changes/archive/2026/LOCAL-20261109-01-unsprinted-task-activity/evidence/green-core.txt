@@ -1,0 +1,12 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/unsprinted-activity.test.ts tests/dataset-reset.test.ts tests/sprint-work.test.ts tests/sprint-flow.test.tsx tests/sprint-focus.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  5 passed (5)
+      Tests  69 passed (69)
+   Start at  21:55:15
+   Duration  465ms (transform 434ms, setup 0ms, import 697ms, tests 175ms, environment 0ms)

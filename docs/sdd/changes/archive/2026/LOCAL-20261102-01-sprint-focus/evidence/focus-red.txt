@@ -1,0 +1,348 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/sprint-focus.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-focus.test.ts (20 tests | 20 failed) 19ms
+     × AC-121: includes testing/release, excludes Deferred and experiment 10ms
+     × AC-122: repeat implementation does not duplicate cycles; reentry after experiment counts to cutoff 1ms
+     × AC-123: distinguishes no implementation, broken history and unknown early TTM 0ms
+     × AC-124: final closure ends the window but intermediate closure does not 0ms
+     × AC-124: zero-length and cutoff transitions are observed without inventing a day 0ms
+     × validates events after cutoff without adding future time 0ms
+     × AC-125/126: includes idle assigned sprints although old membership gap is absent 0ms
+     × AC-127: one active day covers all six days of the cycle inside a 14-day sprint 2ms
+     × AC-128: any team covers overlaps, shared tasks cannot double-count 0ms
+     × AC-129: excludes calendar gaps, Deferred, and ignores flag 0ms
+     × AC-130: active absence is provisional until work covers the whole observed sprint 0ms
+     × AC-131: active overlap makes negative time provisional once 0ms
+     × AC-132: possible work covers the whole unknown sprint, positive coverage takes priority 0ms
+     × AC-133: incomplete calendar is not a gap; independent roots remain measurable 0ms
+     × unbounded unknown includes testing/release outside the old four gap stages 0ms
+     × empty proven calendar is not a successful zero, and absent rhythm is unknown 0ms
+     × work without historical membership does not cover the sprint 0ms
+     × current subtask rule overrides parent work; unknown roster never falls back 0ms
+     × future sprints without dates do not add unknown time 0ms
+     × root work survives unknown subbranches, and numerical values are deterministic on restore 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 20 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-049: implementation cycles > AC-121: includes testing/release, excludes Deferred and experiment
+TypeError: Cannot read properties of undefined (reading 'cycles')
+ ❯ tests/sprint-focus.test.ts:25:30
+     23|  it('AC-121: includes testing/release, excludes Deferred and experimen…
+     24|   const f=fixture();statuses(f.graph.nodes['1'],[[1,'[HF] Реализация']…
+     25|   const r=result(f);expect(r.cycles).toEqual([I(1,15)]);expect(r.windo…
+       |                              ^
+     26|  });
+     27|  it('AC-122: repeat implementation does not duplicate cycles; reentry …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-049: implementation cycles > AC-122: repeat implementation does not duplicate cycles; reentry after experiment counts to cutoff
+TypeError: Cannot read properties of undefined (reading 'cycles')
+ ❯ tests/sprint-focus.test.ts:29:18
+     27|  it('AC-122: repeat implementation does not duplicate cycles; reentry …
+     28|   const f=fixture();statuses(f.graph.nodes['1'],[[1,'Открыто'],[3,'[HF…
+     29|   expect(result(f).cycles).toEqual([I(3,10),I(20,30)]);
+       |                  ^
+     30|  });
+     31|  it('AC-123: distinguishes no implementation, broken history and unkno…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-049: implementation cycles > AC-123: distinguishes no implementation, broken history and unknown early TTM
+TypeError: Cannot read properties of undefined (reading 'state')
+ ❯ tests/sprint-focus.test.ts:32:81
+     30|  });
+     31|  it('AC-123: distinguishes no implementation, broken history and unkno…
+     32|   const f=fixture();statuses(f.graph.nodes['1'],[[1,'Открыто']]);expec…
+       |                                                                                 ^
+     33|   statuses(f.graph.nodes['1'],[[1,'Discovery'],[5,'[HF] Реализация'],[…
+     34|   f.graph.nodes['1'].history!.statusChanges[1].from='broken';expect(re…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-049: implementation cycles > AC-124: final closure ends the window but intermediate closure does not
+TypeError: Cannot read properties of undefined (reading 'cycles')
+ ❯ tests/sprint-focus.test.ts:38:18
+     36|  it('AC-124: final closure ends the window but intermediate closure do…
+     37|   const f=fixture();statuses(f.graph.nodes['1'],[[1,'[HF] Реализация']…
+     38|   expect(result(f).cycles).toEqual([I(1,18)]);
+       |                  ^
+     39|  });
+     40|  it('AC-124: zero-length and cutoff transitions are observed without i…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-049: implementation cycles > AC-124: zero-length and cutoff transitions are observed without inventing a day
+TypeError: Cannot read properties of undefined (reading 'state')
+ ❯ tests/sprint-focus.test.ts:42:18
+     40|  it('AC-124: zero-length and cutoff transitions are observed without i…
+     41|   const f=fixture();statuses(f.graph.nodes['1'],[[1,'Открыто'],[5,'[HF…
+     42|   expect(result(f).state).toBe('not-applicable');expect(result(f).cycl…
+       |                  ^
+     43|   statuses(f.graph.nodes['1'],[[1,'Открыто'],[30,'[HF] Реализация']]);…
+     44|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-049: implementation cycles > validates events after cutoff without adding future time
+TypeError: Cannot read properties of undefined (reading 'cycles')
+ ❯ tests/sprint-focus.test.ts:46:113
+     44|  });
+     45|  it('validates events after cutoff without adding future time',()=>{
+     46|   const f=fixture();statuses(f.graph.nodes['1'],[[1,'[HF] Реализация']…
+       |                                                                                                                 ^
+     47|   f.graph.nodes['1'].history!.statusChanges[0].from='broken';expect(re…
+     48|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > AC-125/126: includes idle assigned sprints although old membership gap is absent
+TypeError: Cannot read properties of undefined (reading 'totalMs')
+ ❯ tests/sprint-focus.test.ts:53:78
+     51|  it('AC-125/126: includes idle assigned sprints although old membershi…
+     52|   const f=fixture();f.input.asOf=f.graph.asOf=at(31);calendar(f.input,…
+     53|   const row=analyzeSprints(f.graph,f.input).rows['1'];expect(days(row.…
+       |                                                                              ^
+     54|  });
+     55|  it('AC-127: one active day covers all six days of the cycle inside a …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > AC-127: one active day covers all six days of the cycle inside a 14-day sprint
+AssertionError: expected undefined to match object { totalMs: +0, …(3) }
+
+- Expected:
+{
+  "coveredMs": 518400000,
+  "evaluatedMs": 518400000,
+  "state": "known",
+  "totalMs": 0,
+}
+
++ Received:
+undefined
+
+ ❯ tests/sprint-focus.test.ts:57:21
+     55|  it('AC-127: one active day covers all six days of the cycle inside a …
+     56|   const f=fixture();calendar(f.input,[[1,15]]);statuses(f.graph.nodes[…
+     57|   expect(result(f)).toMatchObject({totalMs:0,evaluatedMs:6*DAY_MS,cove…
+       |                     ^
+     58|  });
+     59|  it('AC-128: any team covers overlaps, shared tasks cannot double-coun…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > AC-128: any team covers overlaps, shared tasks cannot double-count
+TypeError: Cannot read properties of undefined (reading 'totalMs')
+ ❯ tests/sprint-focus.test.ts:61:23
+     59|  it('AC-128: any team covers overlaps, shared tasks cannot double-coun…
+     60|   const f=fixture();calendar(f.input,[[1,15],[8,22]]);f.graph.nodes['3…
+     61|   expect(days(result(f).totalMs)).toBe(7);expect(days(result(f).evalua…
+       |                       ^
+     62|  });
+     63|  it('AC-129: excludes calendar gaps, Deferred, and ignores flag',()=>{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > AC-129: excludes calendar gaps, Deferred, and ignores flag
+AssertionError: expected undefined to match object { totalMs: 864000000, …(3) }
+
+- Expected:
+{
+  "coveredMs": 518400000,
+  "evaluatedMs": 1382400000,
+  "outsideSprintMs": 864000000,
+  "totalMs": 864000000,
+}
+
++ Received:
+undefined
+
+ ❯ tests/sprint-focus.test.ts:65:21
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > AC-130: active absence is provisional until work covers the whole observed sprint
+AssertionError: expected undefined to match object { state: 'preliminary', …(2) }
+
+- Expected:
+{
+  "preliminaryMs": 432000000,
+  "state": "preliminary",
+  "totalMs": 432000000,
+}
+
++ Received:
+undefined
+
+ ❯ tests/sprint-focus.test.ts:69:119
+     67|  });
+     68|  it('AC-130: active absence is provisional until work covers the whole…
+     69|   const f=fixture();calendar(f.input,[[1,15,true]]);f.input.asOf=at(6)…
+       |                                                                                                                       ^
+     70|   f.graph.nodes['3']=node('3','task',[[6,7]]);f.input.asOf=at(7);expec…
+     71|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > AC-131: active overlap makes negative time provisional once
+AssertionError: expected undefined to match object { totalMs: 777600000, …(2) }
+
+- Expected:
+{
+  "closedMs": 345600000,
+  "preliminaryMs": 432000000,
+  "totalMs": 777600000,
+}
+
++ Received:
+undefined
+
+ ❯ tests/sprint-focus.test.ts:74:21
+     72|  it('AC-131: active overlap makes negative time provisional once',()=>{
+     73|   const f=fixture();calendar(f.input,[[1,8],[5,19,true]]);f.input.asOf…
+     74|   expect(result(f)).toMatchObject({totalMs:9*DAY_MS,closedMs:4*DAY_MS,…
+       |                     ^
+     75|  });
+     76|  it('AC-132: possible work covers the whole unknown sprint, positive c…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > AC-132: possible work covers the whole unknown sprint, positive coverage takes priority
+AssertionError: expected undefined to match object { state: 'unknown', …(3) }
+
+- Expected:
+{
+  "coveredMs": 691200000,
+  "state": "unknown",
+  "totalMs": null,
+  "unknown": [
+    {
+      "end": "2026-09-04T00:00:00.000Z",
+      "start": "2026-09-01T00:00:00.000Z",
+    },
+    {
+      "end": "2026-09-15T00:00:00.000Z",
+      "start": "2026-09-12T00:00:00.000Z",
+    },
+  ],
+}
+
++ Received:
+undefined
+
+ ❯ tests/sprint-focus.test.ts:79:21
+     77|   const f=fixture();calendar(f.input,[[1,15],[4,12]]);f.graph.nodes['3…
+     78|   f.graph.nodes['5']=node('5','task',[[5,6]]);f.input.tasks['5'].sprin…
+     79|   expect(result(f)).toMatchObject({state:'unknown',totalMs:null,unknow…
+       |                     ^
+     80|  });
+     81|  it('AC-133: incomplete calendar is not a gap; independent roots remai…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > AC-133: incomplete calendar is not a gap; independent roots remain measurable
+TypeError: Cannot read properties of undefined (reading 'state')
+ ❯ tests/sprint-focus.test.ts:83:69
+     81|  it('AC-133: incomplete calendar is not a gap; independent roots remai…
+     82|   const f=fixture();f.input.tasks['3'].calendarCoverage='partial';f.gr…
+     83|   const r=analyzeSprints(f.graph,f.input);expect(r.rows['1'].focus!.st…
+       |                                                                     ^
+     84|  });
+     85|  it('unbounded unknown includes testing/release outside the old four g…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > unbounded unknown includes testing/release outside the old four gap stages
+TypeError: Cannot read properties of undefined (reading 'unknown')
+ ❯ tests/sprint-focus.test.ts:87:18
+     85|  it('unbounded unknown includes testing/release outside the old four g…
+     86|   const f=fixture();statuses(f.graph.nodes['1'],[[1,'[HF] Реализация']…
+     87|   expect(result(f).unknown).toEqual([I(8,30)]);
+       |                  ^
+     88|  });
+     89|  it('empty proven calendar is not a successful zero, and absent rhythm…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > empty proven calendar is not a successful zero, and absent rhythm is unknown
+TypeError: Cannot read properties of undefined (reading 'state')
+ ❯ tests/sprint-focus.test.ts:90:57
+     88|  });
+     89|  it('empty proven calendar is not a successful zero, and absent rhythm…
+     90|   const f=fixture();calendar(f.input,[]);expect(result(f).state).toBe(…
+       |                                                         ^
+     91|  });
+     92|  it('work without historical membership does not cover the sprint',()=…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > work without historical membership does not cover the sprint
+TypeError: Cannot read properties of undefined (reading 'totalMs')
+ ❯ tests/sprint-focus.test.ts:93:139
+     91|  });
+     92|  it('work without historical membership does not cover the sprint',()=…
+     93|   const f=fixture();calendar(f.input,[[1,11]]);f.input.tasks['3'].chan…
+       |                                                                                                                                           ^
+     94|  });
+     95|  it('current subtask rule overrides parent work; unknown roster never …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > current subtask rule overrides parent work; unknown roster never falls back
+TypeError: Cannot read properties of undefined (reading 'totalMs')
+ ❯ tests/sprint-focus.test.ts:96:143
+     94|  });
+     95|  it('current subtask rule overrides parent work; unknown roster never …
+     96|   const f=fixture();calendar(f.input,[[1,11]]);f.graph.nodes['6']=node…
+       |                                                                                                                                               ^
+     97|   f.input.tasks['3'].subtaskIds=[];f.input.tasks['3'].rosterCoverage='…
+     98|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > future sprints without dates do not add unknown time
+TypeError: Cannot read properties of undefined (reading 'totalMs')
+ ❯ tests/sprint-focus.test.ts:101:23
+     99|  it('future sprints without dates do not add unknown time',()=>{
+    100|   const f=fixture();f.input.sprints.future={...sprint('future',31,40),…
+    101|   expect(days(result(f).totalMs)).toBe(14);
+       |                       ^
+    102|  });
+    103|  it('root work survives unknown subbranches, and numerical values are …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/20]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-050/051: whole sprint work and negative time > root work survives unknown subbranches, and numerical values are deterministic on restore
+AssertionError: expected undefined to match object { state: 'known', totalMs: +0 }
+
+- Expected:
+{
+  "state": "known",
+  "totalMs": 0,
+}
+
++ Received:
+undefined
+
+ ❯ tests/sprint-focus.test.ts:105:21
+    103|  it('root work survives unknown subbranches, and numerical values are …
+    104|   const f=fixture();calendar(f.input,[[1,8]]);statuses(f.graph.nodes['…
+    105|   expect(result(f)).toMatchObject({state:'known',totalMs:0});expect(re…
+       |                     ^
+    106|  });
+    107| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/20]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  20 failed (20)
+   Start at  21:11:42
+   Duration  160ms (transform 55ms, setup 0ms, import 65ms, tests 19ms, environment 0ms)

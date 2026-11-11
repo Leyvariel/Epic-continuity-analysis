@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "url": "http://127.0.0.1:4317/",
+  "http": 200,
+  "cacheUnchanged": true,
+  "cacheSha256": "d5a1a42d0d9de5bfe0c87a8351813f756e6081ae712f5ae697b882359fe30a69",
+  "hypotheses": 154,
+  "hotels13142Days": 13.929259606481482,
+  "localLinksChecked": 24,
+  "deltaScenariosPreserved": true
+}

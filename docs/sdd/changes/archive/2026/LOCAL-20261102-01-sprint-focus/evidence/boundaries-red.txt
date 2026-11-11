@@ -1,0 +1,66 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/sprint-focus.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/sprint-focus.test.ts (22 tests | 2 failed) 24ms
+   × FR-049/051: an unrecognized terminal closure cannot extend an unfinished cycle as certain work time 4ms
+   × FR-051: full positive coverage proves zero outside-sprint time despite another unknown calendar 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-049/051: an unrecognized terminal closure cannot extend an unfinished cycle as certain work time
+AssertionError: expected { state: 'known', …(16) } to match object { state: 'unknown', totalMs: null }
+(15 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "state": "unknown",
+-   "totalMs": null,
++   "state": "known",
++   "totalMs": 1209600000,
+  }
+
+ ❯ tests/sprint-focus.test.ts:111:20
+    109| it('FR-049/051: an unrecognized terminal closure cannot extend an unfi…
+    110|  const f=fixture();statuses(f.graph.nodes['1'],[[1,'[HF] Реализация'],…
+    111|  expect(result(f)).toMatchObject({state:'unknown',totalMs:null});
+       |                    ^
+    112|  // Known experiment already bounds the cycle independently of subsequ…
+    113|  statuses(f.graph.nodes['1'],[[1,'[HF] Реализация'],[8,'[HF] Экспериме…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-focus.test.ts > FR-051: full positive coverage proves zero outside-sprint time despite another unknown calendar
+AssertionError: expected { state: 'known', …(16) } to match object { state: 'known', totalMs: +0, …(1) }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "outsideSprintMs": 0,
++   "outsideSprintMs": null,
+    "state": "known",
+    "totalMs": 0,
+  }
+
+ ❯ tests/sprint-focus.test.ts:118:20
+    116| it('FR-051: full positive coverage proves zero outside-sprint time des…
+    117|  const f=fixture();calendar(f.input,[[1,8]]);statuses(f.graph.nodes['1…
+    118|  expect(result(f)).toMatchObject({state:'known',totalMs:0,outsideSprin…
+       |                    ^
+    119| });
+    120|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 20 passed (22)
+   Start at  21:24:45
+   Duration  172ms (transform 61ms, setup 0ms, import 72ms, tests 24ms, environment 0ms)

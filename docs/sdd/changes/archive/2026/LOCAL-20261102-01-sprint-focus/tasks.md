@@ -1,0 +1,26 @@
+---
+change_id: LOCAL-20261102-01
+status: archived
+approval_status: approved
+updated: 2026-11-02
+language: ru
+---
+
+# Задачи реализации
+
+Реализация разрешена пользователем 02.11.2026 после согласования полного пакета. Перед правками проверить рабочее дерево и резерв кэша. После каждой поведенческой пары сохранить фактические RED/GREEN; неизменённые адаптеры подтверждать регрессией, не приписывая им фиктивный RED.
+
+- [x] T001 [repo:.] [req:FR-049,AC-121,AC-122,AC-123,AC-124] RED: зафиксировать циклы, исключение Отложено и граничные состояния | path: `tests/sprint-focus.test.ts` | verify: `npm test -- tests/sprint-focus.test.ts` | depends: none
+- [x] T002 [repo:.] [req:FR-049,AC-121,AC-122,AC-123,AC-124] GREEN: реализовать доказанные циклы и границы без зависимости от начала TTM | path: `server/sprint-focus.ts, server/sprint-analysis.ts` | verify: `npm test -- tests/sprint-focus.test.ts` | depends: T001
+- [x] T003 [repo:.] [req:FR-050,AC-125,AC-126,AC-127,AC-128,AC-129,FR-051,AC-130,AC-131,AC-132,AC-133] RED: зафиксировать числовую матрицу, пересечения, предварительность и неизвестность | path: `tests/sprint-focus.test.ts, tests/sprint-work.test.ts, tests/sprint-membership-gaps.test.ts` | verify: `npm test -- tests/sprint-focus.test.ts tests/sprint-work.test.ts tests/sprint-membership-gaps.test.ts` | depends: T002
+- [x] T004 [repo:.] [req:FR-050,AC-125,AC-126,AC-127,AC-128,AC-129,FR-051,AC-130,AC-131,AC-132,AC-133] GREEN: рассчитать новую проекцию независимо от прежних брешей | path: `server/sprint-focus.ts, server/sprint-analysis.ts, shared/sprints.ts` | verify: `npm test -- tests/sprint-focus.test.ts tests/sprint-work.test.ts tests/sprint-membership-gaps.test.ts` | depends: T003
+- [x] T005 [repo:.] [req:FR-035,AC-049,AC-050,AC-081,FR-037,AC-055,AC-056,AC-085,FR-039,AC-060,AC-061,AC-062,AC-073,AC-077,AC-078,AC-079,AC-082,AC-083,AC-084,FR-042,AC-088,AC-089] RED: заменить ожидания видимости и сохранить доказательство работы, исходные состояния и старые бреши | path: `tests/sprint-task-visibility.test.ts, tests/sprint-ui.test.tsx, tests/sprint-flow.test.tsx` | verify: `npm test -- tests/sprint-task-visibility.test.ts tests/sprint-ui.test.tsx tests/sprint-flow.test.tsx tests/sprint-membership-gaps.test.ts` | depends: T004
+- [x] T006 [repo:.] [req:FR-035,AC-049,AC-050,AC-081,FR-037,AC-055,AC-056,AC-085,FR-039,AC-060,AC-061,AC-062,AC-073,AC-077,AC-078,AC-079,AC-082,AC-083,AC-084,FR-042,AC-088,AC-089] GREEN: скрыть нерабочие сегменты на всех уровнях, сохранив диагностику и общую ось | path: `src/SprintRows.tsx, src/App.tsx, server/sprint-analysis.ts` | verify: `npm test -- tests/sprint-task-visibility.test.ts tests/sprint-ui.test.tsx tests/sprint-flow.test.tsx tests/sprint-membership-gaps.test.ts` | depends: T005
+- [x] T007 [repo:.] [req:FR-053,AC-135,AC-136,AC-137] RED: проверить новую колонку, контекст сортировки, состояние источника, детей и детали | path: `tests/sprint-focus-ui.test.tsx, tests/expanded-metrics.test.ts, tests/composition.test.tsx` | verify: `npm test -- tests/sprint-focus-ui.test.tsx tests/expanded-metrics.test.ts tests/composition.test.tsx` | depends: T006
+- [x] T008 [repo:.] [req:FR-053,AC-135,AC-136,AC-137] GREEN: подключить показатель к таблице и деталям, сохранив прежние метрики и доступность | path: `shared/metrics.ts, shared/composition.ts, src/App.tsx, src/HierarchyRows.tsx, src/styles.css` | verify: `npm test -- tests/sprint-focus-ui.test.tsx tests/expanded-metrics.test.ts tests/composition.test.tsx` | depends: T007
+- [x] T009 [repo:.] [req:FR-052,AC-134] Проверить восстановление старых входов без сети и изменения кэша; при дефекте сначала сохранить RED | path: `server/jira/dataset.ts, server/cache.ts, tests/sprint-cache.test.ts, tests/expanded-sources.test.ts` | verify: `npm test -- tests/sprint-cache.test.ts tests/expanded-sources.test.ts` | depends: T008
+- [x] T010 [repo:.] [req:FR-049,FR-050,FR-051,FR-052,FR-053,FR-035,FR-037,FR-039,FR-042] Выполнить общую регрессию, сборку и валидацию SDD; сохранить фактические результаты | path: `tests, docs/sdd/changes/archive/2026/LOCAL-20261102-01-sprint-focus/evidence` | verify: `npm run check; python3 /Users/leyva/.agents/skills/sdd-writer/scripts/validate_sdd.py .` | depends: T009
+- [x] T011 [repo:.] [req:FR-053,AC-135,AC-136,AC-137,FR-035,AC-050,FR-042,AC-088,AC-089] Выполнить реальные визуальные маршруты и сохранить просмотренные снимки | path: `src/App.tsx, src/SprintRows.tsx, docs/sdd/changes/archive/2026/LOCAL-20261102-01-sprint-focus/evidence/visual` | verify: `test-plan.md: шесть браузерных маршрутов, размеры 1440/800 и три масштаба` | depends: T010
+- [x] T012 [repo:.] [req:FR-049,FR-050,FR-051,FR-052,FR-053,FR-035,FR-037,FR-039,FR-042] Перенести только проверенные дельты в текущие спецификации, согласовать домен/архитектуру и условия завершения | path: `docs/SDD.md, docs/sdd/specs, docs/sdd/domain.md, docs/sdd/architecture.md, docs/sdd/operations.md` | verify: `python3 /Users/leyva/.agents/skills/sdd-writer/scripts/validate_sdd.py .; проверка ссылок и свидетельств` | depends: T011
+
+Выполнение подтверждено протоколом verification.md и свидетельствами evidence/. Технические шаги не сокращают согласованный результат. Архивирование допустимо только после проверенной реализации, применения всех дельт и безопасного перенаправления зависимых ссылок.

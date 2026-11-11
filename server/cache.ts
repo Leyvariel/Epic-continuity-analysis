@@ -1,5 +1,5 @@
 import { hierarchySchema } from './hierarchy-schema';
-import { chmod, mkdir, readFile, rename, writeFile, unlink } from 'node:fs/promises';
+import { chmod, mkdir, readFile, rename, writeFile, unlink, readdir } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { z } from 'zod';
@@ -57,6 +57,19 @@ export class CacheStore {
       return legacyV3Schema.parse(migrated);
     }
     return parsed;
+  }
+  async clear(): Promise<void> {
+    try {
+      let files: string[];
+      try { files = await readdir(this.directory); }
+      catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return; throw error; }
+      const owned = files.filter(name => name === 'dataset.v2.backup.json' || /^dataset-[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\.tmp$/i.test(name));
+      // Delete the current dataset last: a failure cleaning auxiliary files preserves it.
+      for (const name of [...owned, 'dataset.json']) {
+        try { await unlink(path.join(this.directory, name)); }
+        catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+      }
+    } catch { throw new AppError('CACHE_RESET', 'Не удалось сбросить данные. Текущий сохранённый набор не удалён.', 500); }
   }
   async write(state: CacheState | JiraCacheState | LegacyCacheStateV3): Promise<void> {
     const temporary = path.join(this.directory, `dataset-${randomUUID()}.tmp`);

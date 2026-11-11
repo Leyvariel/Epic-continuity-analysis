@@ -1,18 +1,17 @@
-import type { SprintAnalysis,SprintInputs,SprintInterval,SprintRow,SprintSegment,SprintRecord,SprintTaskInput } from '../shared/sprints';
+import type { SprintAnalysis,SprintInputs,SprintRow,SprintSegment,SprintRecord,SprintTaskInput } from '../shared/sprints';
 import type { HierarchyInput,HierarchyNodeInput } from '../shared/hierarchy';
 import { canonical,isRejected } from '../shared/statuses';
 import { statusClosure } from './related-timeline';
 import { orderedChanges,sameStatus } from './jira/normalize';
-type Span=[number,number];
+import {mergeSpans,intersect,subtractSpans,asIntervals,type Span} from './sprint-intervals';
+export {mergeSpans,subtractSpans} from './sprint-intervals';
+import {calculateSprintFocus} from './sprint-focus';
+const UNSPRINTED_PROJECTS = new Set(['TEXT','CONTENT','MLE','UX']);
 const iso=(n:number)=>new Date(n).toISOString();
 const ms=(v:string|null|undefined)=>v?Date.parse(v):NaN;
 const overlaps=(a:Span,b:Span)=>a[0]<b[1]&&b[0]<a[1];
-export function mergeSpans(spans:Span[]):Span[]{const out:Span[]=[];for(const [a,b] of spans.filter(([a,b])=>Number.isFinite(a)&&Number.isFinite(b)&&a<b).sort((x,y)=>x[0]-y[0]||x[1]-y[1])){const last=out.at(-1);if(last&&a<=last[1])last[1]=Math.max(last[1],b);else out.push([a,b]);}return out;}
-const intersect=(a:Span[],b:Span[])=>mergeSpans(a.flatMap(x=>b.filter(y=>overlaps(x,y)).map(y=>[Math.max(x[0],y[0]),Math.min(x[1],y[1])] as Span)));
-export function subtractSpans(a:Span[],b:Span[]):Span[]{let out=mergeSpans(a);for(const [c,d] of mergeSpans(b))out=out.flatMap(([x,y])=>d<=x||c>=y?[[x,y]]:([[x,Math.min(y,c)],[Math.max(x,d),y]] as Span[]).filter(([l,r])=>l<r));return out;}
-const asIntervals=(spans:Span[]):SprintInterval[]=>mergeSpans(spans).map(([a,b])=>({start:iso(a),end:iso(b)}));
-interface StatusSpan {span:Span;status:string;id?:string}
-export function sprintStatusHistory(node:HierarchyNodeInput|undefined,cutoff:number):StatusSpan[]|null{
+export interface StatusSpan {span:Span;status:string;id?:string}
+export function sprintStatusHistory(node:HierarchyNodeInput|undefined,cutoff:number,includeZero=false):StatusSpan[]|null{
  const h=node?.history,created=ms(node?.created);
  if(!node||!h||!Number.isFinite(created)||ms(h.historyStart)!==created||node.historyCoverage!=='complete')return null;
  if('source' in h&&h.source==='jira'&&(h.statusCoverage!=='complete'||!h.initialStateProven||!h.proof?.terminal||h.proof.expected!==h.proof.received))return null;
@@ -20,8 +19,8 @@ export function sprintStatusHistory(node:HierarchyNodeInput|undefined,cutoff:num
  for(const c of changes){const t=ms(c.at);if(!Number.isFinite(t)||t<cursor||seen.has(c.id)||!sameStatus(status,c.from,id,c.fromId))return null;seen.add(c.id);cursor=t;status=c.to;id=c.toId;}
  if(!sameStatus(status,h.currentStatus,id,h.currentStatusId))return null;
  const out:StatusSpan[]=[];status=changes[0]?.from??h.currentStatus;id=changes[0]?.fromId??h.currentStatusId;cursor=created;
- for(const c of changes){const t=ms(c.at);if(t>cutoff)break;if(cursor<t)out.push({span:[cursor,t],status,id});cursor=t;status=c.to;id=c.toId;}
- if(cursor<cutoff)out.push({span:[cursor,cutoff],status,id});return out;
+ for(const c of changes){const t=ms(c.at);if(t>cutoff)break;if(cursor<t||includeZero)out.push({span:[cursor,t],status,id});cursor=t;status=c.to;id=c.toId;}
+ if(cursor<cutoff||includeZero&&cursor===cutoff)out.push({span:[cursor,cutoff],status,id});return out;
 }
 export function observedSprint(s:SprintRecord,cutoff:number):{kind:'future'|'unknown'|'active'|'closed';span?:Span}{
  const start=ms(s.startDate),close=ms(s.completeDate),activated=ms(s.activatedDate);
@@ -33,15 +32,25 @@ export function observedSprint(s:SprintRecord,cutoff:number):{kind:'future'|'unk
  if(start>=cutoff)return {kind:'future'};
  return s.state==='closed'&&close<=cutoff?{kind:'closed',span:[start,close]}:{kind:'active',span:[start,cutoff]};
 }
-function membership(t:SprintTaskInput|undefined,node:HierarchyNodeInput,sprintId:string,cutoff:number):Span[]|null{
- if(!t||t.membershipCoverage!=='complete'||!node.created)return null;
+function membershipStates(t:SprintTaskInput|undefined,node:HierarchyNodeInput){
+ if(!t||t.membershipCoverage!=='complete'||!Number.isFinite(ms(node.created)))return null;
  const same=(a:string[],b:string[])=>JSON.stringify([...a].sort())===JSON.stringify([...b].sort());
  const changes=[...t.changes].sort((a,b)=>ms(a.at)-ms(b.at)||a.id.localeCompare(b.id,'en',{numeric:true}));
- let state=changes[0]?.fromIds??t.sprintIds,cursor=ms(node.created);const seen=new Set<string>();
- for(const c of changes){if(ms(c.at)<cursor||seen.has(c.id)||!same(state,c.fromIds))return null;cursor=ms(c.at);state=c.toIds;seen.add(c.id);}
- if(!same(state,t.sprintIds))return null;
- const out:Span[]=[];state=changes[0]?.fromIds??t.sprintIds;cursor=ms(node.created);
- for(const c of changes){const end=ms(c.at);if(end>cutoff)break;if(state.includes(sprintId)&&cursor<end)out.push([cursor,end]);cursor=end;state=c.toIds;}
+ const initial=changes[0]?.fromIds??t.sprintIds;let state=initial,cursor=ms(node.created);const seen=new Set<string>();
+ const unique=(ids:string[])=>new Set(ids).size===ids.length;
+ if(!unique(initial)||!unique(t.sprintIds))return null;
+ for(const c of changes){const time=ms(c.at);if(!Number.isFinite(time)||time<cursor||seen.has(c.id)||!unique(c.fromIds)||!unique(c.toIds)||!same(state,c.fromIds))return null;cursor=time;state=c.toIds;seen.add(c.id);}
+ return same(state,t.sprintIds)?{initial,changes}:null;
+}
+function unsprinted(t:SprintTaskInput|undefined,node:HierarchyNodeInput,cutoff:number){
+ if(!UNSPRINTED_PROJECTS.has(node.key.slice(0,node.key.lastIndexOf('-'))))return false;
+ const history=membershipStates(t,node);
+ return !!history&&!history.initial.length&&!history.changes.some(c=>ms(c.at)<=cutoff&&(c.fromIds.length||c.toIds.length));
+}
+function membership(t:SprintTaskInput|undefined,node:HierarchyNodeInput,sprintId:string,cutoff:number):Span[]|null{
+ const history=membershipStates(t,node);if(!history)return null;
+ const out:Span[]=[];let state=history.initial,cursor=ms(node.created);
+ for(const c of history.changes){const end=ms(c.at);if(end>cutoff)break;if(state.includes(sprintId)&&cursor<end)out.push([cursor,end]);cursor=end;state=c.toIds;}
  if(state.includes(sprintId)&&cursor<cutoff)out.push([cursor,cutoff]);return out;
 }
 interface Work {yes:Span[];unknown:Span[];subtasks:Map<string,Span[]>}
@@ -68,8 +77,8 @@ export function analyzeSprints(graph:HierarchyInput,input:SprintInputs):SprintAn
  const applicable=(n:HierarchyNodeInput)=>!n.created||ms(n.created)<=cutoff;
  const reachable=new Set<string>(),todo=[...rootIds];
  while(todo.length){const id=todo.pop()!;if(reachable.has(id))continue;reachable.add(id);if(graph.nodes[id]?.type==='epic')todo.push(...adj.get(id)??[]);}
- const work=new Map<string,Work>();
- for(const id of reachable){const n=graph.nodes[id];if(n?.type==='task'&&applicable(n)&&n.resolution!==null&&!isRejected(n.resolution))work.set(id,workFor(n,input.tasks[id],graph,cutoff));}
+ const work=new Map<string,Work>(),exactIds=new Set<string>();
+ for(const id of reachable){const n=graph.nodes[id];if(n?.type==='task'&&applicable(n)&&n.resolution!==null&&!isRejected(n.resolution)){work.set(id,workFor(n,input.tasks[id],graph,cutoff));if(unsprinted(input.tasks[id],n,cutoff))exactIds.add(id);}}
  const earliest=Math.min(cutoff,...[...reachable].flatMap(id=>{const n=graph.nodes[id];return n&&applicable(n)&&n.type!=='subtask'&&Number.isFinite(ms(n.created))?[ms(n.created)]:[];}));
  for(const rowId of [...reachable].sort((a,b)=>a.localeCompare(b,'en',{numeric:true}))){
   const rowNode=graph.nodes[rowId];if(!rowNode||!applicable(rowNode)||!['task','epic'].includes(rowNode.type)||rowNode.resolution===null||isRejected(rowNode.resolution))continue;
@@ -79,12 +88,14 @@ export function analyzeSprints(graph:HierarchyInput,input:SprintInputs):SprintAn
    if(n.type==='unknown'||n.resolution===null){structural=true;continue;}
    if(n.type==='epic'){if(n.branchCoverage!=='complete')structural=true;queue.push(...adj.get(id)??[]);}else if(!isRejected(n.resolution))descendants.add(id);
   }
+  const exactYes:Span[]=[],exactUnknown:Span[]=[],activity:NonNullable<SprintRow['activity']>=[];
   const warnings=new Set<string>(),candidateIds=new Set<string>();let unbounded=structural||!descendants.size;
   if(!descendants.size)warnings.add('Ритм спринтов не определён: нет доступных обычных задач.');
   if(structural)warnings.add(`Состав ветки ${rowNode.key} не подтверждён; отсутствие работы неизвестно.`);
   for(const id of descendants){const t=input.tasks[id];if(!t){unbounded=true;warnings.add('Спринты задачи не получены.');continue;}
    for(const w of t.warnings)warnings.add(`${graph.nodes[id].key}: ${w}`);
    if(work.get(id)?.unknown.length)warnings.add(`${graph.nodes[id].key}: не подтверждены рабочие статусы, категории или текущие связи подзадач.`);
+   if(exactIds.has(id)){const w=work.get(id)!;exactYes.push(...w.yes);exactUnknown.push(...w.unknown);activity.push({taskKey:graph.nodes[id].key,intervals:asIntervals(w.yes),unknown:asIntervals(subtractSpans(w.unknown,w.yes)),subtaskKeys:[...w.subtasks.keys()].sort()});continue;}
    for(const sid of [...t.sprintIds,...t.changes.flatMap(c=>[...c.fromIds,...c.toIds])])candidateIds.add(sid);
    if(t.calendarCoverage!=='complete'||!t.calendarIds.length){unbounded=true;warnings.add('Ритм или полнота календаря не подтверждены.');}
    for(const bid of t.calendarIds){const cal=input.calendars[bid];if(!cal||cal.coverage!=='complete'){unbounded=true;warnings.add('Календарь спринтов неполон.');}for(const sid of cal?.sprintIds??[])candidateIds.add(sid);}
@@ -95,12 +106,12 @@ export function analyzeSprints(graph:HierarchyInput,input:SprintInputs):SprintAn
    if(!observed.span){unbounded=true;warnings.add(`Не подтверждены даты или состояние спринта ${s.name}.`);continue;}
    if(observed.span[1]<=earliest)continue;usable.push({s,span:observed.span,kind:observed.kind as 'active'|'closed'});
   }
-  // Work coverage remains the per-sprint result. Epic gaps use membership only.
+  // Sprint membership and work stay distinct; exact activity covers only its own dates.
   const assigned:Span[]=[],assignmentUnknown:Span[]=[];
   const memberSprintIds=new Set<string>(),unknownMemberSprintIds=new Set<string>();
   const P:Span[]=[],U:Span[]=[],A:Span[]=[],C:Span[]=[],segments:SprintSegment[]=[];
   for(const {s,span,kind} of usable){const tasks=new Set<string>(),subtasks=new Set<string>();let possible=unbounded,hasMember=false,uncertainMembership=unbounded;
-   for(const id of descendants){const n=graph.nodes[id],t=input.tasks[id],w=work.get(id)!;const member=membership(t,n,s.id,cutoff);
+   for(const id of descendants){if(exactIds.has(id))continue;const n=graph.nodes[id],t=input.tasks[id],w=work.get(id)!;const member=membership(t,n,s.id,cutoff);
     if(member===null){if(!n.created||ms(n.created)<span[1])uncertainMembership=true;if([...w.yes,...w.unknown].some(p=>overlaps(p,span)))possible=true;continue;}
     const participating=intersect(member,[span]);if(!participating.length)continue;hasMember=true;
     if(intersect(w.yes,participating).length){tasks.add(n.key);for(const [key,spans] of w.subtasks)if(intersect(spans,participating).length)subtasks.add(key);}
@@ -130,7 +141,7 @@ export function analyzeSprints(graph:HierarchyInput,input:SprintInputs):SprintAn
    if(unknownMemberSprintIds.has(s.sprintId)||!possiblyOpen)return false;
    return !possiblyOpen.some(([a,b])=>a<=start&&end<=b);
   }).map(s=>s.sprintId):undefined;
-  rows[rowId]={issueId:rowId,...(hiddenSprintIds?{hiddenSprintIds}:{}),segments,warnings:[...warnings],phases:isRoot?phases:[],gaps:isRoot?asIntervals(subtractSpans(intersect(mask,C),[...assigned,...assignmentUnknown,...A])):[],preliminary:isRoot?asIntervals(subtractSpans(intersect(mask,A),[...P,...U])):[],unknown:isRoot?asIntervals(subtractSpans(intersect(mask,U),P)):[]};
+  rows[rowId]={issueId:rowId,activity,...(isRoot?{focus:calculateSprintFocus(rowNode,sprintStatusHistory(rowNode,cutoff,true),cutoff,segments,unbounded,[...warnings],{yes:exactYes,unknown:exactUnknown,wholeCycle:!structural&&descendants.size>0&&[...descendants].every(id=>exactIds.has(id))})}:{}),...(hiddenSprintIds?{hiddenSprintIds}:{}),segments,warnings:[...warnings],phases:isRoot?phases:[],gaps:isRoot?asIntervals(subtractSpans(intersect(mask,C),[...assigned,...assignmentUnknown,...A,...exactYes,...exactUnknown])):[],preliminary:isRoot?asIntervals(subtractSpans(intersect(mask,A),[...P,...U,...exactYes,...exactUnknown])):[],unknown:isRoot?asIntervals(subtractSpans(intersect(mask,[...U,...exactUnknown]),[...P,...exactYes])):[]};
  }
  return {...(input.diagnostics?{diagnostics:input.diagnostics}:{}),asOf:input.asOf,mode:input.mode,rows,warnings:input.warnings};
 }

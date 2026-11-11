@@ -1,0 +1,365 @@
+{
+  "sha256": "d5a1a42d0d9de5bfe0c87a8351813f756e6081ae712f5ae697b882359fe30a69",
+  "mtime": 1794237652.8105998,
+  "asOf": "2026-11-09T15:05:53.271Z",
+  "roots": 154,
+  "sprintInputs": 1782,
+  "projects": {
+    "ANL": {
+      "nodes": {
+        "task": 92
+      },
+      "tasks": 92,
+      "with_sprint": 78,
+      "empty_complete": 7,
+      "empty_unknown": 0,
+      "no_input": 7,
+      "empty_examples": [
+        {
+          "key": "ANL-20526",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "ANL-20648",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "ANL-20649",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "ANL-21964",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "ANL-22046",
+          "resolution": "Сделано",
+          "membership": "complete"
+        }
+      ],
+      "with_examples": [
+        {
+          "key": "ANL-17326",
+          "sprints": [
+            "10730"
+          ]
+        },
+        {
+          "key": "ANL-17622",
+          "sprints": [
+            "10947",
+            "10995"
+          ]
+        },
+        {
+          "key": "ANL-17699",
+          "sprints": [
+            "10995",
+            "11055"
+          ]
+        }
+      ],
+      "boards": [
+        "1966",
+        "971"
+      ],
+      "coverage": {
+        "complete": 85
+      }
+    },
+    "CONTENT": {
+      "nodes": {
+        "task": 5
+      },
+      "tasks": 5,
+      "with_sprint": 0,
+      "empty_complete": 5,
+      "empty_unknown": 0,
+      "no_input": 0,
+      "empty_examples": [
+        {
+          "key": "CONTENT-14794",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "CONTENT-25283",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "CONTENT-28855",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "CONTENT-30824",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "CONTENT-31225",
+          "resolution": "Сделано",
+          "membership": "complete"
+        }
+      ],
+      "with_examples": [],
+      "boards": [],
+      "coverage": {
+        "complete": 5
+      }
+    },
+    "HOTELS": {
+      "nodes": {
+        "task": 1877,
+        "epic": 154,
+        "subtask": 93
+      },
+      "tasks": 1877,
+      "with_sprint": 1359,
+      "empty_complete": 313,
+      "empty_unknown": 0,
+      "no_input": 205,
+      "empty_examples": [
+        {
+          "key": "HOTELS-8564",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "HOTELS-8591",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "HOTELS-9266",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "HOTELS-9267",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "HOTELS-9293",
+          "resolution": "Сделано",
+          "membership": "complete"
+        }
+      ],
+      "with_examples": [
+        {
+          "key": "HOTELS-6806",
+          "sprints": [
+            "11498",
+            "8863",
+            "8994"
+          ]
+        },
+        {
+          "key": "HOTELS-7556",
+          "sprints": [
+            "10017",
+            "10082",
+            "8402"
+          ]
+        },
+        {
+          "key": "HOTELS-7643",
+          "sprints": [
+            "10187",
+            "10188",
+            "10309"
+          ]
+        }
+      ],
+      "boards": [
+        "1045",
+        "1046",
+        "1298",
+        "1465",
+        "1509",
+        "1906",
+        "1992",
+        "900"
+      ],
+      "coverage": {
+        "complete": 1672
+      }
+    },
+    "MAPP": {
+      "nodes": {
+        "task": 2
+      },
+      "tasks": 2,
+      "with_sprint": 2,
+      "empty_complete": 0,
+      "empty_unknown": 0,
+      "no_input": 0,
+      "empty_examples": [],
+      "with_examples": [
+        {
+          "key": "MAPP-13279",
+          "sprints": [
+            "11991"
+          ]
+        },
+        {
+          "key": "MAPP-14123",
+          "sprints": [
+            "12123"
+          ]
+        }
+      ],
+      "boards": [
+        "1522"
+      ],
+      "coverage": {
+        "complete": 2
+      }
+    },
+    "MLE": {
+      "nodes": {
+        "task": 6
+      },
+      "tasks": 6,
+      "with_sprint": 0,
+      "empty_complete": 6,
+      "empty_unknown": 0,
+      "no_input": 0,
+      "empty_examples": [
+        {
+          "key": "MLE-293",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "MLE-271",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "MLE-299",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "MLE-360",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "MLE-407",
+          "resolution": "Сделано",
+          "membership": "complete"
+        }
+      ],
+      "with_examples": [],
+      "boards": [],
+      "coverage": {
+        "complete": 6
+      }
+    },
+    "TEXT": {
+      "nodes": {
+        "task": 9
+      },
+      "tasks": 9,
+      "with_sprint": 0,
+      "empty_complete": 9,
+      "empty_unknown": 0,
+      "no_input": 0,
+      "empty_examples": [
+        {
+          "key": "TEXT-328",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "TEXT-551",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "TEXT-609",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "TEXT-767",
+          "resolution": "Сделано",
+          "membership": "complete"
+        },
+        {
+          "key": "TEXT-876",
+          "resolution": "Сделано",
+          "membership": "complete"
+        }
+      ],
+      "with_examples": [],
+      "boards": [],
+      "coverage": {
+        "complete": 9
+      }
+    },
+    "UX": {
+      "nodes": {
+        "task": 1
+      },
+      "tasks": 1,
+      "with_sprint": 0,
+      "empty_complete": 1,
+      "empty_unknown": 0,
+      "no_input": 0,
+      "empty_examples": [
+        {
+          "key": "UX-1000",
+          "resolution": "Сделано",
+          "membership": "complete"
+        }
+      ],
+      "with_examples": [],
+      "boards": [],
+      "coverage": {
+        "complete": 1
+      }
+    },
+    "WL": {
+      "nodes": {
+        "task": 2
+      },
+      "tasks": 2,
+      "with_sprint": 2,
+      "empty_complete": 0,
+      "empty_unknown": 0,
+      "no_input": 0,
+      "empty_examples": [],
+      "with_examples": [
+        {
+          "key": "WL-59",
+          "sprints": [
+            "11138",
+            "11455"
+          ]
+        },
+        {
+          "key": "WL-150",
+          "sprints": [
+            "11779"
+          ]
+        }
+      ],
+      "boards": [
+        "1724",
+        "900"
+      ],
+      "coverage": {
+        "complete": 2
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+OK: SDD validation passed with 0 warning(s)
+
+exit=0

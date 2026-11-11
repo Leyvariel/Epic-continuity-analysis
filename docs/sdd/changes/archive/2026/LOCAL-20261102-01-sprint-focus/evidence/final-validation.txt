@@ -1,0 +1,19 @@
+Команда: python3 /Users/leyva/.agents/skills/sdd-writer/scripts/validate_sdd.py .
+Код выхода: 0
+OK: SDD validation passed with 0 warning(s)
+
+Команда: python3 /Users/leyva/.agents/skills/sdd-writer/scripts/validate_sdd.py docs/sdd/changes/archive/2026/LOCAL-20261102-01-sprint-focus
+Код выхода: 0
+OK: SDD validation passed with 0 warning(s)
+
+Команда: git diff --check
+Код выхода: 0
+
+Команда: node --check scripts/verify-sprint-focus-browser.mjs
+Код выхода: 0
+
+Документов: 20
+Проверено локальных ссылок: 177
+Уникальных ID текущих требований и сценариев: 192
+Все 9 требований и сценарии перенесены без содержательных различий.
+Ошибок: 0

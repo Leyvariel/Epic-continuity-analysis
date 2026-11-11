@@ -1,0 +1,52 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/dataset-reset-ui.test.tsx
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/dataset-reset-ui.test.tsx (4 tests | 4 failed) 94ms
+   × AC-145/146 confirms, cancels without a request and clears the source and view only on success 66ms
+   × AC-149 server error retains the dataset; lost success response reconciles with the server 13ms
+   × AC-148 disables import and duplicate reset while request is pending 12ms
+   × AC-150 can reset after corrupt-cache load error 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/dataset-reset-ui.test.tsx > AC-145/146 confirms, cancels without a request and clears the source and view only on success
+AssertionError: expected undefined to be defined
+ ❯ click tests/dataset-reset-ui.test.tsx:13:71
+
+ ❯ tests/dataset-reset-ui.test.tsx:18:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/dataset-reset-ui.test.tsx > AC-149 server error retains the dataset; lost success response reconciles with the server
+AssertionError: expected undefined to be defined
+ ❯ click tests/dataset-reset-ui.test.tsx:13:71
+
+ ❯ tests/dataset-reset-ui.test.tsx:26:8
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/dataset-reset-ui.test.tsx > AC-148 disables import and duplicate reset while request is pending
+AssertionError: expected undefined to be defined
+ ❯ click tests/dataset-reset-ui.test.tsx:13:71
+
+ ❯ tests/dataset-reset-ui.test.tsx:31:8
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/dataset-reset-ui.test.tsx > AC-150 can reset after corrupt-cache load error
+AssertionError: expected undefined to be defined
+ ❯ click tests/dataset-reset-ui.test.tsx:13:71
+
+ ❯ tests/dataset-reset-ui.test.tsx:34:186
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  21:56:10
+   Duration  811ms (transform 148ms, setup 0ms, import 215ms, tests 94ms, environment 430ms)

@@ -1,0 +1,226 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run tests/expanded-hierarchy.test.ts tests/hierarchy-ui.test.tsx tests/sprint-focus-ui.test.tsx tests/hypothesis-columns-ui.test.tsx
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/expanded-hierarchy.test.ts (8 tests | 8 failed) 10ms
+   × AC-105/120: own child return excludes initial waiting and never supplies child TTM 6ms
+   × AC-114/106: child-only columns stay hidden even with unavailable history; excluded nodes add no columns 1ms
+   × preserves DF and arbitrary child names instead of merging them into HF stages 1ms
+   × AC-138: Подготовка contributes a column only from a source hypothesis 1ms
+   × AC-138: Валидация contributes a column only from a source hypothesis 0ms
+   × AC-138: Скоринг contributes a column only from a source hypothesis 0ms
+   × AC-138: Тестирование эпика contributes a column only from a source hypothesis 0ms
+   × AC-138: Релиз contributes a column only from a source hypothesis 0ms
+ ❯ tests/hypothesis-columns-ui.test.tsx (1 test | 1 failed) 161ms
+   × AC-102/114/138: only source observations add alternatives; filtering and expansion keep columns and source values 160ms
+ ❯ tests/sprint-focus-ui.test.tsx (5 tests | 1 failed) 256ms
+   × AC-137: children have no numeric cells; Excel excludes the metric and resets its sorting 30ms
+ ❯ tests/hierarchy-ui.test.tsx (4 tests | 2 failed) 516ms
+     × xlsx: сначала свёрнуто; скрывает дочерние числа, сохраняет полосы и сохраняет ось при 3 масштабах 25ms
+     × jira: сначала свёрнуто; скрывает дочерние числа, сохраняет полосы и сохраняет ось при 3 масштабах 30ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/expanded-hierarchy.test.ts > AC-105/120: own child return excludes initial waiting and never supplies child TTM
+AssertionError: expected [ 'ttm', 'ttmWithoutFlag', …(3) ] to deeply equal [ 'ttm', 'ttmWithoutFlag', …(1) ]
+
+- Expected
++ Received
+
+  [
+    "ttm",
+    "ttmWithoutFlag",
++   "open",
+    "implementation",
++   "status:в работе",
+  ]
+
+ ❯ tests/expanded-hierarchy.test.ts:25:60
+     23|  expect(relatedMetricValue(child,'ttm')).toBeNull();expect(relatedMetr…
+     24|  expect(f.root.ttmMs).toBe(10*DAY_MS);
+     25|  expect(metricsFor([f.root],'history',graph).map(c=>c.id)).toEqual(['t…
+       |                                                            ^
+     26| });
+     27| it('AC-114/106: child-only columns stay hidden even with unavailable h…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+ FAIL  tests/expanded-hierarchy.test.ts > AC-114/106: child-only columns stay hidden even with unavailable history; excluded nodes add no columns
+AssertionError: expected [ 'ttm', 'ttmWithoutFlag', …(3) ] to not include 'status:в работе'
+ ❯ tests/expanded-hierarchy.test.ts:36:18
+     34|  expect(relatedMetricValue(graph.nodes.child,'status:в работе')).toBeN…
+     35|  const ids=metricsFor([f.root],'history',graph).map(c=>c.id);
+     36|  expect(ids).not.toContain('status:в работе');expect(ids).not.toContai…
+       |                  ^
+     37| });
+     38| it('preserves DF and arbitrary child names instead of merging them int…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL  tests/expanded-hierarchy.test.ts > preserves DF and arbitrary child names instead of merging them into HF stages
+AssertionError: expected [ '[DF] Реализация' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "[DF] Реализация",
++ ]
+
+ ❯ tests/expanded-hierarchy.test.ts:44:100
+     42|  expect(relatedMetricValue(child,'implementation')).toBe(0);
+     43|  expect(relatedMetricValue(child,'status:[df] реализация')).toBe(3*DAY…
+     44|  expect(metricsFor([f.root],'history',graph).filter(c=>c.id.startsWith…
+       |                                                                                                    ^
+     45| });
+     46|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL  tests/expanded-hierarchy.test.ts > AC-138: Подготовка contributes a column only from a source hypothesis
+AssertionError: expected [ 'Time to Market', …(3) ] to not include 'Подготовка'
+ ❯ tests/expanded-hierarchy.test.ts:52:66
+     50|  Object.assign(f.input.nodes.child,{history:child.history,created:chil…
+     51|  const graph=buildHierarchy(f.input)!;
+     52|  expect(metricsFor([f.root],'history',graph).map(c=>c.name)).not.toCon…
+       |                                                                  ^
+     53|  const source=calculateTimeline(child.summary,child.history,child.asOf…
+     54|  expect(metricsFor([f.root,source],'history',graph).map(c=>c.name)).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL  tests/expanded-hierarchy.test.ts > AC-138: Валидация contributes a column only from a source hypothesis
+AssertionError: expected [ 'Time to Market', …(3) ] to not include 'Валидация'
+ ❯ tests/expanded-hierarchy.test.ts:52:66
+     50|  Object.assign(f.input.nodes.child,{history:child.history,created:chil…
+     51|  const graph=buildHierarchy(f.input)!;
+     52|  expect(metricsFor([f.root],'history',graph).map(c=>c.name)).not.toCon…
+       |                                                                  ^
+     53|  const source=calculateTimeline(child.summary,child.history,child.asOf…
+     54|  expect(metricsFor([f.root,source],'history',graph).map(c=>c.name)).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL  tests/expanded-hierarchy.test.ts > AC-138: Скоринг contributes a column only from a source hypothesis
+AssertionError: expected [ 'Time to Market', …(3) ] to not include 'Скоринг'
+ ❯ tests/expanded-hierarchy.test.ts:52:66
+     50|  Object.assign(f.input.nodes.child,{history:child.history,created:chil…
+     51|  const graph=buildHierarchy(f.input)!;
+     52|  expect(metricsFor([f.root],'history',graph).map(c=>c.name)).not.toCon…
+       |                                                                  ^
+     53|  const source=calculateTimeline(child.summary,child.history,child.asOf…
+     54|  expect(metricsFor([f.root,source],'history',graph).map(c=>c.name)).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL  tests/expanded-hierarchy.test.ts > AC-138: Тестирование эпика contributes a column only from a source hypothesis
+AssertionError: expected [ 'Time to Market', …(3) ] to not include 'Тестирование эпика'
+ ❯ tests/expanded-hierarchy.test.ts:52:66
+     50|  Object.assign(f.input.nodes.child,{history:child.history,created:chil…
+     51|  const graph=buildHierarchy(f.input)!;
+     52|  expect(metricsFor([f.root],'history',graph).map(c=>c.name)).not.toCon…
+       |                                                                  ^
+     53|  const source=calculateTimeline(child.summary,child.history,child.asOf…
+     54|  expect(metricsFor([f.root,source],'history',graph).map(c=>c.name)).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL  tests/expanded-hierarchy.test.ts > AC-138: Релиз contributes a column only from a source hypothesis
+AssertionError: expected [ 'Time to Market', …(3) ] to not include 'Релиз'
+ ❯ tests/expanded-hierarchy.test.ts:52:66
+     50|  Object.assign(f.input.nodes.child,{history:child.history,created:chil…
+     51|  const graph=buildHierarchy(f.input)!;
+     52|  expect(metricsFor([f.root],'history',graph).map(c=>c.name)).not.toCon…
+       |                                                                  ^
+     53|  const source=calculateTimeline(child.summary,child.history,child.asOf…
+     54|  expect(metricsFor([f.root,source],'history',graph).map(c=>c.name)).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL  tests/hierarchy-ui.test.tsx > T007/T008: раскрытие на календаре > xlsx: сначала свёрнуто; скрывает дочерние числа, сохраняет полосы и сохраняет ось при 3 масштабах
+ FAIL  tests/hierarchy-ui.test.tsx > T007/T008: раскрытие на календаре > jira: сначала свёрнуто; скрывает дочерние числа, сохраняет полосы и сохраняет ось при 3 масштабах
+AssertionError: expected <div …(4)></div> to be null
+
+- Expected:
+null
+
++ Received:
+<div
+  class="metric related-metric"
+  data-metric="ttm"
+  tabindex="0"
+  title="Time to Market: Для дочерних объектов TTM не рассчитывается · B-1"
+>
+  —
+</div>
+
+ ❯ tests/hierarchy-ui.test.tsx:35:53
+     33|   await act(()=>button('A-1').click());expect(div.querySelectorAll('.r…
+     34|   await act(()=>button('B-1').click());expect(div.querySelectorAll('.r…
+     35|   expect(div.querySelector('.related-row .metric')).toBeNull();expect(…
+       |                                                     ^
+     36|   expect(div.querySelector('.related-row [data-metric]')).toBeNull();
+     37|   expect(div.querySelector('.related-row .left-area [tabindex]')).toBe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ FAIL  tests/hypothesis-columns-ui.test.tsx > AC-102/114/138: only source observations add alternatives; filtering and expansion keep columns and source values
+AssertionError: expected [ 'Сортировать: Time to Market', …(9) ] to deeply equal [ 'Сортировать: Time to Market', …(8) ]
+
+- Expected
++ Received
+
+@@ -6,6 +6,7 @@
+    "Сортировать: Валидация",
+    "Сортировать: Скоринг",
+    "Сортировать: Реализация",
+    "Сортировать: Тестирование эпика",
+    "Сортировать: Релиз",
++   "Сортировать: Working",
+  ]
+
+ ❯ tests/hypothesis-columns-ui.test.tsx:26:20
+     24|  const headers=()=>[...div.querySelectorAll('.timeline-header [aria-la…
+     25|  const expected=['Time to Market','TTM без флага','Без работы в спринт…
+     26|  expect(headers()).toEqual(expected);
+       |                    ^
+     27|  const first=div.querySelector('.epic-row[data-issue-key="A-1"]')!;
+     28|  expect(first.querySelector('[data-metric="implementation"]')?.textCon…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/12]⎯
+
+ FAIL  tests/sprint-focus-ui.test.tsx > AC-137: children have no numeric cells; Excel excludes the metric and resets its sorting
+AssertionError: expected <div …(4)></div> to be null
+
+- Expected:
+null
+
++ Received:
+<div
+  class="metric related-metric"
+  data-metric="ttm"
+  tabindex="0"
+  title="Time to Market: Для дочерних объектов TTM не рассчитывается · A-2"
+>
+  —
+</div>
+
+ ❯ tests/sprint-focus-ui.test.tsx:40:156
+     38| it('AC-137: children have no numeric cells; Excel excludes the metric …
+     39|  const input=sprintDatasetInputs();input.epics[0].excelAggregates={'TT…
+     40|  await act(()=>div.querySelector<HTMLButtonElement>('button[aria-label…
+       |                                                                                                                                                            ^
+     41|  await act(()=>div.querySelector<HTMLButtonElement>('button[aria-label…
+     42|  expect(div.querySelectorAll('.related-row .sprint-segment')).toHaveLe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+
+ Test Files  4 failed (4)
+      Tests  12 failed | 6 passed (18)
+   Start at  10:25:12
+   Duration  1.82s (transform 1.04s, setup 0ms, import 1.68s, tests 943ms, environment 1.55s)

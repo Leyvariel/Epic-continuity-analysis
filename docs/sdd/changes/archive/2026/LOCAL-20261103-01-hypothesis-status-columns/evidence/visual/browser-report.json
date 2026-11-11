@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "browser": "installed Google Chrome, isolated temporary profile",
+  "checks": [
+    "Only source columns; children retain status and work sprint bars in day/week/month; collapse, alignment and axis unchanged",
+    "All five root alternatives appear in order with correct numbers; filtering and sorting preserve columns; child cells remain absent",
+    "800px viewport: numeric columns and calendar accessible by horizontal and vertical scroll",
+    "Main app 4317: saved dataset loads, updated bundle is served, child numeric cells absent; no import or cache mutation"
+  ],
+  "errors": []
+}

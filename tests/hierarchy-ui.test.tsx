@@ -23,7 +23,7 @@ describe('T007/T008: раскрытие на календаре',()=>{
   await act(()=>div.querySelector<HTMLButtonElement>('button[aria-label="Свернуть A-1"]')!.click());
   expect(div.querySelectorAll('.related-row[data-issue-key="C-1"]')).toHaveLength(1);
  });
- it.each(['xlsx','jira'])('%s: сначала свёрнуто; раскрывает собственные числа и сохраняет ось при 3 масштабах',async source=>{
+ it.each(['xlsx','jira'])('%s: сначала свёрнуто; скрывает дочерние числа, сохраняет полосы и сохраняет ось при 3 масштабах',async source=>{
   Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});const div=document.createElement('div');document.body.append(div);const r=createRoot(div);mounted.push(r);
   const dataset=source==='jira'?await linkedJiraDataset():buildDataset(parseWorkbook(linkedWorkbook(),'offline.xlsx',CUT),CUT);
   vi.spyOn(globalThis,'fetch').mockResolvedValue(new Response(JSON.stringify({dataset}),{headers:{'content-type':'application/json'}}));
@@ -32,9 +32,10 @@ describe('T007/T008: раскрытие на календаре',()=>{
   expect(div.querySelectorAll('.related-row')).toHaveLength(0);expect(button('A-1')).not.toBeNull();
   await act(()=>button('A-1').click());expect(div.querySelectorAll('.related-row')).toHaveLength(1);expect(div.textContent).toContain('B-1');
   await act(()=>button('B-1').click());expect(div.querySelectorAll('.related-row')).toHaveLength(2);expect(div.textContent).toContain('C-1');expect(div.textContent).not.toContain('S-1');
-  expect(div.querySelector('.related-row .metric')).not.toBeNull();expect(div.querySelector('.related-row .flag-caption')).toBeNull();
-  expect(div.querySelector('.related-row [data-metric="ttm"]')?.textContent).toBe('—');
-  expect(div.querySelector('.related-row[data-issue-key="C-1"] [data-metric="status:в работе"]')?.textContent).toBe('4,00');
+  expect(div.querySelector('.related-row .metric')).toBeNull();expect(div.querySelector('.related-row .flag-caption')).toBeNull();
+  expect(div.querySelector('.related-row [data-metric]')).toBeNull();
+  expect(div.querySelector('.related-row .left-area [tabindex]')).toBeNull();
+  expect(div.querySelector('[aria-label="Сортировать: В работе"]')).toBeNull();
   expect(div.querySelectorAll('.related-segment').length).toBeGreaterThan(0);expect(div.querySelector('[role=dialog]')).toBeNull();
   const initialWidth=parseFloat(div.querySelector<HTMLElement>('.related-segment')!.style.width);
   for(const [label,pixels] of [['День',26],['Месяц',3],['Неделя',8]] as const){

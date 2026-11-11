@@ -67,6 +67,16 @@ export class DatasetService {
     if (this.state.calculationProfile !== 'jira-v3') throw new AppError('OFFLINE_SOURCE', 'Это прежний автономный набор. Загрузите файл в режиме Jira.', 409);
     return this.startJira({ kind: 'refresh', inputs: this.state.inputs });
   }
+  async reset(datasetId: string | null): Promise<void> {
+    if (this.busy) throw new AppError('BUSY', 'Дождитесь завершения текущего задания.', 409);
+    if (this.state && this.state.dataset.id !== datasetId) throw new AppError('STALE_DATASET', 'Набор изменился. Откройте последний набор и подтвердите сброс заново.', 409);
+    this.busy = true;
+    const operation = this.cache.clear().then(() => {
+      this.state = null; this.cacheError = null; this.jobs.clear(); this.controller = null;
+    }).finally(() => { this.busy = false; });
+    this.activeTask = operation.catch(() => {});
+    await operation;
+  }
   shutdown() { this.controller?.abort(); }
   private startJira(request: JiraRequest): ImportJobV3 {
     if (this.busy) throw new AppError('BUSY', 'Дождитесь завершения текущего задания.', 409);
