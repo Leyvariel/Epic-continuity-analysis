@@ -1,0 +1,6 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "error": "AssertionError [ERR_ASSERTION]: The input did not match the regular expression /не подтверждён|не разреш|недоступ/i. Input:\n\n'⚠ Обнаружен цикл связей.'\n"
+}

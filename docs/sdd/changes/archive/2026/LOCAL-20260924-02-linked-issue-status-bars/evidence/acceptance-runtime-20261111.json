@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "cacheUnchanged": true,
+  "sha256": "fadcd33e7c955276cadccbd2d0bd9d20f574a1ce99710d5737d592c6d9a32e95",
+  "datasetId": "ee66fa53-2041-436f-8aff-7df629a752de",
+  "roots": [
+    "BUSDIS-61",
+    "BUSDIS-6",
+    "BUSDIS-16"
+  ],
+  "http": 200,
+  "localLinks": "passed"
+}
