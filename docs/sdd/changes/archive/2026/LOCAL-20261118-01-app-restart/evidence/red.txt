@@ -1,0 +1,92 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run --run tests/restart-api.test.ts tests/restart-client.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+ ❯ tests/restart-client.test.ts (0 test)
+ ❯ tests/restart-api.test.ts (4 tests | 3 failed) 55ms
+   × AC-160 accepts restart once, preserves the dataset and blocks subsequent mutations 39ms
+   × AC-161 refuses restart while a reset is pending 4ms
+   × AC-161 refuses restart during an import and permits it after completion 5ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/restart-client.test.ts [ tests/restart-client.test.ts ]
+Error: Cannot find module '../src/restart' imported from /Users/leyva/Projects/Epic Continuity Analisys/tests/restart-client.test.ts
+ ❯ tests/restart-client.test.ts:2:1
+      1| import { afterEach, expect, it, vi } from 'vitest';
+      2| import { restartApplication } from '../src/restart';
+       | ^
+      3| const response = (body: unknown, status = 200) => new Response(JSON.st…
+      4| afterEach(() => { vi.restoreAllMocks(); vi.useRealTimers(); });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/restart-api.test.ts > AC-160 accepts restart once, preserves the dataset and blocks subsequent mutations
+AssertionError: expected 404 to be 202 // Object.is equality
+
+- Expected
++ Received
+
+- 202
++ 404
+
+ ❯ tests/restart-api.test.ts:32:27
+     30|   const before = await (await fetch(`${app.base}/api/runtime`)).json();
+     31|   const response = await app.post();
+     32|   expect(response.status).toBe(202);
+       |                           ^
+     33|   expect(await response.json()).toEqual({ instanceId: before.instanceI…
+     34|   expect(app.restart).toHaveBeenCalledTimes(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/restart-api.test.ts > AC-161 refuses restart while a reset is pending
+AssertionError: expected 404 to be 409 // Object.is equality
+
+- Expected
++ Received
+
+- 409
++ 404
+
+ ❯ tests/restart-api.test.ts:46:27
+     44|   const resetting = app.service.reset(null);
+     45|   const response = await app.post();
+     46|   expect(response.status).toBe(409); expect(app.restart).not.toHaveBee…
+       |                           ^
+     47|   finish(); await resetting;
+     48|   expect((await app.post()).status).toBe(202);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/restart-api.test.ts > AC-161 refuses restart during an import and permits it after completion
+AssertionError: expected 404 to be 409 // Object.is equality
+
+- Expected
++ Received
+
+- 409
++ 404
+
+ ❯ tests/restart-api.test.ts:55:37
+     53|   vi.spyOn(app.cache, 'write').mockImplementation(async state => { awa…
+     54|   app.service.import(historyWorkbook(), 'history.xlsx');
+     55|   expect((await app.post()).status).toBe(409); expect(app.restart).not…
+       |                                     ^
+     56|   finish(); await app.service.waitForIdle();
+     57|   expect((await app.post()).status).toBe(202);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  3 failed | 1 passed (4)
+   Start at  11:03:01
+   Duration  419ms (transform 148ms, setup 0ms, import 287ms, tests 55ms, environment 0ms)
+

@@ -23,6 +23,7 @@ import { segmentLabels } from '../shared/layout';
 import { compositionFor, compositionScale } from '../shared/composition';
 import { CompositionBar, CompositionHeader, COMPOSITION_WIDTH } from './CompositionChart';
 import { LocalApiError, readImportStatus, request } from './api';
+import { restartApplication } from './restart';
 import { PREVIEW_MESSAGE, WORKING_APP_URL, type ApplicationMode } from '../shared/runtime';
 type Sort = Metric | 'key' | 'title';
 type Zoom = 'day' | 'week' | 'month';
@@ -41,6 +42,8 @@ export function App() {
   const [job, setJob] = useState<ImportJob | null>(null);
   const [starting, setStarting] = useState(false);
   const [resetting, setResetting] = useState(false);
+  const [restarting, setRestarting] = useState(false);
+  const restartLock = useRef(false);
   const [resetTarget, setResetTarget] = useState<{datasetId:string|null}|null>(null);
   const [viewGeneration, setViewGeneration] = useState(0);
   const requestGeneration = useRef(0), resetLock = useRef(false);
@@ -56,7 +59,7 @@ export function App() {
   const [showRules, setShowRules] = useState(false);
   const closeEpic = useCallback(() => setSelectedKey(null), []);
   const closeRules = useCallback(() => setShowRules(false), []);
-  const active = resetting || starting || job?.status === 'queued' || job?.status === 'running';
+  const active = restarting || resetting || starting || job?.status === 'queued' || job?.status === 'running';
 
   useEffect(() => {
     let live = true; const generation = requestGeneration.current;
@@ -132,6 +135,12 @@ export function App() {
       } else setError(failure.message);
     } finally {resetLock.current=false; setResetting(false); setResetTarget(null);}
   };
+  const restartApp = async () => {
+    if (loading || active || resetTarget || mode !== 'application' || restartLock.current) return;
+    restartLock.current = true; setRestarting(true); setError(''); setStatusMessage('');
+    try { await restartApplication(); }
+    catch (e) { setError((e as Error).message); restartLock.current = false; setRestarting(false); }
+  };
   const filtered = useMemo(() => {
     const term = query.trim().toLocaleLowerCase('ru');
     return [...(dataset?.epics ?? [])].filter(epic => `${epic.summary.key} ${epic.metadata?.title ?? epic.summary.title}`.toLocaleLowerCase('ru').includes(term) && (!assignee || epicAssignee(epic) === assignee)).sort((a, b) => {
@@ -176,17 +185,18 @@ export function App() {
   return <div className="app">
     <header className="app-header">
       <div><div className="eyebrow">ПРОДУКТОВЫЕ ПРОЦЕССЫ <span>Локально</span></div><h1>Анализ HF-эпиков</h1><p>История этапов и Time to Market по данным Jira</p></div>
-      <div className="actions">{mode === 'application' && <button className="reset-action" disabled={loading || active} title={active ? 'Дождитесь завершения текущего действия' : 'Удалить сохранённые данные анализа'} onClick={() => setResetTarget({datasetId:dataset?.id ?? null})}>Сбросить все данные</button>}<button onClick={() => setShowRules(true)}>Правила расчёта</button>
+      <div className="actions">{mode === 'application' && <button disabled={loading || active || !!resetTarget} title={active ? 'Дождитесь завершения текущего действия' : 'Перезапустить сервер и открыть сохранённый анализ'} onClick={() => void restartApp()}>{restarting ? 'Перезапуск…' : 'Перезапустить приложение'}</button>}{mode === 'application' && <button className="reset-action" disabled={loading || active} title={active ? 'Дождитесь завершения текущего действия' : 'Удалить сохранённые данные анализа'} onClick={() => setResetTarget({datasetId:dataset?.id ?? null})}>Сбросить все данные</button>}<button onClick={() => setShowRules(true)}>Правила расчёта</button>
         {mode === 'application' && isJiraDataset(dataset) && <button className="primary" disabled={active} onClick={() => void startJob({ kind: 'refresh', datasetId: dataset.id })}>Обновить</button>}
       </div>
     </header>
     {resetTarget && <ResetDialog busy={resetting} onClose={closeReset} onConfirm={()=>void resetData()}/>}
     {!loading && (mode === 'application' ? <SourceForm key={viewGeneration} busy={active} onSubmit={startJob} /> : <div className="notice preview-notice" role="status"><strong>{mode === 'demo' ? 'Демонстрационные данные.' : 'Сохранённый снимок.'}</strong> {PREVIEW_MESSAGE} <a href={WORKING_APP_URL}>Открыть основное приложение</a></div>)}
     {error && <div className="notice error" role="alert">{error}</div>}
+    {restarting && <div className="notice" role="status">Приложение перезапускается. Сохранённый анализ откроется автоматически.</div>}
     {statusMessage && <div className="notice" role="status">{statusMessage}</div>}
     {job?.status === 'failed' && dataset && <div className="notice">Новая загрузка не завершена. Показан предыдущий сохранённый набор.</div>}
     {job?.status === 'failed' && job.audit && <SelectionDetails audit={job.audit} />}
-    {active && !resetting && <div className="progress" role="status"><div><strong>{phaseLabel(job?.phase)}</strong><span>{job?.currentKey ?? 'Подготовка'} · {job?.completed ?? 0} из {job?.total ?? '…'}</span></div><progress value={job?.total == null ? undefined : job.phase === 'selecting' ? job.progress?.checked ?? job.completed : job.completed} max={job?.total || 1} />{job?.progress && <small>Найдено: {job.progress.found} · признаки проверены: {job.progress.checked} · отобрано HF: {job.progress.selected} · историй получено: {job.progress.histories}</small>}{dataset && <small>До завершения загрузки показан предыдущий набор.</small>}</div>}
+    {active && !resetting && !restarting && <div className="progress" role="status"><div><strong>{phaseLabel(job?.phase)}</strong><span>{job?.currentKey ?? 'Подготовка'} · {job?.completed ?? 0} из {job?.total ?? '…'}</span></div><progress value={job?.total == null ? undefined : job.phase === 'selecting' ? job.progress?.checked ?? job.completed : job.completed} max={job?.total || 1} />{job?.progress && <small>Найдено: {job.progress.found} · признаки проверены: {job.progress.checked} · отобрано HF: {job.progress.selected} · историй получено: {job.progress.histories}</small>}{dataset && <small>До завершения загрузки показан предыдущий набор.</small>}</div>}
     {loading ? <div className="empty">Загрузка последнего локального набора…</div> : !dataset ? <main className="empty">{mode !== 'application' ? <h2>Нет сохранённых данных для просмотра</h2> : <><div className="empty-symbol">↗</div><h2>Выберите эпики для анализа</h2><p>Вставьте список ключей, загрузите CSV/XLSX или вставьте ссылку на доску либо отдельный эпик.</p><p className="hint">История берётся из Jira. Последний результат сохраняется на этом компьютере.</p></>}</main> : <main>
       <section className="dataset-meta" aria-label="Состояние набора">
         <div><strong>{filtered.length}<small> / {dataset.epics.length}</small></strong><span>HF-эпиков в выборке</span></div>

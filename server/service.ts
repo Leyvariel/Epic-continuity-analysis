@@ -77,6 +77,10 @@ export class DatasetService {
     this.activeTask = operation.catch(() => {});
     await operation;
   }
+  reserveRestart(): void {
+    if (this.busy) throw new AppError('BUSY', 'Дождитесь завершения текущего действия.', 409);
+    this.busy = true;
+  }
   shutdown() { this.controller?.abort(); }
   private startJira(request: JiraRequest): ImportJobV3 {
     if (this.busy) throw new AppError('BUSY', 'Дождитесь завершения текущего задания.', 409);

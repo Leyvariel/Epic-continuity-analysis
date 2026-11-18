@@ -22,6 +22,7 @@ language: ru
 - [Расчёт TTM и impediment](sdd/specs/timeline.md)
 - [Визуализация и анализ](sdd/specs/visualization.md)
 - [Сохранение и обновление набора](sdd/specs/dataset-lifecycle.md)
+- [Перезапуск приложения](sdd/specs/application-runtime.md)
 - [Спринты и непрерывность работы](sdd/specs/sprint-continuity.md)
 - [Время без работы](sdd/specs/sprint-focus.md)
 - [Совместимость с автономным XLSX](sdd/specs/legacy-compatibility.md)
@@ -31,6 +32,8 @@ language: ru
 [Сверка реализации связанных элементов](sdd/changes/archive/2026/LOCAL-20260924-02-linked-issue-status-bars/sdd-review.md) фиксирует актуализацию current specs; [приёмка 11.11.2026](sdd/changes/archive/2026/LOCAL-20260924-02-linked-issue-status-bars/acceptance-20261111.md) завершена в подтверждённом пользователем объёме. [Предыдущая сверка после реализации списка ключей](sdd/changes/archive/2026/LOCAL-20260924-01-multi-epic-keys/sdd-review.md) фиксирует исправленные расхождения и текущие проверки. [Исходный аудит](sdd/review.md) сохраняет трассировку прежних режимов, остаточные риски и вопросы приёмки.
 
 ## Статус изменений
+
+[Перезапуск приложения](sdd/changes/archive/2026/LOCAL-20261118-01-app-restart/proposal.md) реализован и архивирован по прямому поручению пользователя от 18.11.2026. Кнопка перезапускает сервер и возвращает сохранённый анализ; занятость и режим просмотра защищены. Проверены 588 тестов, TypeScript, сборка и реальный Chrome. [Свидетельства](sdd/changes/archive/2026/LOCAL-20261118-01-app-restart/verification.md). По последующему поручению добавлены [TDD/BDD и фактическое выполнение](sdd/changes/archive/2026/LOCAL-20261118-01-app-restart/test-plan.md), [сверка этапов разработки](sdd/changes/archive/2026/LOCAL-20261118-01-app-restart/workflow-review.md); ограничения предварительного TDD сохранены.
 
 [Работа без спринтов и сброс данных](sdd/changes/archive/2026/LOCAL-20261109-01-unsprinted-task-activity/proposal.md) реализована по поручению пользователя от 09.11.2026 и архивирована. Точные активные интервалы согласованных проектов учитываются отдельно от рабочих спринтов; добавлен подтверждаемый полный сброс анализа. Проверены 514 тестов в 68 файлах, TypeScript, сборка, SDD и реальный Chrome, включая HOTELS-13142. Четыре дельты перенесены в текущие спецификации. [Результат и границы проверки](sdd/changes/archive/2026/LOCAL-20261109-01-unsprinted-task-activity/verification.md).
 

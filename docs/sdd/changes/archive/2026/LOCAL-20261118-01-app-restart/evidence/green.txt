@@ -1,0 +1,13 @@
+
+> hf-epic-continuity@1.0.0 test
+> vitest run --run tests/restart-api.test.ts tests/restart-client.test.ts tests/restart-ui.test.tsx tests/restart-runtime.test.ts
+
+
+ RUN  v4.1.11 /Users/leyva/Projects/Epic Continuity Analisys
+
+
+ Test Files  4 passed (4)
+      Tests  14 passed (14)
+   Start at  11:06:12
+   Duration  3.98s (transform 443ms, setup 0ms, import 841ms, tests 3.79s, environment 647ms)
+

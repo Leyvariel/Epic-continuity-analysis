@@ -1,0 +1,5 @@
+Пакет изменения
+OK: SDD validation passed with 0 warning(s)
+
+SDD репозитория
+OK: SDD validation passed with 0 warning(s)

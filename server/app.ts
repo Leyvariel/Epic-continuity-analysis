@@ -1,11 +1,13 @@
 import express from 'express';
+import { randomUUID } from 'node:crypto';
 import type { ErrorRequestHandler } from 'express';
 import { AppError, safeError } from './errors';
 import type { DatasetService } from './service';
 import { PREVIEW_MESSAGE, type ApplicationMode } from '../shared/runtime';
 
-export function createApp(service: DatasetService, nonce?: string, mode: ApplicationMode = 'application') {
+export function createApp(service: DatasetService, nonce?: string, mode: ApplicationMode = 'application', restart?: () => void) {
   const app = express();
+  const instanceId = randomUUID();
   app.disable('x-powered-by');
   // The same checks apply to static files, Vite and API routes (DNS rebinding / CSRF).
   app.use((req, res, next) => {
@@ -27,6 +29,16 @@ export function createApp(service: DatasetService, nonce?: string, mode: Applica
       res.status(409).json({ error: { code: 'READ_ONLY_PREVIEW', message: PREVIEW_MESSAGE } }); return;
     }
     next();
+  });
+  app.get('/api/runtime', (_req, res) => res.json({ instanceId }));
+  app.post('/api/restart', (_req, res) => {
+    if (!restart) throw new AppError('RESTART_UNAVAILABLE', 'Перезапуск недоступен. Запустите приложение через npm start или npm run dev.', 503);
+    service.reserveRestart();
+    let scheduled = false;
+    const schedule = () => { if (!scheduled) { scheduled = true; setImmediate(restart); } };
+    res.once('finish', schedule);
+    res.once('close', schedule);
+    res.status(202).json({ instanceId });
   });
   app.get('/api/dataset', (_req, res) => res.json({ dataset: service.getDataset(), ...(mode === 'application' ? {} : { mode }) }));
   app.get('/api/jobs/:id', (req, res) => res.json(service.getJob(req.params.id)));

@@ -93,3 +93,9 @@ PAT доступен только серверу. Фиксированный ori
 Рабочая конфигурация доски привязана к подтверждённым настройкам и их отпечаткам. Другие доски и изменённые постоянные настройки требуют проверки; произвольный board id сам по себе не означает совместимость. Предел 1000 HF не мешает текущему объёму (636 подтверждённых + 7 неопределённых), но не отменяет проверки полноты.
 
 Документация API: [Jira Server REST 9.12.4](https://docs.atlassian.com/software/jira/docs/api/REST/9.12.4/), [Jira Software REST 9.12.4](https://docs.atlassian.com/jira-software/REST/9.12.4/), [Atlassian о чтении changelog](https://support.atlassian.com/jira/kb/how-to-analyze-the-history-or-changelog-of-an-issue-in-jira/), [влияние сопоставления статусов колонкам](https://support.atlassian.com/jira/kb/jira-software-data-center-kanban-board-does-not-show-all-issues/). Документация ветки 9.12 не выдаётся за проверку точного patch 9.12.10; ответы текущего сервера проверялись отдельно.
+
+## Перезапуск приложения — оформление постфактум 18.11.2026
+
+Кнопка реализована и проверена в [пакете LOCAL-20261118-01](docs/sdd/changes/archive/2026/LOCAL-20261118-01-app-restart/verification.md). Требования перенесены в [текущую SDD](docs/sdd/specs/application-runtime.md).
+
+По последующему поручению пользователя оформлены [план TDD/BDD с фактическим выполнением](docs/sdd/changes/archive/2026/LOCAL-20261118-01-app-restart/test-plan.md) и [сверка цикла разработки](docs/sdd/changes/archive/2026/LOCAL-20261118-01-app-restart/workflow-review.md). У API сохранён предварительный падающий запуск; клиентский файл тогда не загружался из-за отсутствующего модуля. UI и проверки настоящего процесса добавлены после реализации; их предварительное падение не зафиксировано. Отдельное утверждение proposal/design не состоялось и не проставляется задним числом. Код и объём поведения при этом дополнении не меняются.

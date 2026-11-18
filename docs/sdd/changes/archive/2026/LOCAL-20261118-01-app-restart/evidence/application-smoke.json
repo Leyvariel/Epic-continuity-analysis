@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "httpStatus": 200,
+  "runtimeInstanceId": "df28f636-a02b-4283-aabf-459e85799a92",
+  "restartButtonInServedBundle": true,
+  "datasetPresent": false,
+  "requests": "GET only"
+}
